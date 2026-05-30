@@ -1,0 +1,67 @@
+/* ANA theme responsive header styles */
+
+.site-header {
+	background: #ffffff;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.header-inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.site-branding {
+	display: flex;
+	align-items: center;
+	gap: .75rem;
+}
+
+.site-title {
+	margin: 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+}
+
+.site-title a { color: #222; text-decoration: none; }
+.site-description { margin: 0; font-size: .9rem; color: #666; }
+
+.main-navigation { display: flex; align-items: center; gap: 1rem; }
+.menu-toggle { display: none; align-items: center; gap: .5rem; background: transparent; border: 0; cursor: pointer; }
+.menu-icon { width: 22px; height: 2px; display: block; background: #222; position: relative; }
+.menu-icon::before, .menu-icon::after { content: ''; display: block; width: 22px; height: 2px; background: #222; position: absolute; left: 0; }
+.menu-icon::before { top: -7px; }
+.menu-icon::after { top: 7px; }
+
+.primary-menu { display: flex; list-style: none; margin: 0; padding: 0; gap: .5rem; }
+.primary-menu li { position: relative; }
+.primary-menu a { display: inline-block; padding: .5rem .75rem; color: #333; text-decoration: none; }
+.primary-menu .sub-menu { position: absolute; left: 0; top: 100%; background: #fff; border: 1px solid #eee; display: none; min-width: 200px; z-index: 50; }
+.primary-menu .sub-menu li a { padding: .5rem 1rem; }
+.primary-menu .sub-menu.active { display: block; }
+
+.header-actions { display: flex; align-items: center; gap: .5rem; }
+
+/* Mobile / Tablet */
+@media (max-width: 768px) {
+	.header-inner { padding: .75rem 1rem; }
+	.menu-toggle { display: flex; }
+	.primary-menu { position: absolute; top: 100%; left: 0; right: 0; background: #fff; flex-direction: column; display: none; padding: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+	.primary-menu.active { display: flex; }
+	.primary-menu li { margin-bottom: .25rem; }
+	.site-description { display: none; }
+	.header-actions { order: 3; }
+}
+
+/* Small devices */
+@media (max-width: 420px) {
+	.site-title { font-size: 1rem; }
+	.primary-menu a { padding: .5rem .5rem; }
+}
+
+/* Accessibility focus states */
+a:focus, button:focus { outline: 3px solid rgba(21,156,228,.3); outline-offset: 2px; }
