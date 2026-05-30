@@ -1,0 +1,1 @@
+<?php get_header(); ?><h1>Tag</h1><?php get_footer(); ?>
