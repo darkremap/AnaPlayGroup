@@ -1,10 +1,7 @@
-<?php 
-    get_header(); 
-        if(have_posts()):
-            while(have_posts()): 
-                the_post(); 
-                the_content(); 
-            endwhile; 
-        endif; 
-    get_footer(); 
-?>
+<?php get_header(); ?>
+<h1>test</h1>
+
+
+
+
+<?php get_footer(); ?>
