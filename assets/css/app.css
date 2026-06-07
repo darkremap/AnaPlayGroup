@@ -324,13 +324,250 @@ a:focus, button:focus {
   outline: 3px solid rgba(21,156,228,.3);
   outline-offset: 2px;
 }
+/* ==========================
+   AnaHero
+========================== */
+    .AnaHero {
+      direction: ltr;
+      background-color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+ 
+    /* subtle radial glow behind cards */
+    .AnaHero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 70% at 35% 50%,
+                  rgba(10,63,90,.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+ 
+    /* ── Text side (right / RTL start) ── */
+    .hero-text {
+      text-align: right;
+      padding-right: 2rem;
+      z-index: 2;
+      position: relative;
+    }
+ 
+    .hero-title {
+      font-family: iranSans_bold, sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--TealFlow);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .hero-desc {
+      font-family: iranSans, sans-serif;
+      color: var(--lightGray);
+      font-size: clamp(.85rem, 1.5vw, 1rem);
+      line-height: 2;
+      margin-bottom: 2.5rem;
+      max-width: 380px;
+      margin-right: auto;           /* keeps block right-aligned */
+    }
+ 
+    /* consult button uses the teal colour from the image */
+    .btn-consult {
+      font-family: iranSans_bold, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 12px 32px;
+      background: var(--DeepOceanBlue);
+      color: var(--white);
+      border: 2px solid var(--DeepOceanBlue);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background .3s, transform .3s;
+      letter-spacing: .02em;
+    }
+    .btn-consult:hover {
+      background: var(--TealFlow);
+      border-color: var(--TealFlow);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+ 
+    /* ── Card fan (left / RTL end) ── */
+    .card-fan {
+      position: relative;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    /* Each panel */
+    .fan-card {
+      position: absolute;
+      width: 110px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.55);
+      transition: transform .4s ease, box-shadow .4s ease;
+      cursor: pointer;
+      transform-origin: bottom center;
+    }
+    .fan-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+ 
+    /* perspective wrapper */
+    .fan-card { perspective: 800px; }
+ 
+    /* individual card positions / rotations / heights */
+    .fan-card:nth-child(1) {
+      height: 330px;
+      transform: translateX(-290px) rotateY(38deg);
+      z-index: 1;
+    }
+    .fan-card:nth-child(2) {
+      height: 380px;
+      transform: translateX(-185px) rotateY(24deg);
+      z-index: 2;
+    }
+    .fan-card:nth-child(3) {
+      height: 420px;
+      transform: translateX(-85px) rotateY(12deg);
+      z-index: 3;
+    }
+    /* centre card – logo overlay */
+    .fan-card:nth-child(4) {
+      height: 440px;
+      transform: translateX(10px) rotateY(0deg);
+      z-index: 10;
+      background: #111;
+    }
+    .fan-card:nth-child(5) {
+      height: 420px;
+      transform: translateX(110px) rotateY(-12deg);
+      z-index: 3;
+    }
+    .fan-card:nth-child(6) {
+      height: 380px;
+      transform: translateX(205px) rotateY(-24deg);
+      z-index: 2;
+    }
+    .fan-card:nth-child(7) {
+      height: 320px;
+      transform: translateX(295px) rotateY(-38deg);
+      z-index: 1;
+    }
+ 
+    /* hover lift */
+    .fan-card:hover {
+      z-index: 20;
+      box-shadow: 0 20px 60px rgba(0,0,0,.75);
+      transform: translateX(var(--tx)) rotateY(0deg) translateY(-18px) scale(1.04);
+    }
+    /* pass current translateX via custom property so hover works */
+    .fan-card:nth-child(1) { --tx: -290px; }
+    .fan-card:nth-child(2) { --tx: -185px; }
+    .fan-card:nth-child(3) { --tx: -85px;  }
+    .fan-card:nth-child(4) { --tx: 10px;   }
+    .fan-card:nth-child(5) { --tx: 110px;  }
+    .fan-card:nth-child(6) { --tx: 205px;  }
+    .fan-card:nth-child(7) { --tx: 295px;  }
+ 
+    /* hands wrapper on the centre card */
+    .hands-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .hand-top, .hand-bottom {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      pointer-events: none;
+    }
+    .hand-top    { top: -2px; }
+    .hand-bottom { bottom: -2px; }
+ 
+    /* logo badge */
+    .logo-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--WarmGold);
+      background: rgba(10,20,30,.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--WarmGold);
+      font-family: Georgia, serif;
+      font-style: italic;
+      box-shadow: 0 0 20px rgba(233,164,65,.3);
+    }
+ 
+    /* ── Responsive ── */
+    @media (max-width: 991px) {
+      .AnaHero { min-height: auto; padding: 3rem 0; }
+      .card-fan {
+        height: 300px;
+        margin-top: 2.5rem;
+        transform: scale(.72);
+        transform-origin: top center;
+      }
+      .hero-text { text-align: center; padding-right: 0; }
+      .hero-desc { margin-left: auto; }
+    }
+ 
+    @media (max-width: 576px) {
+      .card-fan { transform: scale(.52); }
+    }
+ 
+    /* entrance animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-text > * {
+      animation: fadeUp .7s ease both;
+    }
+    .hero-title  { animation-delay: .1s; }
+    .hero-desc   { animation-delay: .25s; }
+    .btn-consult { animation-delay: .4s; }
+ 
+    @keyframes fanIn {
+      from { opacity: 0; transform: translateX(var(--tx)) rotateY(90deg); }
+      to   { opacity: 1; }
+    }
+    .fan-card {
+      animation: fanIn .8s ease both;
+    }
+    .fan-card:nth-child(1) { animation-delay: .55s; }
+    .fan-card:nth-child(2) { animation-delay: .45s; }
+    .fan-card:nth-child(3) { animation-delay: .35s; }
+    .fan-card:nth-child(4) { animation-delay: .25s; }
+    .fan-card:nth-child(5) { animation-delay: .35s; }
+    .fan-card:nth-child(6) { animation-delay: .45s; }
+    .fan-card:nth-child(7) { animation-delay: .55s; }
+
+
 
 /* ==========================
    AnaGames
 ========================== */
 .AnaGames{
 	background: var(--white);
-	padding: 60px 5px;
+	padding-block: 60px;
 
 }
 .AnaGames-Title{

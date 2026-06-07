@@ -7,9 +7,9 @@
 </head>
 <body <?php body_class(); ?>>
     <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'ana' ); ?></a>
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header container-fluid">
         <div class="header-inner"> 
-            
+
             <div class="site-branding">
                 <a href="<?php echo esc_url(home_url('/')); ?>">
                     <?php
