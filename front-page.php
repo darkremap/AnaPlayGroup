@@ -21,7 +21,7 @@
     <div class="AnaGames-gallery">
         <div class="AnaGames-panel">
             <img src="https://picsum.photos/id/1015/800/800" alt="">
-            <span>#23</span>
+            <span>hhadhiasd du asdoiasd </span>
         </div>
 
         <div class="AnaGames-panel">

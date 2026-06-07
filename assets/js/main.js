@@ -1,32 +1,32 @@
+//    Mobile Toggle (Hamburger)
 document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNavigation = document.getElementById('main-navigation');
 
-    const toggle = document.getElementById('menu-toggle');
-    const nav = document.getElementById('main-navigation');
-
-    if(toggle){
-
-        toggle.addEventListener('click', function(){
-
-            nav.classList.toggle('active');
-
+    if (menuToggle && mainNavigation) {
+        
+        menuToggle.addEventListener('click', function () {
+            // این خط باید در کنسول مرورگر چاپ شود تا مطمئن شویم کلیک کار میکند
+            console.log('Hamburger Clicked!'); 
+            
+            this.classList.toggle('active');
+            mainNavigation.classList.toggle('active');
+            
+            // لاگ وضعیت کلاس
+            console.log('Button classes:', this.className);
         });
 
+        // بستن منو با کلیک روی لینک‌ها
+        const menuLinks = mainNavigation.querySelectorAll('a');
+        menuLinks.forEach(function(link) {
+            link.addEventListener('click', function () {
+                menuToggle.classList.remove('active');
+                mainNavigation.classList.remove('active');
+            });
+        });
+        
+    } else {
+        console.log('Error: Menu Toggle or Navigation not found!'); 
     }
-
-    window.addEventListener('scroll', function(){
-
-        const header = document.querySelector('.site-header');
-
-        if(window.scrollY > 50){
-
-            header.classList.add('scrolled');
-
-        }else{
-
-            header.classList.remove('scrolled');
-
-        }
-
-    });
-
 });
+
