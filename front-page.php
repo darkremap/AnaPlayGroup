@@ -41,7 +41,7 @@
    </div>
 
     <div class="AnaGames-gallery container-fluid">
-        <div class="AnaGames-panel">
+        <div class="AnaGames-panel active">
             <img src="https://picsum.photos/id/1015/800/800" alt="">
             <span>hhadhiasd du asdoiasd </span>
         </div>

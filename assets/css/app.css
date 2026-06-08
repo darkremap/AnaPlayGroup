@@ -519,19 +519,9 @@ a:focus, button:focus {
     transition:.3s;
 }
 
-.AnaGames-gallery:hover .AnaGames-panel{
-    flex:.5;
-}
-
-.AnaGames-gallery .AnaGames-panel:hover{
-    flex:5;
-}
-
-.AnaGames-gallery .AnaGames-panel:hover::before,
-.AnaGames-gallery .AnaGames-panel:hover span{
-    opacity:1;
-}
-
+.AnaGames-panel.active { flex: 5; }
+.AnaGames-panel.active::before { opacity: 1; }
+.AnaGames-panel.active span { opacity: 1; }
 
 /* ==========================
    Botstrap
