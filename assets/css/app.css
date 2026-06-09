@@ -17,10 +17,10 @@
   src: url(../fonts/IRANSansWeb\(FaNum\)_Bold.ttf);
 }
 .iranSans{
-    font-family: iranSans , sans-serif;
+  font-family: iranSans , sans-serif !important;
 }
 .iranSans_bold{
-    font-family: iranSans_bold , sans-serif;
+  font-family: iranSans_bold , sans-serif !important;
 }
 
 
@@ -464,6 +464,7 @@ a:focus, button:focus {
 	align-items: center;
 	gap: 10px;
 	margin-bottom: 24px;
+  padding-inline: 20px;
 }
 .AnaGames-Content{
 	display: flex;
@@ -473,56 +474,174 @@ a:focus, button:focus {
 .AnaGames-Content p{
 	margin: 0;
 	color: var(--lightGray);
+  text-align: center;
 }
 .AnaGames-gallery{
-    display:flex;
-    gap:8px;
-    width:100%;
-    height:62vh;
+  display:flex;
+  gap:8px;
+  width:100%;
+  height:62vh;
+}
+.AnaGames-gallery-content{
+  background: linear-gradient(135deg, rgb(0 0 0 / 31%), rgba(20, 20, 20, .45));
+  border-left: 4px solid #d4af37;
+  padding: 35px;
+  border-radius: 18px;
+  max-width: 700px;
 }
 
+.AnaGames-gallery-content h1{
+  color:#d4af37 !important;
+  margin-bottom:20px;
+}
+
+.AnaGames-gallery-content-item{
+  margin-bottom:15px;
+}
+
+.AnaGames-gallery-content-item h5{
+  color:#fff;
+  margin-bottom:6px;
+}
+
+.AnaGames-gallery-content-item p{
+  color:#d5d5d5;
+}
 .AnaGames-panel{
-    position:relative;
-    flex:1;
-    overflow:hidden;
-    cursor:pointer;
-    transition:flex 1s ease-in-out;
+  position:relative;
+  flex:1;
+  overflow:hidden;
+  cursor:pointer;
+  transition:flex 1s ease-in-out;
 }
 
 .AnaGames-panel img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
 .AnaGames-panel::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        to top,
-        rgba(0,0,0,.45),
-        transparent
-    );
-    opacity:0;
-    transition:.3s;
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+      to top,
+      rgba(0,0,0,.45),
+      transparent
+  );
+  opacity:0;
+  transition:.3s;
 }
 
 .AnaGames-panel span{
-    position:absolute;
-    right:20px;
-    bottom:20px;
-    color:#fff;
-    font-size:14px;
-    opacity:0;
-    transition:.3s;
+  position:absolute;
+  right:80px;
+  top:120px;
+  color:#fff;
+  font-size:14px;
+  opacity:0;
+  transition:.3s;
 }
 
 .AnaGames-panel.active { flex: 5; }
 .AnaGames-panel.active::before { opacity: 1; }
 .AnaGames-panel.active span { opacity: 1; }
 
+@media (max-width: 768px) {
+  .AnaGames-gallery {
+    flex-direction: column;
+    height: auto;
+  }
+  .AnaGames-panel {
+    flex: none;        /* flex رو کاملاً غیرفعال کن */
+    width: 100%;
+    height: 80px;      /* حالت بسته */
+    transition: height .9s cubic-bezier(.4,0,.2,1);  /* فقط height انیمیشن داره */
+  }
+  .AnaGames-panel.active {
+    flex: none;
+    height: 320px;     /* حالت باز */
+  }
+  .AnaGames-panel span {
+    right: 10px;
+    top: 20px;
+  }
+  .AnaGames-gallery-content {
+    margin-inline: 10px;
+  }
+  .AnaGames-gallery-content h1{
+    margin-bottom:12px;
+  }
+  .AnaGames-gallery-content-item p {
+    margin-bottom: 0;
+    font-size: 10px;
+  }
+  .AnaGames-gallery-content-item {
+    margin-bottom: 5px;
+  }
+  .AnaGames-gallery-content-item h5 {
+    font-size: 12px !important;
+  }
+}
+/* ==========================
+   AnaPoint
+========================== */
+.AnaPoint{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:32px;
+  direction:rtl;
+  padding-block: 60px;
+}
+
+/* کارت‌ها */
+.AnaPoint-Card{
+  background: var(--white);
+  border: 1px solid rgba(10,63,90,.08);
+  border-radius:18px;
+  padding:40px;
+  display:flex;
+  flex-direction:column;
+  min-height:260px;
+  transition: all .35s ease;
+  box-shadow: 0 4px 18px rgba(10,63,90,.05);
+}
+
+/* hover */
+.AnaPoint-Card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(10,63,90,.12);
+  border-color: rgba(31,166,166,.25);
+}
+
+/* آیکون */
+.AnaPoint-Icon{
+  display:flex;
+  justify-content:flex-end;
+  font-size:42px;
+  color: var(--TealFlow);
+  margin-bottom:28px;
+}
+
+/* عنوان */
+.AnaPoint-Card h3{
+  margin:0 0 20px;
+  font-size:40px;
+  color: var(--DeepOceanBlue);
+  font-weight:800;
+  text-align:right;
+}
+
+/* متن */
+.AnaPoint-Card p{
+  margin-top:auto;
+  font-size:20px;
+  line-height:2;
+  color: var(--lightGray);
+  text-align:right;
+}
 /* ==========================
    Botstrap
 ========================== */

@@ -30,12 +30,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// AnaGames Section Fore Drower Hover 
+// AnaGames Section Fore Drower Hover
 const panels = document.querySelectorAll('.AnaGames-panel');
 panels.forEach(panel => {
-  panel.addEventListener('mouseenter', () => {
-    panels.forEach(p => p.classList.remove('active'));
-    panel.classList.add('active');
+  ['mouseenter', 'click'].forEach(evt => {
+    panel.addEventListener(evt, () => {
+      panels.forEach(p => p.classList.remove('active'));
+      panel.classList.add('active');
+    });
   });
 });
 
