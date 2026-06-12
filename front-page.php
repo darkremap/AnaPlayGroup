@@ -16,7 +16,7 @@
  
       <!-- ── Left column: hero image ── -->
       <div class="col-12 col-lg-7 order-lg-2 AnaHero-img-col">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="Meyar">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
       </div>
  
     </div><!-- /row -->

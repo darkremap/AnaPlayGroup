@@ -706,6 +706,160 @@ a:focus, button:focus {
   }
 }
 /* ==========================
+   AnaChart
+========================== */
+
+/* کارت */
+.AnaChart-card {
+    background: var(--AnaChart-card-bg);
+    border: 1px solid var(--AnaChart-card-border);
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(10,63,90,0.05);
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.AnaChart-card:hover {
+    box-shadow: 0 8px 36px rgba(10,63,90,0.1);
+    transform: translateY(-2px);
+}
+
+/* حلقه SVG */
+.AnaChart-progressRing { transform: rotate(-90deg); }
+.AnaChart-ringBg { stroke: #EDEAE3; }
+.AnaChart-ringFg { transition: stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1); }
+
+/* ===== انیمیشن ورود ===== */
+@keyframes AnaChart-fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* پیش‌فرض: مخفی تا JS لود شود */
+.AnaChart-animIn { opacity: 0; transition: opacity 0.6s ease; }
+
+/* وقتی JS کنترل را گرفت، انیمیشن اجرا شود */
+.AnaChart-loaded .AnaChart-animIn { 
+    animation: AnaChart-fadeUp 0.6s ease both;
+}
+.AnaChart-loaded .AnaChart-d1{animation-delay:.08s}
+.AnaChart-loaded .AnaChart-d2{animation-delay:.16s}
+.AnaChart-loaded .AnaChart-d3{animation-delay:.24s}
+.AnaChart-loaded .AnaChart-d4{animation-delay:.32s}
+.AnaChart-loaded .AnaChart-d5{animation-delay:.4s}
+.AnaChart-loaded .AnaChart-d6{animation-delay:.48s}
+.AnaChart-loaded .AnaChart-d7{animation-delay:.56s}
+.AnaChart-loaded .AnaChart-d8{animation-delay:.64s}
+
+/* نسخه پشتیبان: اگر JS خطا داد، بعد از ۳ ثانیه المان‌ها ظاهر شوند */
+.AnaChart-animIn:nth-child(1) { transition-delay: 0.3s; }
+.AnaChart-animIn:nth-child(2) { transition-delay: 0.5s; }
+.AnaChart-animIn:nth-child(3) { transition-delay: 0.7s; }
+
+/* متن گرادیان */
+.AnaChart-gradText {
+    background: linear-gradient(135deg, var(--DeepOceanBlue), var(--TealFlow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* خط تزئینی */
+.AnaChart-decoLine {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--TealFlow), var(--WarmGold), transparent);
+    border-radius: 2px;
+}
+
+/* نبض درخشش */
+@keyframes AnaChart-pulseGlow {
+    0%,100% { box-shadow: 0 2px 16px rgba(31,166,166,0.1), 0 0 0 0 rgba(31,166,166,0); }
+    50% { box-shadow: 0 2px 16px rgba(31,166,166,0.1), 0 0 30px rgba(31,166,166,0.12); }
+}
+.AnaChart-pulseGlow { animation: AnaChart-pulseGlow 3.5s ease-in-out infinite; }
+
+/* نوار افقی */
+.AnaChart-hbarTrack { background: #EDEAE3; border-radius: 6px; height: 10px; overflow: hidden; }
+.AnaChart-hbarFill { height: 100%; border-radius: 6px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); width: 0; }
+
+/* نشان سطح */
+.AnaChart-levelBadge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* کارت توصیه */
+.AnaChart-recCard { border-right: 4px solid; padding-right: 16px; }
+
+/* برند AnaChart */
+.AnaChart-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(10,63,90,0.06), rgba(31,166,166,0.06));
+    border: 1px solid rgba(10,63,90,0.08);
+}
+
+/* اسکرول‌بار */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--white); }
+::-webkit-scrollbar-thumb { background: #D5D0C8; border-radius: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .AnaChart-animIn, .AnaChart-pulseGlow, .AnaChart-ringFg, .AnaChart-hbarFill {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+    }
+}
+
+/* نوار بالای صفحه */
+.AnaChart-topAccent {
+    height: 4px;
+    background: linear-gradient(90deg, var(--DeepOceanBlue), var(--TealFlow), var(--WarmGold));
+}
+
+/* ===== استایل‌های اختصاصی تحلیل رفتاری ===== */
+.AnaChart-spectrumTrack { 
+    background: #EDEAE3; 
+    height: 6px; 
+    border-radius: 3px; 
+    position: relative; 
+    width: 100%; 
+}
+.AnaChart-spectrumFill { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    border-radius: 3px; 
+    background: linear-gradient(90deg, var(--TealFlow), var(--WarmGold)); 
+    transition: width 1.5s cubic-bezier(0.4,0,0.2,1); 
+    width: 0; /* پیش‌فرض برای انیمیشن */
+}
+.AnaChart-spectrumDot { 
+    width: 18px; 
+    height: 18px; 
+    background: var(--DeepOceanBlue); 
+    border: 3px solid var(--AnaChart-card-bg, #FFFFFF); 
+    border-radius: 50%; 
+    position: absolute; 
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    box-shadow: 0 2px 8px rgba(10,63,90,0.2); 
+    transition: left 1.5s cubic-bezier(0.4,0,0.2,1); 
+    left: 0; /* پیش‌فرض برای انیمیشن */
+}
+.AnaChart-spectrumLabel { 
+    font-size: 10px; 
+    color: var(--lightGray); 
+}
+
+
+/* ==========================
    Botstrap
 ========================== */
 
