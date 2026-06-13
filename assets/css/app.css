@@ -996,6 +996,150 @@ a:focus, button:focus {
     margin-bottom: 16px;
   }
 }
+
+/* ==========================
+  AnaAboutUs
+========================== */
+.AnaAboutUs {
+  margin-bottom: 100px;
+}
+
+/* ── Title block ── */
+.AnaGames-Title {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+/* ── Body layout: cube left, two cards right ── */
+.AnaAboutUs-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+/* Cube occupies rows 1–2 in column 1 (right column in RTL visual = col 1 in grid) */
+.AnaAboutUs-cube {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  height: 480px;
+}
+
+.AnaAboutUs-cube img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 12px 36px rgba(10,63,90,0.18));
+}
+
+/* Cards in column 2 */
+.AnaAboutUs-cards {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Card ── */
+.AnaAboutUs-card {
+  background: linear-gradient(135deg, #ffffff 0%, #eef4f7 100%);
+  border: 1px solid rgba(10,63,90,0.1);
+  border-radius: 14px;
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.AnaAboutUs-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--TealFlow), var(--DeepOceanBlue));
+  border-radius: 0 14px 14px 0;
+}
+
+.AnaAboutUs-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(10,63,90,0.13);
+}
+
+.AnaAboutUs-card h3 {
+  font-family: iranSans_bold, sans-serif;
+  font-size: 17px;
+  color: var(--DeepOceanBlue);
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.AnaAboutUs-card p {
+  font-family: iranSans, sans-serif;
+  font-size: 13.5px;
+  line-height: 2;
+  color: #3a4a55;
+  text-align: right;
+}
+
+/* ── Bottom row: two equal cards side by side ── */
+.AnaAboutUs-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.AnaAboutUs-bottom .AnaAboutUs-card::before {
+  background: linear-gradient(180deg, var(--WarmGold), var(--TealFlow));
+}
+
+/* ── Fade-up animation ── */
+.AnaStep-fadeUp {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: fadeUp 0.65s ease forwards;
+}
+.AnaStep-d1 { animation-delay: 0.1s; }
+.AnaStep-d2 { animation-delay: 0.2s; }
+.AnaStep-d3 { animation-delay: 0.32s; }
+.AnaStep-d4 { animation-delay: 0.44s; }
+.AnaStep-d5 { animation-delay: 0.56s; margin-left: 20px; }
+.AnaStep-d6 { animation-delay: 0.68s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .AnaAboutUs-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .AnaAboutUs-cube  { grid-column: 1; grid-row: 1; }
+  .AnaAboutUs-cards { grid-column: 1; grid-row: 2; }
+  .AnaAboutUs-bottom { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  h1 { font-size: 22px !important; }
+  .AnaAboutUs { padding: 40px 20px 56px; }
+  .AnaAboutUs-card { padding: 18px 20px; }
+  .AnaAboutUs-cube {
+    height: 340px;
+  }
+  .AnaAboutUs-bottom {
+    gap: 20px;
+  }
+  .AnaStep-d5 {
+    margin-left: 0;
+  }
+}
+
 /* ==========================
   Botstrap
 ========================== */
