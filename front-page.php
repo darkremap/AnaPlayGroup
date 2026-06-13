@@ -274,7 +274,10 @@
             <p class="iranSans">ما اینجا هستیم تا در مسیر رسیدن به اهدافتان همراه شما باشیم. اگر پروژه خاصی در نظر دارید یا برای چالش‌های خود به راهنمایی تخصصی نیاز دارید، تیم ما آماده است تا بینش‌های کاربردی مورد نیازتان را ارائه دهد.</p>
         </div>
     </div>
-
+    <a href="#" class="btn-consult Anabtn">درخواست مشاوره</a>
+    <div class="container AnaConsultation-image">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Consultation.png" alt="AnaPlayGroup">
+    </div>
 </section>
 
 <?php get_footer(); ?>

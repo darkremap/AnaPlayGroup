@@ -972,13 +972,30 @@ a:focus, button:focus {
   AnaConsultation
 ========================== */
 .AnaConsultation{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
 }
 .AnaConsultation p{
   padding-inline: 100px;
   line-height: 30px;
 }
-
-
+.AnaConsultation-image{
+  width: 100%;
+}
+.AnaConsultation-image img{
+  width: 100%;
+}
+@media (max-width: 680px){
+  .AnaConsultation p{
+    padding-inline: 0;
+    line-height: 30px;
+  }
+  .AnaConsultation .AnaGames-Title{
+    margin-bottom: 16px;
+  }
+}
 /* ==========================
   Botstrap
 ========================== */
