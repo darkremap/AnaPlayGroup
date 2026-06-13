@@ -25,13 +25,16 @@
 .iranSans_bold{
   font-family: iranSans_bold , sans-serif !important;
 }
-
-
 h1{
 	color: var(--DeepOceanBlue) !important;
 	font-size: 28px !important;
 	font-family: iranSans_bold , sans-serif !important;
   margin: 0;
+}
+@media (max-width: 680px){
+  h1{
+    font-size: 22px !important;
+  }
 }
 /* ==========================
    buttom
@@ -714,10 +717,6 @@ a:focus, button:focus {
 .AnaPoint-Card:nth-child(4) { transition-delay: 0.45s; }
 
 /* ==========================
-   AnaChart
-========================== */
-
-/* ==========================
    AnaStep
 ========================== */
 .AnaStep{
@@ -944,11 +943,35 @@ a:focus, button:focus {
     opacity: .95;
   }
 }
+
 /* ==========================
-   AnaConsultation
+  AnaHomeChart
+========================== */
+.AnaHomeChart{
+  margin-block: 100px 0;
+}
+.AnaHomeChart-image{
+  width: 100%;
+  margin-top: -150px;
+}
+.AnaHomeChart-image img{
+  width: 100%;
+}
+
+@media (max-width: 680px){
+  .AnaHomeChart{
+    margin-block: 100px;
+  }
+  .AnaHomeChart-image{
+    width: 100%;
+    margin-top: -60px;
+  }
+}
+
+/* ==========================
+  AnaConsultation
 ========================== */
 .AnaConsultation{
-  margin-block: 100px;
 }
 .AnaConsultation p{
   padding-inline: 100px;
@@ -957,7 +980,7 @@ a:focus, button:focus {
 
 
 /* ==========================
-   Botstrap
+  Botstrap
 ========================== */
 
 /* ============================================================

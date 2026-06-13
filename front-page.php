@@ -243,6 +243,22 @@
         </ol>
     </div>
 </section>
+<section class="container AnaHomeChart">
+    <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
+        <h1 id="AnaStep-title" class="iranSans_bold">دست آورد شما بعد از انجام بازی</h1>
+        <div class="AnaTitleBoarder">
+        <span class="divider-dot"></span>
+        <span class="divider-line"></span>
+        <span class="divider-diamond"></span>
+        <span class="divider-line"></span>
+        <span class="divider-dot"></span>
+        </div>
+    </div>
+    <div class="AnaHomeChart-image">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/chart.png" alt="AnaPlayGroup">
+    </div>
+</section>
+
 <section class="AnaConsultation">
     <!-- ── Your existing title markup (unchanged) ── -->
     <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
