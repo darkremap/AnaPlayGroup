@@ -1,4 +1,4 @@
-/* ANA theme responsive header styles */
+﻿/* ANA theme responsive header styles */
  body{
   direction: rtl;
   background-color: var(--white);
@@ -31,6 +31,7 @@ h1{
 	color: var(--DeepOceanBlue) !important;
 	font-size: 28px !important;
 	font-family: iranSans_bold , sans-serif !important;
+  margin: 0;
 }
 /* ==========================
    buttom
@@ -473,13 +474,14 @@ a:focus, button:focus {
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-	margin-bottom: 24px;
+	margin-bottom: 46px;
   padding-inline: 20px;
 }
 .AnaGames-Content{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+  gap: 12px;
 }
 .AnaGames-Content p{
 	margin: 0;
@@ -613,9 +615,6 @@ a:focus, button:focus {
 /* ==========================
    AnaPoint
 ========================== */
-/* ==========================
-   AnaPoint GRID (Responsive)
-========================== */
 
 .AnaPoint{
   display: grid;
@@ -643,10 +642,6 @@ a:focus, button:focus {
   }
 }
 
-/* ==========================
-   Card Style
-========================== */
-
 .AnaPoint-Card{
   background: var(--white);
   border: 1px solid rgba(10,63,90,.08);
@@ -664,10 +659,6 @@ a:focus, button:focus {
   box-shadow: 0 20px 50px rgba(10,63,90,.12);
   border-color: rgba(31,166,166,.25);
 }
-
-/* ==========================
-   Icon + Title
-========================== */
 
 .AnaPoint-Icon{
   display: flex;
@@ -705,157 +696,263 @@ a:focus, button:focus {
     font-size: 14px;
   }
 }
+.AnaPoint-Card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.AnaPoint-Card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* کارت‌ها با تأخیر پشت سر هم ظاهر می‌شن */
+.AnaPoint-Card:nth-child(1) { transition-delay: 0s;    }
+.AnaPoint-Card:nth-child(2) { transition-delay: 0.15s; }
+.AnaPoint-Card:nth-child(3) { transition-delay: 0.30s; }
+.AnaPoint-Card:nth-child(4) { transition-delay: 0.45s; }
+
 /* ==========================
    AnaChart
 ========================== */
 
-/* کارت */
-.AnaChart-card {
-    background: var(--AnaChart-card-bg);
-    border: 1px solid var(--AnaChart-card-border);
-    border-radius: 18px;
-    box-shadow: 0 2px 16px rgba(10,63,90,0.05);
-    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-.AnaChart-card:hover {
-    box-shadow: 0 8px 36px rgba(10,63,90,0.1);
-    transform: translateY(-2px);
+/* ==========================
+   AnaStep
+========================== */
+.AnaStep{
+
 }
 
-/* حلقه SVG */
-.AnaChart-progressRing { transform: rotate(-90deg); }
-.AnaChart-ringBg { stroke: #EDEAE3; }
-.AnaChart-ringFg { transition: stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1); }
-
-/* ===== انیمیشن ورود ===== */
-@keyframes AnaChart-fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
-    to { opacity: 1; transform: translateY(0); }
+.AnaStep-pathWrap{
+  position: relative;
 }
 
-/* پیش‌فرض: مخفی تا JS لود شود */
-.AnaChart-animIn { opacity: 0; transition: opacity 0.6s ease; }
-
-/* وقتی JS کنترل را گرفت، انیمیشن اجرا شود */
-.AnaChart-loaded .AnaChart-animIn { 
-    animation: AnaChart-fadeUp 0.6s ease both;
-}
-.AnaChart-loaded .AnaChart-d1{animation-delay:.08s}
-.AnaChart-loaded .AnaChart-d2{animation-delay:.16s}
-.AnaChart-loaded .AnaChart-d3{animation-delay:.24s}
-.AnaChart-loaded .AnaChart-d4{animation-delay:.32s}
-.AnaChart-loaded .AnaChart-d5{animation-delay:.4s}
-.AnaChart-loaded .AnaChart-d6{animation-delay:.48s}
-.AnaChart-loaded .AnaChart-d7{animation-delay:.56s}
-.AnaChart-loaded .AnaChart-d8{animation-delay:.64s}
-
-/* نسخه پشتیبان: اگر JS خطا داد، بعد از ۳ ثانیه المان‌ها ظاهر شوند */
-.AnaChart-animIn:nth-child(1) { transition-delay: 0.3s; }
-.AnaChart-animIn:nth-child(2) { transition-delay: 0.5s; }
-.AnaChart-animIn:nth-child(3) { transition-delay: 0.7s; }
-
-/* متن گرادیان */
-.AnaChart-gradText {
-    background: linear-gradient(135deg, var(--DeepOceanBlue), var(--TealFlow));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.AnaStep-list{
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* خط تزئینی */
-.AnaChart-decoLine {
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--TealFlow), var(--WarmGold), transparent);
-    border-radius: 2px;
+.AnaStep-item{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 28px;
+  text-align: center;
 }
 
-/* نبض درخشش */
-@keyframes AnaChart-pulseGlow {
-    0%,100% { box-shadow: 0 2px 16px rgba(31,166,166,0.1), 0 0 0 0 rgba(31,166,166,0); }
-    50% { box-shadow: 0 2px 16px rgba(31,166,166,0.1), 0 0 30px rgba(31,166,166,0.12); }
-}
-.AnaChart-pulseGlow { animation: AnaChart-pulseGlow 3.5s ease-in-out infinite; }
-
-/* نوار افقی */
-.AnaChart-hbarTrack { background: #EDEAE3; border-radius: 6px; height: 10px; overflow: hidden; }
-.AnaChart-hbarFill { height: 100%; border-radius: 6px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); width: 0; }
-
-/* نشان سطح */
-.AnaChart-levelBadge {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
+.AnaStep-item1,
+.AnaStep-item3{
+  padding-top: 0;
 }
 
-/* کارت توصیه */
-.AnaChart-recCard { border-right: 4px solid; padding-right: 16px; }
-
-/* برند AnaChart */
-.AnaChart-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(10,63,90,0.06), rgba(31,166,166,0.06));
-    border: 1px solid rgba(10,63,90,0.08);
+.AnaStep-item2,
+.AnaStep-item4{
+  padding-top: 0;
 }
 
-/* اسکرول‌بار */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--white); }
-::-webkit-scrollbar-thumb { background: #D5D0C8; border-radius: 3px; }
-
-@media (prefers-reduced-motion: reduce) {
-    .AnaChart-animIn, .AnaChart-pulseGlow, .AnaChart-ringFg, .AnaChart-hbarFill {
-        animation: none !important;
-        transition: none !important;
-        opacity: 1 !important;
-    }
+.AnaStep-coin{
+  position: relative;
+  z-index: 2;
+  display: inline-grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  color: #050505;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  background:
+    radial-gradient(circle at 38% 35%, #fff0a5 0 17%, #edc85c 38%, #b7781e 68%, #f0ce69 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.28),
+    inset 0 0 0 7px rgba(126,70,10,.15),
+    0 4px 10px rgba(95,54,9,.18);
 }
 
-/* نوار بالای صفحه */
-.AnaChart-topAccent {
-    height: 4px;
-    background: linear-gradient(90deg, var(--DeepOceanBlue), var(--TealFlow), var(--WarmGold));
+.AnaStep-coin::before{
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px dotted rgba(196,134,39,.78);
 }
 
-/* ===== استایل‌های اختصاصی تحلیل رفتاری ===== */
-.AnaChart-spectrumTrack { 
-    background: #EDEAE3; 
-    height: 6px; 
-    border-radius: 3px; 
-    position: relative; 
-    width: 100%; 
+.AnaStep-label{
+  color: var(--DeepOceanBlue);
+  font-size: 18px;
 }
-.AnaChart-spectrumFill { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    height: 100%; 
-    border-radius: 3px; 
-    background: linear-gradient(90deg, var(--TealFlow), var(--WarmGold)); 
-    transition: width 1.5s cubic-bezier(0.4,0,0.2,1); 
-    width: 0; /* پیش‌فرض برای انیمیشن */
+
+@media (max-width: 992px){
+  .AnaStep{
+    padding-inline: 18px;
+  }
+  .AnaStep-pathWrap{
+    min-height: 220px;
+  }
+  .AnaStep-path{
+    height: 142px;
+  }
+  .AnaStep-item{
+    gap: 82px;
+  }
+  .AnaStep-coin{
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+  .AnaStep-label{
+    max-width: 210px;
+    white-space: normal;
+  }
 }
-.AnaChart-spectrumDot { 
-    width: 18px; 
-    height: 18px; 
-    background: var(--DeepOceanBlue); 
-    border: 3px solid var(--AnaChart-card-bg, #FFFFFF); 
-    border-radius: 50%; 
-    position: absolute; 
-    top: 50%; 
-    transform: translate(-50%, -50%); 
-    box-shadow: 0 2px 8px rgba(10,63,90,0.2); 
-    transition: left 1.5s cubic-bezier(0.4,0,0.2,1); 
-    left: 0; /* پیش‌فرض برای انیمیشن */
+
+@media (max-width: 680px){
+  .AnaStep{
+    padding-block: 44px 0;
+  }
+  .AnaStep .AnaGames-Title{
+    margin-bottom: 24px;
+  }
+  .AnaStep-pathWrap{
+    width: min(390px, 100%);
+    min-height: auto;
+    margin-top: 22px;
+  }
+  .AnaStep-path{
+    display: none;
+  }
+  .AnaStep-list{
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    min-height: 0;
+    padding-right: 95px !important;
+  }
+  .AnaStep-item{
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 18px;
+    min-height: 64px;
+    padding: 0;
+    text-align: right;
+  }
+  .AnaStep-item::after{
+    content: "";
+    position: absolute;
+    top: 64px;
+    right: 28px;
+    width: 4px;
+    height: 22px;
+    border-right: 4px dotted var(--DeepOceanBlue);
+    opacity: .95;
+  }
+  .AnaStep-item:last-child::after{
+    display: none;
+  }
+  .AnaStep-coin{
+    flex: 0 0 auto;
+    width: 54px;
+    height: 54px;
+  }
+  .AnaStep-label{
+    width: auto;
+    max-width: calc(100% - 76px);
+    font-size: 16px;
+    text-align: right;
+    white-space: normal;
+  }
 }
-.AnaChart-spectrumLabel { 
-    font-size: 10px; 
-    color: var(--lightGray); 
+/* ====== خط نقطه چین متحرک دسکتاپ ====== */
+.AnaStep-item {
+  position: relative;
+}
+
+.AnaStep-item::after {
+  content: "";
+  position: absolute;
+  top: 27px; /* وسط قرار گرفتن نسبت به ارتفاع 58px سکه */
+  left: -150px;
+  width: 100%;
+  height: 4px; /* ضخامت خط */
+  z-index: 1; /* قرار گرفتن زیر سکه (که z-index:2 دارد) */
+  background-image: radial-gradient(circle, var(--DeepOceanBlue) 2px, transparent 2px);
+  background-size: 16px 4px; /* فاصله بین نقاط */
+  background-repeat: repeat-x;
+  background-position: 0 0;
+  animation: moveDotsRTL 1s linear infinite;
+}
+
+/* مخفی کردن خط برای آخرین آیتم */
+.AnaStep-item:last-child::after {
+  display: none;
+}
+
+/* انیمیشن حرکت نقطه‌چین از راست به چپ */
+@keyframes moveDotsRTL {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -16px 0; /* به اندازه background-size به چپ حرکت می‌کند */
+  }
+}
+
+/* ====== تنظیمات تبلت (992px) ====== */
+@media (max-width: 992px){
+  .AnaStep-item::after {
+    top: 23px; /* تنظیم مجدد وسط برای سکه‌های 50px */
+  }
+}
+
+/* ====== انیمیشن حرکت نقطه‌چین از بالا به پایین (برای موبایل) ====== */
+@keyframes moveDotsDown {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 16px; /* به اندازه ارتفاع بک‌گراند به سمت پایین حرکت می‌کند */
+  }
+}
+
+/* ====== تنظیمات موبایل (680px) ====== */
+@media (max-width: 680px){
+  .AnaStep-item::after {
+    /* تنظیم ابعاد و موقعیت خط عمودی */
+    width: 4px;
+    height: 50px;
+    top: 64px;
+    left: auto;
+    right: 28px;
+    
+    /* ساخت نقطه‌چین متحرک عمودی با پس‌زمینه */
+    background-image: radial-gradient(circle, var(--DeepOceanBlue) 2px, transparent 2px);
+    background-size: 4px 16px; /* عرض 4px و ارتفاع 16px برای فاصله‌اندازی نقاط */
+    background-repeat: repeat-y;
+    background-position: 0 0;
+    animation: moveDotsDown 1s linear infinite;
+    
+    /* حذف خط ثابت قبلی */
+    border-right: none;
+    opacity: .95;
+  }
+}
+/* ==========================
+   AnaConsultation
+========================== */
+.AnaConsultation{
+  margin-block: 100px;
+}
+.AnaConsultation p{
+  padding-inline: 100px;
+  line-height: 30px;
 }
 
 

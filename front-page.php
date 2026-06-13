@@ -1,9 +1,9 @@
-<?php get_header(); ?>
+﻿<?php get_header(); ?>
 <!-- ══ HERO ══ -->
 <section class="AnaHero">
   <div>
     <div class="row AnaHero-items">
- 
+
       <!-- ── Right column: text ── -->
       <div class="px-5 col-12 col-lg-5 hero-text order-lg-1">
         <h2 class="hero-title iranSans_bold">بازی راهی برای شناخت</h2>
@@ -13,12 +13,12 @@
         </p>
         <a href="#" class="btn-consult Anabtn">درخواست مشاوره</a>
       </div>
- 
+
       <!-- ── Left column: hero image ── -->
       <div class="col-12 col-lg-7 order-lg-2 AnaHero-img-col">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
       </div>
- 
+
     </div><!-- /row -->
   </div><!-- /container -->
 </section>
@@ -158,6 +158,7 @@
     </div>
 </section>
 
+
 <section class="AnaPoint container-fluid">
     <div class="AnaPoint-Card">
         <div class="AnaPoint-Icon">
@@ -169,7 +170,7 @@
         <p class="iranSans">پی‌ریزی آینده و شکوفایی پتانسیل‌ها از مسیر آزادی در تجربه و رشد درونی</p>
     </div>
     <div class="AnaPoint-Card">
-        <div class="AnaPoint-Icon"> 
+        <div class="AnaPoint-Icon">
             <svg width="25" height="20" viewBox="0 0 31 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.10452 13.0506L0.00477522 13.0518L0.00357649 9.79169L3.10332 9.79055C5.24214 9.78976 7.35018 10.3595 9.3034 11.4183C13.1773 9.29783 17.8269 9.29612 21.7024 11.4138C23.6548 10.3535 25.7779 9.78221 27.9013 9.78143L31.001 9.78029L31.0022 13.0404L27.9025 13.0415C25.7481 13.0423 23.5941 13.8092 21.7038 15.2118C17.9211 12.4258 13.0855 12.4275 9.3048 15.2163C7.41344 13.8152 5.25884 13.0498 3.10452 13.0506ZM3.10811 22.8309L0.00837141 22.8321L0.00717268 19.572L3.10692 19.5708C5.24574 19.57 7.35377 20.1398 9.307 21.1986C13.1809 19.0781 17.8305 19.0764 21.706 21.194C23.6584 20.1338 25.7815 19.5625 27.9049 19.5617L31.0046 19.5606L31.0058 22.8207L27.9061 22.8218C25.7517 22.8226 23.5977 23.5895 21.7074 24.992C17.9247 22.206 13.0891 22.2078 9.30839 24.9966C7.41704 23.5955 5.26244 22.8301 3.10811 22.8309ZM3.10092 3.27036L0.00117903 3.2715L-1.96951e-05 0.0114106L3.09972 0.0102709C5.23855 0.00948441 7.34658 0.579226 9.29981 1.63804C13.1737 -0.482447 17.8233 -0.484157 21.6988 1.63348C23.6512 0.573231 25.7743 0.00193344 27.8977 0.0011527L30.9974 1.29335e-05L30.9986 3.2601L27.8989 3.26124C25.7445 3.26203 23.5905 4.02895 21.7002 5.43148C17.9175 2.6455 13.0819 2.64728 9.3012 5.43604C7.40984 4.0349 5.25524 3.26957 3.10092 3.27036Z" fill="#0A3F5A"/>
             </svg>
@@ -203,6 +204,61 @@
         </div>
         <p class="iranSans">تبدیل بازی به زبانی برای کشف و پیوندی میان کنجکاوی و خرد در مسیرِ خودشناسی.</p>
     </div>
+</section>
+
+
+<section class="AnaStep">
+    <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
+        <h1 id="AnaStep-title" class="iranSans_bold">مسیر تجربه بازی</h1>
+        <div class="AnaTitleBoarder">
+        <span class="divider-dot"></span>
+        <span class="divider-line"></span>
+        <span class="divider-diamond"></span>
+        <span class="divider-line"></span>
+        <span class="divider-dot"></span>
+        </div>
+        <div class="AnaGames-Content">
+            <p class="iranSans">از ورود به بازی تا دریافت کارنامه نهایی، شرکت‌کنندگان از طریق تعامل و بازخورد، الگوهای رفتاری خود را کشف می‌کنند.</p>
+        </div>
+    </div>
+
+    <div class="AnaStep-pathWrap" aria-label="مراحل تجربه بازی">
+        <ol class="AnaStep-list container iranSans">
+            <li class="AnaStep-item AnaStep-item1">
+                <span class="AnaStep-coin">1</span>
+                <span class="AnaStep-label">انجام بازی</span>
+            </li>
+            <li class="AnaStep-item AnaStep-item2">
+                <span class="AnaStep-coin">2</span>
+                <span class="AnaStep-label">بازخورد مشارکتی</span>
+            </li>
+            <li class="AnaStep-item AnaStep-item3">
+                <span class="AnaStep-coin">3</span>
+                <span class="AnaStep-label">کشف نتایج شگفت انگیز</span>
+            </li>
+            <li class="AnaStep-item AnaStep-item4">
+                <span class="AnaStep-coin">4</span>
+                <span class="AnaStep-label">دریافت کارنامه</span>
+            </li>
+        </ol>
+    </div>
+</section>
+<section class="AnaConsultation">
+    <!-- ── Your existing title markup (unchanged) ── -->
+    <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
+        <h1 class="iranSans_bold">درخواست مشاوره و راهنمایی</h1>
+        <div class="AnaTitleBoarder">
+        <span class="divider-dot"></span>
+        <span class="divider-line"></span>
+        <span class="divider-diamond"></span>
+        <span class="divider-line"></span>
+        <span class="divider-dot"></span>
+        </div>
+        <div class="container px-5 AnaGames-Content">
+            <p class="iranSans">ما اینجا هستیم تا در مسیر رسیدن به اهدافتان همراه شما باشیم. اگر پروژه خاصی در نظر دارید یا برای چالش‌های خود به راهنمایی تخصصی نیاز دارید، تیم ما آماده است تا بینش‌های کاربردی مورد نیازتان را ارائه دهد.</p>
+        </div>
+    </div>
+
 </section>
 
 <?php get_footer(); ?>
