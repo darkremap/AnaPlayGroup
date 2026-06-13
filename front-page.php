@@ -159,7 +159,7 @@
 </section>
 
 
-<section class="AnaPoint container-fluid">
+<section class="AnaPoint container">
     <div class="AnaPoint-Card">
         <div class="AnaPoint-Icon">
             <svg width="25" height="20" viewBox="0 0 33 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -279,5 +279,57 @@
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Consultation.png" alt="AnaPlayGroup">
     </div>
 </section>
+
+<section class="container AnaAboutUs">
+    <!-- Title -->
+    <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
+        <h1 class="iranSans_bold">درباره ما</h1>
+        <div class="AnaTitleBoarder">
+            <span class="divider-dot"></span>
+            <span class="divider-line"></span>
+            <span class="divider-diamond"></span>
+            <span class="divider-line"></span>
+            <span class="divider-dot"></span>
+        </div>
+    </div>
+    <!-- Top row: cube + two stacked cards -->
+    <div class="AnaAboutUs-body">
+        <!-- Rubik cube image (right side in RTL) -->
+        <div class="AnaAboutUs-cube AnaStep-fadeUp AnaStep-d2">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/aboutus.png" alt="AnaPlayGroup">
+        </div>
+        <!-- Two cards stacked on the left -->
+        <div class="AnaAboutUs-cards">
+            <div class="AnaAboutUs-card AnaStep-fadeUp AnaStep-d3">
+                <h3>سفری به اعماق خویشتن</h3>
+                <p>
+                در دنیای پرشتاب امروز، بازی‌های ما فضایی امن برای رویه‌رو شدن با لایه‌های پنهان وجود، «سایه‌ها» و الگوهای ناخودآگاه فراهم می‌کنند. این تجربه‌ها فقط سرگرمی نیستند؛ سفری برای خودشناسی، افزایش آگاهی و کشف حقیقت درون‌اند. در این مسیر شما نه فقط با یک بازی، بلکه با بازتابی از خویشتن واقعی خود روبه‌رو می‌شوید.
+                </p>
+            </div>
+            <div class="AnaAboutUs-card AnaStep-fadeUp AnaStep-d4">
+                <h3>پل زدن میان انسان‌ها</h3>
+                <p>
+                در مجموعه ما، ما باور داریم ارتباط مؤثر زمانی شکل می‌گیرد که انسان‌ها در فضایی امن و مشترک، یکدیگر را عمیق‌تر ببینند و درک کنند. بازی‌های ما به سازمان‌ها، دوستان و خانواده‌ها کمک می‌کنند دیوارهای دفاعی را کنار بگذارند، همدلی بیشتری تجربه کنند و زبان یکدیگر را بهتر بفهمند. اینجا بازی، فقط سرگرمی نیست؛ بلکه نزدیکی قلب‌ها و ساختن تجربه‌های مشترک.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Bottom row: two equal cards -->
+    <div class="AnaAboutUs-bottom" style="margin-top: 24px;">
+        <div class="AnaAboutUs-card AnaStep-fadeUp AnaStep-d5">
+            <h3>هوشمندی در دل ساختار</h3>
+            <p>
+                در مجموعه ما باور داریم سازمان‌ها می‌توانند فراتر از ساختارهای خشک و بی‌روح عمل کنند. ما با ترکیب روانشناسی، داده و روایت، مفاهیم پیچیده سازمانی و فرهنگ تیمی را به تجربه‌های بازی‌وار و انسانی تبدیل می‌کنیم. هدف ما خلق محیط کاری زنده و پویاست؛ جایی که رشد، خلاقیت و انگیزه بخشی طبیعی از جریان کار باشند، نه یک اجبار.
+            </p>
+        </div>
+        <div class="AnaAboutUs-card AnaStep-fadeUp AnaStep-d6">
+            <h3>هوشمندی در دل ساختار</h3>
+            <p>
+                در مجموعه ما باور داریم سازمان‌ها می‌توانند فراتر از ساختارهای خشک و بی‌روح عمل کنند. ما با ترکیب روانشناسی، داده و روایت، مفاهیم پیچیده سازمانی و فرهنگ تیمی را به تجربه‌های بازی‌وار و انسانی تبدیل می‌کنیم. هدف ما خلق محیط کاری زنده و انگیزه بخشی طبیعی از جریان کار باشند، نه یک اجبار.
+            </p>
+        </div>
+    </div>
+</section>
+
 
 <?php get_footer(); ?>
