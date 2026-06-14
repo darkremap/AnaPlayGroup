@@ -331,7 +331,7 @@
     </div>
 </section>
 
-<section class="container AnaComments">
+<div class="container AnaComments">
     <!-- Title -->
     <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
         <h1 class="iranSans_bold">نظرات شرکت کنندگان</h1>
@@ -499,6 +499,6 @@
     
     <!-- Dots -->
     <div class="AnaComments-dots" id="ana-dots"></div>
-</sections>
+</div>
 
 <?php get_footer(); ?>
