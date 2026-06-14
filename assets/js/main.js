@@ -67,3 +67,68 @@ panels.forEach(panel => {
 
 
 // AnaSteo--------------------------------------------------------------------------------
+
+
+// AnaComments  ---------------------------------------------------------------------------
+
+(function () {
+    const track   = document.getElementById('ana-track');
+    const prevBtn = document.getElementById('ana-prev');
+    const nextBtn = document.getElementById('ana-next');
+    const dotsEl  = document.getElementById('ana-dots');
+ 
+    const cards      = track.querySelectorAll('.AnaComments-card');
+    const total      = cards.length;
+    const visibleCount = () => window.innerWidth <= 760 ? 1 : 2;
+    let current = 0;
+ 
+    // Build dots
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      const steps = total - visibleCount() + 1;
+      for (let i = 0; i < steps; i++) {
+        const d = document.createElement('span');
+        d.className = 'AnaComments-dot' + (i === current ? ' active' : '');
+        d.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(d);
+      }
+    }
+ 
+    function updateDots() {
+      dotsEl.querySelectorAll('.AnaComments-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+ 
+    function cardWidth() {
+      return cards[0].offsetWidth + 24; // 24 = gap
+    }
+ 
+    function goTo(index) {
+      const maxIndex = total - visibleCount();
+      current = Math.max(0, Math.min(index, maxIndex));
+      track.style.transform = `translateX(${current * cardWidth()}px)`;
+      updateDots();
+    }
+ 
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+ 
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goTo(current - 1);
+      if (e.key === 'ArrowLeft')  goTo(current + 1);
+    });
+ 
+    // Touch/swipe
+    let startX = 0;
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+ 
+    // Init & resize
+    buildDots();
+    window.addEventListener('resize', () => { buildDots(); goTo(current); });
+  })();

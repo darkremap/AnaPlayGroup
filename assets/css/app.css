@@ -1127,7 +1127,6 @@ a:focus, button:focus {
 
 @media (max-width: 680px) {
   h1 { font-size: 22px !important; }
-  .AnaAboutUs { padding: 40px 20px 56px; }
   .AnaAboutUs-card { padding: 18px 20px; }
   .AnaAboutUs-cube {
     height: 340px;
@@ -1138,6 +1137,242 @@ a:focus, button:focus {
   .AnaStep-d5 {
     margin-left: 0;
   }
+}
+
+/* ==========================
+  AnaComments
+========================== */
+.AnaComments {
+  margin-bottom: 100px;
+}
+
+/* ── Slider wrapper ── */
+.AnaComments-slider-wrap {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Nav arrows ── */
+.AnaComments-nav {
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  background: var(--TealFlow);
+  color: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  z-index: 2;
+  user-select: none;
+}
+.AnaComments-nav:hover {
+  border-color: var(--TealFlow);
+  background: rgba(31,166,166,0.12);
+}
+.AnaComments-nav.prev { order: -1; }
+.AnaComments-nav.next { order: 99; }
+
+/* ── Track ── */
+.AnaComments-track-outer {
+  flex: 1;
+  overflow: hidden;
+}
+
+.AnaComments-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+}
+
+/* ── Card ── */
+.AnaComments-card {
+  flex: 0 0 calc(50% - 12px);
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 28px 22px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* Big quote mark */
+.AnaComments-card::before {
+  content: '\201C';
+  font-family: Georgia, serif;
+  font-size: 120px;
+  line-height: 1;
+  color: var(--WarmGold);
+  position: absolute;
+  top: 0;
+  right: 20px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.AnaComments-card-text {
+  font-family: iranSans, sans-serif;
+  font-size: 14px;
+  line-height: 2.1;
+  color: #222;
+  text-align: right;
+  height: 100px;
+  overflow: auto;
+  padding-top: 10px;
+}
+
+/* Footer row */
+.AnaComments-card-footer {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  direction: ltr;
+}
+
+/* Avatar block */
+.AnaComments-avatar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.AnaComments-avatar img {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ddd;
+}
+.AnaComments-avatar-item{
+  display: flex;
+  gap: 10px;
+  background: white;
+  width: 150px;
+  padding: 10px;
+  justify-content: space-between;
+  box-shadow: 0px 1px 20px 3px rgb(10 63 90 / 31%);
+}
+
+.AnaComments-avatar-placeholder {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--TealFlow), var(--DeepOceanBlue));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-family: iranSans_bold, sans-serif;
+  flex-shrink: 0;
+}
+
+.AnaComments-avatar-info {
+  text-align: right;
+}
+.AnaComments-avatar-name {
+  font-family: iranSans_bold, sans-serif;
+  font-size: 13.5px;
+  color: #111;
+}
+.AnaComments-avatar-role {
+  font-family: iranSans, sans-serif;
+  font-size: 12px;
+  color: var(--lightGray);
+  margin-top: 2px;
+}
+
+/* Meta: score + game name */
+.AnaComments-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-right: 16px;
+}
+
+.AnaComments-meta-item {
+  text-align: center;
+}
+.AnaComments-meta-label {
+  font-family: iranSans, sans-serif;
+  font-size: 11px;
+  color: var(--lightGray);
+  display: block;
+  margin-bottom: 3px;
+}
+.AnaComments-meta-value {
+  font-family: iranSans_bold, sans-serif;
+  font-size: 14px;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+.AnaComments-meta-value .coin-icon {
+  width: 16px; height: 16px;
+  background: var(--WarmGold);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.AnaComments-meta-divider {
+  width: 1px;
+  height: 32px;
+  background: #e0e0e0;
+}
+
+/* ── Dots indicator ── */
+.AnaComments-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.AnaComments-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--lightGray);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.AnaComments-dot.active {
+  background: var(--TealFlow);
+  transform: scale(1.25);
+}
+
+/* ── Animations ── */
+.AnaStep-fadeUp {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: fadeUp 0.65s ease forwards;
+}
+.AnaStep-d1 { animation-delay: 0.1s; }
+.AnaStep-d2 { animation-delay: 0.25s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 760px) {
+  .AnaComments-card { flex: 0 0 100%; }
+  .AnaComments { padding: 40px 16px 56px; }
+  h1 { font-size: 22px !important; }
+  .AnaGames-Title h1 { font-size: 24px !important; }
+  .AnaComments-nav {display: none;  width: 38px; height: 38px; font-size: 14px; }
+  .AnaComments-card-text {font-size: 12px; }
 }
 
 /* ==========================
