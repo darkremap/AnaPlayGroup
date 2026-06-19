@@ -2,11 +2,10 @@
 
 <!-- ══ CTA Banner ══ -->
 <div class="AnaCTA">
-    <div class="AnaCTA-title">درخواست<br>ثبت نام</div>
+    <div class="AnaCTA-title">درخواست ثبت نام</div>
  
     <p class="AnaCTA-desc">
-        Encourage open and honest communication among community members.
-        This can be facilitated through forums, social media groups, or regular meetings.
+        به جمع بازیکنان بپیوندید یا دنیای ما را از نزدیک تجربه کنید؛ همین حالا برای شروع بازی یا رزرو دمو اقدام کنید.
     </p>
  
     <a href="<?php echo esc_url( home_url( '/register' ) ); ?>" class="AnaCTA-btn" aria-label="ثبت نام">
