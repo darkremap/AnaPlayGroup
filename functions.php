@@ -139,3 +139,57 @@ function ana_allow_svg_uploads( $mimes ) {
     return $mimes;
 }
 add_filter( 'upload_mimes', 'ana_allow_svg_uploads' );
+
+
+// ── 1. Register footer menu location ──────────────────────────────
+function ana_register_menus() {
+    register_nav_menus( [
+        'footer-menu' => __( 'Footer Menu', 'ana-theme' ),
+    ] );
+}
+add_action( 'after_setup_theme', 'ana_register_menus' );
+ 
+ 
+// ── 2. Social links in Customizer ─────────────────────────────────
+function ana_customize_register( WP_Customize_Manager $wp_customize ) {
+ 
+    // Section
+    $wp_customize->add_section( 'ana_social_links', [
+        'title'    => __( 'Social Links', 'ana-theme' ),
+        'priority' => 120,
+    ] );
+ 
+    $socials = [
+        'ana_social_facebook'  => __( 'Facebook URL',  'ana-theme' ),
+        'ana_social_twitter'   => __( 'Twitter URL',   'ana-theme' ),
+        'ana_social_instagram' => __( 'Instagram URL', 'ana-theme' ),
+        'ana_social_linkedin'  => __( 'LinkedIn URL',  'ana-theme' ),
+        'ana_social_whatsapp'  => __( 'WhatsApp URL or Number (e.g. https://wa.me/989123456789)', 'ana-theme' ),
+        'ana_social_telegram'  => __( 'Telegram URL (e.g. https://t.me/yourchannel)', 'ana-theme' ),
+    ];
+ 
+    foreach ( $socials as $id => $label ) {
+        $wp_customize->add_setting( $id, [
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ] );
+        $wp_customize->add_control( $id, [
+            'label'   => $label,
+            'section' => 'ana_social_links',
+            'type'    => 'url',
+        ] );
+    }
+}
+add_action( 'customize_register', 'ana_customize_register' );
+ 
+ 
+// ── 3. Enqueue footer CSS ─────────────────────────────────────────
+function ana_enqueue_footer_styles() {
+    wp_enqueue_style(
+        'ana-footer',
+        get_template_directory_uri() . '/assets/css/ana-footer.css',
+        [],
+        '1.0.0'
+    );
+}
+add_action( 'wp_enqueue_scripts', 'ana_enqueue_footer_styles' );
