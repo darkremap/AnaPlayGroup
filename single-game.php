@@ -62,9 +62,9 @@
     <!-- Info -->
     <section class="AnaSingleGameInfo">
         <div class="AnaSingleGameInfo-left">
-            <h2>نورا</h2>
-            <h3>مدار بازی</h3>
-            <p>
+            <h2 class="iranSans_bold">نورا</h2>
+            <h3 class="iranSans">مدار بازی</h3>
+            <p class="iranSans">
                 بازی گروهی معمایی با محوریت کشف داستان، تحلیل شخصیت و تصمیم‌گیری.
             </p>
             <div class="AnaSingleGameInfo-buttons">
@@ -76,25 +76,30 @@
                 </a>
             </div>
         </div>
-        <div class="AnaSingleGameInfo-right">
+        <div class="iranSans AnaSingleGameInfo-right">
             <div class="AnaSingleGameInfo-top">
-                <div>
-                    <span>مولف</span>
-                    <strong>آناهیتا موکبری</strong>
+                <div class="AnaSingleGameInfo-top-image">
+                    <div class="AnaSingleGameInfo-avatar-title">
+                        <span>نوع بازی</span>
+                        <strong>کارتی</strong>
+                    </div>
                 </div>
-                <div>
-                    <span>سبک</span>
-                    <strong>معمایی و روایی</strong>
+                <div class="AnaSingleGameInfo-top-logo">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="gallery">
+                    <div>
+                        <span>آفاق نگار اندیشه آنا</span>
+                    </div>
                 </div>
             </div>
-            <div class="AnaSingleGameInfo-grid">
-                <div>
+            <div class="iranSans AnaSingleGameInfo-grid">
+                <div class="AnaSingleGameInfo-grid-virsion">
                     <span>نسخه نهایی</span>
-                    <strong>1.00</strong>
+                    <strong>ویرایش 1.00</strong>
+                    <span>اردیبهشت 1405</span>
                 </div>
                 <div>
                     <span>شرکت کنندگان</span>
-                    <strong>2 تا 8 نفر</strong>
+                    <strong>2 تا 10 نفر</strong>
                 </div>
                 <div>
                     <span>محدوده سنی</span>
