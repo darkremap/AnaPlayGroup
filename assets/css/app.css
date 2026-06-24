@@ -110,17 +110,17 @@ h1{
    HEADER
 ========================== */
 .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-    background: rgba(246,244,239,.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(10,63,90,.08);
-    transition: .3s;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: rgba(246,244,239,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(10,63,90,.08);
+  transition: .3s;
 }
 
 .site-header.scrolled {
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
 }
 
 .header-inner {
@@ -147,172 +147,182 @@ h1{
   align-items: center;
 }
 .main-navigation svg {
-  margin-left: 20px;
+  margin-inline: 20px;
 }
 .main-navigation svg:hover {
-   fill:var(--WarmGold) !important;
-   cursor: pointer;
+  fill:var(--WarmGold) !important;
+  cursor: pointer;
 }
 .primary-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 35px;
-    list-style: none;
-    flex-direction: row;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  list-style: none;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
 }
 .primary-menu li {
-    position: relative;
+  position: relative;
 }
 .primary-menu a {
-    color: var(--DeepOceanBlue);
-    text-decoration: none;
-    font-weight: 600;
-    position: relative;
-    transition: .3s;
-    display: inline-block;
-    padding: .5rem 0;
+  color: var(--DeepOceanBlue);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: .3s;
+  display: inline-block;
+  padding: .5rem 0;
 }
 .primary-menu a::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 0;
-    height: 2px;
-    background: var(--WarmGold);
-    transition: .3s;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background: var(--WarmGold);
+  transition: .3s;
 }
 .primary-menu a:hover {
-    color: var(--WarmGold);
+  color: var(--WarmGold);
 }
 .primary-menu a:hover::after {
-    width: 100%;
+  width: 100%;
 }
 
 /* Sub-menu */
 .primary-menu .sub-menu {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background: #fff;
-    border: 1px solid #eee;
-    display: none;
-    min-width: 200px;
-    z-index: 50;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 0;
-    flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  border: 1px solid #eee;
+  display: none;
+  min-width: 200px;
+  z-index: 50;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  flex-direction: column;
 }
 .primary-menu .sub-menu li a {
-    padding: .5rem 1rem;
+  padding: .5rem 1rem;
 }
 .primary-menu li:hover > .sub-menu {
-    display: block;
+  display: block;
 }
 
 /* Header CTA Buttons */
 .header-cta {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
 }
 
 /* ==========================
    HAMBURGER TOGGLE (X Animation)
 ========================== */
 .menu-toggle {
-    display: none; /* Hidden on desktop */
-    width: 44px;
-    height: 44px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 6px; /* Space between lines */
-    z-index: 10001; /* Above the menu */
+  display: none; /* Hidden on desktop */
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px; /* Space between lines */
+  z-index: 10001; /* Above the menu */
 }
 .menu-toggle span {
-    display: block;
-    width: 28px;
-    height: 3px;
-    background: var(--DeepOceanBlue);
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
-    transform-origin: center;
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: var(--DeepOceanBlue);
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
 }
 
 /* Active State (X Shape) */
 .menu-toggle.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg); /* 6px gap + 3px half-height = 9px */
+  transform: translateY(9px) rotate(45deg); /* 6px gap + 3px half-height = 9px */
 }
 .menu-toggle.active span:nth-child(2) {
-    opacity: 0; /* Hide middle line */
+  opacity: 0; /* Hide middle line */
 }
 .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
 }
 
 /* ==========================
    RESPONSIVE (Tablet & Mobile)
 ========================== */
 @media (max-width: 991px) {
-    .menu-toggle {
-      display: flex; /* Show hamburger */
-    }
-    .main-navigation {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: fixed;
-      top: 0;
-      right: -100%; /* Hide off-screen */
-      width: 75vw;
-      height: 100vh;
-      background: white;
-      box-shadow: -10px 0 30px rgba(0,0,0,.08);
-      transition: .35s ease-in-out;
-      padding: 100px 30px 30px; /* Top padding so it doesn't go under header */
-      z-index: 9998;
-    }
-    .main-navigation.active {
-      right: 0; /* Slide in */
-    }
-    .primary-menu {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-    }
-    .primary-menu li {
-      width: 100%;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    .primary-menu a {
-      padding: 1rem 0;
-      width: 100%;
-    }
-    .primary-menu a::after {
-      display: none; /* Remove hover line in mobile */
-    }
-    .primary-menu .sub-menu {
-      position: static;
-      box-shadow: none;
-      border: none;
-      padding-right: 15px;
-      display: none;
-    }
-    .primary-menu li:hover > .sub-menu {
-      display: none; /* Disable hover on mobile, needs click */
-    }
-    .primary-menu .sub-menu.active {
-      display: block;
-    }
+  .site-branding{
+    order: 2;
+  }
+  .header-cta{
+    order: 3;
+  }
+  .menu-toggle {
+    display: flex; /* Show hamburger */
+    order: 1;
+  }
+  .btn-DeepOceanBlue-outline{
+    display: none;
+  }
+  .main-navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hide off-screen */
+    width: 75vw;
+    height: 100vh;
+    background: white;
+    box-shadow: -10px 0 30px rgba(0,0,0,.08);
+    transition: .35s ease-in-out;
+    padding: 100px 30px 30px; /* Top padding so it doesn't go under header */
+    z-index: 9998;
+  }
+  .main-navigation.active {
+    right: 0; /* Slide in */
+  }
+  .primary-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .primary-menu li {
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .primary-menu a {
+    padding: 1rem 0;
+    width: 100%;
+  }
+  .primary-menu a::after {
+    display: none; /* Remove hover line in mobile */
+  }
+  .primary-menu .sub-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    padding-right: 15px;
+    display: none;
+  }
+  .primary-menu li:hover > .sub-menu {
+    display: none; /* Disable hover on mobile, needs click */
+  }
+  .primary-menu .sub-menu.active {
+    display: block;
+  }
 }
 
 @media (max-width: 576px) {
@@ -324,11 +334,6 @@ h1{
     }
 }
 
-/* Accessibility */
-a:focus, button:focus {
-  outline: 3px solid rgba(21,156,228,.3);
-  outline-offset: 2px;
-}
 /* ==========================
    AnaHero
 ========================== */
