@@ -41,22 +41,22 @@ h1{
 ========================== */
 
 .Anabtn {
-    display: inline-block;
-    padding: 12px 24px;
-    font-family: iranSans_bold, sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: background .3s, color .3s, transform .3s, border-color .3s;
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: iranSans_bold, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background .3s, color .3s, transform .3s, border-color .3s;
 }
 
 /* Filled */
 .btn-DeepOceanBlue {
-    background: var(--DeepOceanBlue);
-    color: var(--white);
-    border-color: var(--DeepOceanBlue);
+  background: var(--DeepOceanBlue);
+  color: var(--white);
+  border-color: var(--DeepOceanBlue);
 }
 .btn-DeepOceanBlue:hover {
     transform: translateY(-2px);
@@ -64,17 +64,18 @@ h1{
 
 /* Outline */
 .btn-DeepOceanBlue-outline {
-    background: transparent;
-    color: var(--DeepOceanBlue);
-    border-color: var(--DeepOceanBlue);
+  background: transparent;
+  color: var(--DeepOceanBlue);
+  border-color: var(--DeepOceanBlue);
 }
 .btn-DeepOceanBlue-outline:hover {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 @media (max-width: 991px) {
   .Anabtn {
     padding: 7px 12px;
     font-size: 10px;
+    text-align: center;
  }
 }
 /* ==========================
@@ -1370,6 +1371,328 @@ a:focus, button:focus {
   .AnaComments-nav {display: none;  width: 38px; height: 38px; font-size: 14px; }
   .AnaComments-card-text {font-size: 12px; }
 }
+
+/* ==========================
+   Ana Single Game
+========================== */
+
+.AnaSingleGame{
+  direction: ltr;
+}
+
+/* HERO */
+
+.AnaSingleGameHero{
+  margin-block: 60px 120px;
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:60px;
+  align-items:start;
+}
+
+.AnaSingleGameHero-images{
+  position:relative;
+}
+
+.AnaSingleGameHero-images img:first-child{
+  width: 200px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 2;
+}
+
+.AnaSingleGameHero-images img:last-child{
+  width:100%;
+  height: 600px;
+  display:block;
+  padding: 60px 0 0 120px;
+}
+.AnaSingleGameHero-content{
+  direction: rtl;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.AnaSingleGameHero-title{
+  background:var(--WarmGold);
+  display:flex;
+  flex-direction: column;
+  padding:25px;
+  margin-bottom:30px;
+}
+.AnaSingleGameHero-title div{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.AnaSingleGameHero-title span{
+  font-size:36px;
+  font-weight:800;
+  color:#17233d;
+}
+
+.AnaSingleGameHero-title h1{
+    margin:0;
+}
+
+.AnaSingleGameHero-subtitle{
+  color:var(--white);
+}
+
+.AnaSingleGameHero-text{
+  color:var(--DeepOceanBlue);
+  line-height:2.2;
+  text-align: justify;
+}
+
+.AnaSingleGameHero-rating{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin-top:40px;
+}
+
+.AnaSingleGameHero-avatars{
+  display:flex;
+}
+
+.AnaSingleGameHero-avatars img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:3px solid #000;
+  margin-left:-10px;
+}
+
+/* STORY */
+
+.AnaSingleGameStory{
+  position:relative;
+}
+.AnaSingleGameStory-image{
+  display: flex;
+  justify-content: flex-end;
+  height: 400px;
+  overflow: hidden;
+}
+
+.AnaSingleGameStory-image img{
+  width:60%;
+  display:block;
+}
+.AnaSingleGameStory-EnglishCard{
+  position:absolute;
+  left:0;
+  bottom:-40px;
+  width:50%;
+  padding: 10px 10px 0 0;
+  border: 2px solid var(--TealFlow);
+}
+.AnaSingleGameStory-card{
+  background:#fff;
+  padding:40px;
+  box-shadow:0 30px 70px rgba(0,0,0,.25);
+}
+.AnaSingleGameStory-card h1{
+  color: black !important;
+}
+.AnaSingleGameStory-card p{
+  color: var(--lightGray);
+  line-height: 20px;
+  text-align: justify;
+  height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* GALLERY */
+
+.AnaSingleGameGallery{
+  margin:180px auto 80px;
+  height: 600px;
+}
+
+.AnaSingleGameGallery img{
+  width:100%;
+  height: 100%;
+  display:block;
+}
+
+/* INFO */
+
+.AnaSingleGameInfo{
+  max-width:1200px;
+  margin:-220px auto 120px;
+  background:#fff;
+  padding:50px;
+  display:grid;
+  grid-template-columns:350px 1fr;
+  gap:40px;
+  box-shadow:0 20px 60px rgba(0,0,0,.15);
+  position:relative;
+  z-index:5;
+}
+.AnaSingleGameInfo-left{
+  direction: rtl;
+}
+
+
+.AnaSingleGameInfo-left h2{
+  font-size:30px;
+  color:var(--DeepOceanBlue);
+  margin: 0;
+}
+
+.AnaSingleGameInfo-buttons{
+  display:flex;
+  gap:15px;
+  margin-top:27px;
+}
+
+.AnaSingleGameInfo-top{
+  background:#edf1f4;
+  padding:25px;
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:23px;
+  direction: rtl;
+}
+.AnaSingleGameInfo-top-image{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.AnaSingleGameInfo-avatar-title{
+  display: flex;
+  flex-direction: column;
+}
+.AnaSingleGameInfo-top-logo{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.AnaSingleGameInfo-top-logo div{
+  display: flex;
+  flex-direction: column;
+}
+.AnaSingleGameInfo-top-logo img{
+  width: 60px;
+}
+.AnaSingleGameInfo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  direction: rtl;
+}
+
+.AnaSingleGameInfo-grid div{
+  border:1px solid #d8dde3;
+  padding:20px;
+  text-align:center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.AnaSingleGameInfo-grid-virsion{
+  padding: 0 20px !important;
+  border: none !important;
+  text-align: start !important;
+}
+
+.AnaSingleGameInfo-grid span{
+  display:block;
+  margin-block:10px;
+}
+
+.AnaSingleGameInfo-grid strong{
+  font-size:24px;
+  color:var(--DeepOceanBlue);
+}
+
+/* MOBILE */
+
+@media(max-width:991px){
+  .AnaSingleGameHero{
+    grid-template-columns:1fr;
+    gap:40px;
+    margin-block: 40px;
+  }
+  .AnaSingleGameHero-images img:first-child{
+    width:35%;
+    right:0;
+  }
+  .AnaSingleGameHero-images img:last-child{
+    height: auto;
+    padding-left: 100px;
+  }
+  .AnaSingleGameHero-title{
+    padding: 10px;
+    margin-bottom: 0;
+  }
+  .AnaSingleGameHero-title span{
+    font-size:32px;
+  }
+  .AnaSingleGameHero-subtitle{
+    font-size: 12px;
+    margin: 5px;
+  }
+  .AnaSingleGameHero-text{
+    line-height: 22px;
+    font-size: 14px;
+  }
+  .AnaSingleGameHero-rating{
+    margin-top: 0;
+  }
+  .AnaSingleGameStory-image{
+    height: 250px;
+  }
+  .AnaSingleGameStory-image img{
+    width: 75%;
+  }
+  .AnaSingleGameStory-EnglishCard{
+    width: 70%;
+    padding: 7px 7px 0 0;
+    bottom: -80px;
+  }
+  .AnaSingleGameStory-card{
+    padding: 10px;
+  }
+  .AnaSingleGameStory-card h1{
+    font-size: 16px !important;
+  }
+  .AnaSingleGameStory-card p{
+    height: 160px;
+    font-size: 10px;
+    line-height: 14px;
+    margin: 0;
+  }
+  .AnaSingleGameInfo{
+    grid-template-columns:1fr;
+    padding:20px;
+    margin-top:-150px;
+    margin-inline: 20px;
+  }
+  .AnaSingleGameInfo-top-logo{
+    gap: 10px;
+  }
+  .AnaSingleGameInfo-top-logo div{
+    font-size: 14px;
+  }
+  .AnaSingleGameInfo-grid{
+    grid-template-columns:1fr;
+  }
+  .AnaSingleGameInfo-buttons{
+    flex-direction:column;
+  }
+  .AnaSingleGameGallery{
+    margin: 110px auto 80px;
+    height: 250px;
+  }
+}
  
 /* ══════════════════════════════
     FOOTER
@@ -1548,20 +1871,25 @@ a:focus, button:focus {
 /* ── Responsive ── */
 @media (max-width: 760px) {
     .AnaCTA {
-        flex-direction: column;
-        margin: 0 16px;
-        padding: 28px 24px;
-        text-align: center;
+      flex-direction: column;
+      margin: 0 16px -50px 16px;
+      padding: 28px 24px;
+      text-align: center;
     }
     .AnaCTA-title { font-size: 26px; text-align: center; }
     .AnaCTA-desc  { font-size: 13px; }
     .AnaCTA-btn   { width: 80px; height: 80px; }
     .AnaCTA-btn svg { width: 32px; height: 32px; }
  
-    .AnaFooter { padding: 36px 20px 20px; }
+    .AnaFooter { padding: 80px 20px 20px;}
     .AnaFooter-nav,
     .AnaFooter-nav ul { gap: 20px; }
 }
+
+ 
+
+
+
 /* ==========================
   Botstrap
 ========================== */
