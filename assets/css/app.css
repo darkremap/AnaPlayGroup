@@ -41,22 +41,22 @@ h1{
 ========================== */
 
 .Anabtn {
-    display: inline-block;
-    padding: 12px 24px;
-    font-family: iranSans_bold, sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: background .3s, color .3s, transform .3s, border-color .3s;
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: iranSans_bold, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background .3s, color .3s, transform .3s, border-color .3s;
 }
 
 /* Filled */
 .btn-DeepOceanBlue {
-    background: var(--DeepOceanBlue);
-    color: var(--white);
-    border-color: var(--DeepOceanBlue);
+  background: var(--DeepOceanBlue);
+  color: var(--white);
+  border-color: var(--DeepOceanBlue);
 }
 .btn-DeepOceanBlue:hover {
     transform: translateY(-2px);
@@ -64,17 +64,18 @@ h1{
 
 /* Outline */
 .btn-DeepOceanBlue-outline {
-    background: transparent;
-    color: var(--DeepOceanBlue);
-    border-color: var(--DeepOceanBlue);
+  background: transparent;
+  color: var(--DeepOceanBlue);
+  border-color: var(--DeepOceanBlue);
 }
 .btn-DeepOceanBlue-outline:hover {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 @media (max-width: 991px) {
   .Anabtn {
     padding: 7px 12px;
     font-size: 10px;
+    text-align: center;
  }
 }
 /* ==========================
@@ -1503,6 +1504,9 @@ a:focus, button:focus {
   color: var(--lightGray);
   line-height: 20px;
   text-align: justify;
+  height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* GALLERY */
@@ -1554,7 +1558,7 @@ a:focus, button:focus {
   padding:25px;
   display:flex;
   justify-content:space-between;
-  margin-bottom:20px;
+  margin-bottom:23px;
   direction: rtl;
 }
 .AnaSingleGameInfo-top-image{
@@ -1615,37 +1619,78 @@ a:focus, button:focus {
   .AnaSingleGameHero{
     grid-template-columns:1fr;
     gap:40px;
+    margin-block: 40px;
   }
-
   .AnaSingleGameHero-images img:first-child{
-    width:110px;
+    width:35%;
     right:0;
   }
-
+  .AnaSingleGameHero-images img:last-child{
+    height: auto;
+    padding-left: 100px;
+  }
+  .AnaSingleGameHero-title{
+    padding: 10px;
+    margin-bottom: 0;
+  }
   .AnaSingleGameHero-title span{
     font-size:32px;
   }
-
-  .AnaSingleGameStory-card{
-    position:relative;
-    width:100%;
-    left:auto;
-    bottom:auto;
-    margin-top:-50px;
+  .AnaSingleGameHero-subtitle{
+    font-size: 12px;
+    margin: 5px;
   }
-
+  .AnaSingleGameHero-text{
+    line-height: 22px;
+    font-size: 14px;
+  }
+  .AnaSingleGameHero-rating{
+    margin-top: 0;
+  }
+  .AnaSingleGameStory-image{
+    height: 250px;
+  }
+  .AnaSingleGameStory-image img{
+    width: 75%;
+  }
+  .AnaSingleGameStory-EnglishCard{
+    width: 70%;
+    padding: 7px 7px 0 0;
+    bottom: -80px;
+  }
+  .AnaSingleGameStory-card{
+    padding: 10px;
+  }
+  .AnaSingleGameStory-card h1{
+    font-size: 16px !important;
+  }
+  .AnaSingleGameStory-card p{
+    height: 160px;
+    font-size: 10px;
+    line-height: 14px;
+    margin: 0;
+  }
   .AnaSingleGameInfo{
     grid-template-columns:1fr;
-    padding:25px;
-    margin-top:-60px;
+    padding:20px;
+    margin-top:-150px;
+    margin-inline: 20px;
   }
-
+  .AnaSingleGameInfo-top-logo{
+    gap: 10px;
+  }
+  .AnaSingleGameInfo-top-logo div{
+    font-size: 14px;
+  }
   .AnaSingleGameInfo-grid{
     grid-template-columns:1fr;
   }
-
   .AnaSingleGameInfo-buttons{
     flex-direction:column;
+  }
+  .AnaSingleGameGallery{
+    margin: 110px auto 80px;
+    height: 250px;
   }
 }
  
@@ -1826,17 +1871,17 @@ a:focus, button:focus {
 /* ── Responsive ── */
 @media (max-width: 760px) {
     .AnaCTA {
-        flex-direction: column;
-        margin: 0 16px;
-        padding: 28px 24px;
-        text-align: center;
+      flex-direction: column;
+      margin: 0 16px -50px 16px;
+      padding: 28px 24px;
+      text-align: center;
     }
     .AnaCTA-title { font-size: 26px; text-align: center; }
     .AnaCTA-desc  { font-size: 13px; }
     .AnaCTA-btn   { width: 80px; height: 80px; }
     .AnaCTA-btn svg { width: 32px; height: 32px; }
  
-    .AnaFooter { padding: 36px 20px 20px; }
+    .AnaFooter { padding: 80px 20px 20px;}
     .AnaFooter-nav,
     .AnaFooter-nav ul { gap: 20px; }
 }
