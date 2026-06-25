@@ -252,3 +252,354 @@ function custom_post_type_games() {
 
 }
 add_action( 'init', 'custom_post_type_games', 0 );
+
+
+/* ────────────────────────────────────────────────────────
+   1. CREATE DB TABLE ON THEME ACTIVATION
+   ──────────────────────────────────────────────────────── */
+function ana_create_contact_table() {
+    global $wpdb;
+ 
+    $table_name      = $wpdb->prefix . 'ana_contacts';
+    $charset_collate = $wpdb->get_charset_collate();
+ 
+    $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+        id          BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        name        VARCHAR(100)        NOT NULL DEFAULT '',
+        phone       VARCHAR(20)         NOT NULL DEFAULT '',
+        message     TEXT,
+        submitted_at DATETIME           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        is_read     TINYINT(1)          NOT NULL DEFAULT 0,
+        PRIMARY KEY (id)
+    ) {$charset_collate};";
+ 
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    dbDelta( $sql );
+ 
+    update_option( 'ana_contact_db_version', '1.0' );
+}
+add_action( 'after_switch_theme', 'ana_create_contact_table' );
+ 
+// Also run on init in case table is missing (safe — uses CREATE TABLE IF NOT EXISTS)
+add_action( 'init', function() {
+    if ( get_option( 'ana_contact_db_version' ) !== '1.0' ) {
+        ana_create_contact_table();
+    }
+} );
+ 
+ 
+/* ────────────────────────────────────────────────────────
+   2. SAVE SUBMISSION TO DB
+   ──────────────────────────────────────────────────────── */
+function ana_save_contact_submission( $name, $phone, $message = '' ) {
+    global $wpdb;
+ 
+    $table_name = $wpdb->prefix . 'ana_contacts';
+ 
+    $rows_affected = $wpdb->insert(
+        $table_name,
+        [
+            'name'         => $name,
+            'phone'        => $phone,
+            'message'      => $message,
+            'submitted_at' => current_time( 'mysql' ),
+            'is_read'      => 0,
+        ],
+        [ '%s', '%s', '%s', '%s', '%d' ]
+    );
+ 
+    return $rows_affected !== false;
+}
+ 
+ 
+/* ────────────────────────────────────────────────────────
+   3. EMAIL NOTIFICATION TO ADMIN
+   ──────────────────────────────────────────────────────── */
+function ana_notify_admin_contact( $name, $phone, $message = '' ) {
+    $admin_email = get_option( 'admin_email' );
+    $site_name   = get_bloginfo( 'name' );
+ 
+    // Allow overriding recipient via Customizer
+    $notify_email = get_theme_mod( 'ana_contact_notify_email', $admin_email );
+ 
+    $subject = sprintf( '[%s] ثبت شماره تماس جدید از %s', $site_name, $name );
+ 
+    $body  = "سلام،\n\n";
+    $body .= "یک کاربر جدید اطلاعات تماس خود را در سایت ثبت کرده است:\n\n";
+    $body .= "────────────────────\n";
+    $body .= "نام:       {$name}\n";
+    $body .= "شماره:     {$phone}\n";
+    if ( $message ) {
+        $body .= "پیام:\n{$message}\n";
+    }
+    $body .= "────────────────────\n\n";
+    $body .= "زمان ثبت: " . current_time( 'Y/m/d H:i:s' ) . "\n\n";
+    $body .= "برای مشاهده همه درخواست‌ها به پنل ادمین مراجعه کنید:\n";
+    $body .= admin_url( 'admin.php?page=ana-contacts' ) . "\n\n";
+    $body .= "با احترام،\n{$site_name}";
+ 
+    $headers = [
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: ' . $site_name . ' <' . $admin_email . '>',
+    ];
+ 
+    wp_mail( $notify_email, $subject, $body, $headers );
+}
+ 
+ 
+/* ────────────────────────────────────────────────────────
+   4. ADMIN PANEL — MENU + LIST PAGE
+   ──────────────────────────────────────────────────────── */
+function ana_register_admin_menu() {
+    add_menu_page(
+        'درخواست‌های تماس',       // page title
+        'تماس‌های ANA',           // menu title
+        'manage_options',          // capability
+        'ana-contacts',            // slug
+        'ana_contacts_admin_page', // callback
+        'dashicons-phone',         // icon
+        30                         // position
+    );
+}
+add_action( 'admin_menu', 'ana_register_admin_menu' );
+ 
+ 
+function ana_contacts_admin_page() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'ana_contacts';
+ 
+    // ── Mark as read ──
+    if ( isset( $_GET['mark_read'] ) && is_numeric( $_GET['mark_read'] ) &&
+         check_admin_referer( 'ana_mark_read_' . (int) $_GET['mark_read'] ) ) {
+        $wpdb->update( $table_name, [ 'is_read' => 1 ], [ 'id' => (int) $_GET['mark_read'] ], [ '%d' ], [ '%d' ] );
+        echo '<div class="notice notice-success is-dismissible"><p>✓ به عنوان خوانده‌شده علامت‌گذاری شد.</p></div>';
+    }
+ 
+    // ── Delete ──
+    if ( isset( $_GET['delete_row'] ) && is_numeric( $_GET['delete_row'] ) &&
+         check_admin_referer( 'ana_delete_' . (int) $_GET['delete_row'] ) ) {
+        $wpdb->delete( $table_name, [ 'id' => (int) $_GET['delete_row'] ], [ '%d' ] );
+        echo '<div class="notice notice-success is-dismissible"><p>✓ رکورد حذف شد.</p></div>';
+    }
+ 
+    // ── Export CSV ──
+    if ( isset( $_GET['export_csv'] ) && current_user_can( 'manage_options' ) &&
+         check_admin_referer( 'ana_export_csv' ) ) {
+        ana_export_contacts_csv();
+    }
+ 
+    // ── Fetch rows ──
+    $per_page   = 20;
+    $current_pg = max( 1, (int) ( $_GET['paged'] ?? 1 ) );
+    $offset     = ( $current_pg - 1 ) * $per_page;
+    $filter     = isset( $_GET['filter'] ) && $_GET['filter'] === 'unread' ? 'unread' : 'all';
+ 
+    $where      = $filter === 'unread' ? 'WHERE is_read = 0' : '';
+    $total      = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} {$where}" );
+    $total_unread = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} WHERE is_read = 0" );
+ 
+    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $rows = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT * FROM {$table_name} {$where} ORDER BY submitted_at DESC LIMIT %d OFFSET %d",
+            $per_page,
+            $offset
+        )
+    );
+ 
+    $total_pages = ceil( $total / $per_page );
+ 
+    ?>
+    <div class="wrap" style="direction:rtl; font-family: Tahoma, sans-serif;">
+ 
+        <h1 style="display:flex; align-items:center; gap:12px;">
+            📞 درخواست‌های تماس
+            <?php if ( $total_unread > 0 ) : ?>
+                <span style="background:#E9A441;color:#fff;border-radius:50px;padding:2px 12px;font-size:13px;">
+                    <?php echo esc_html( $total_unread ); ?> خوانده‌نشده
+                </span>
+            <?php endif; ?>
+        </h1>
+ 
+        <!-- Toolbar -->
+        <div style="display:flex; gap:12px; align-items:center; margin:16px 0; flex-wrap:wrap;">
+            <a href="<?php echo esc_url( admin_url('admin.php?page=ana-contacts') ); ?>"
+               class="button <?php echo $filter === 'all' ? 'button-primary' : ''; ?>">
+               همه (<?php echo esc_html($total); ?>)
+            </a>
+            <a href="<?php echo esc_url( admin_url('admin.php?page=ana-contacts&filter=unread') ); ?>"
+               class="button <?php echo $filter === 'unread' ? 'button-primary' : ''; ?>">
+               خوانده‌نشده (<?php echo esc_html($total_unread); ?>)
+            </a>
+            <a href="<?php echo esc_url( wp_nonce_url( admin_url('admin.php?page=ana-contacts&export_csv=1'), 'ana_export_csv' ) ); ?>"
+               class="button">
+               ⬇ خروجی CSV
+            </a>
+        </div>
+ 
+        <!-- Table -->
+        <table class="wp-list-table widefat fixed striped"
+               style="direction:rtl; text-align:right; border-radius:8px; overflow:hidden;">
+            <thead style="background:#0A3F5A; color:#fff;">
+                <tr>
+                    <th style="color:#fff; width:40px;">#</th>
+                    <th style="color:#fff;">نام</th>
+                    <th style="color:#fff;">شماره موبایل</th>
+                    <th style="color:#fff;">پیام</th>
+                    <th style="color:#fff;">تاریخ ثبت</th>
+                    <th style="color:#fff; width:60px;">وضعیت</th>
+                    <th style="color:#fff; width:120px;">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ( empty( $rows ) ) : ?>
+                    <tr>
+                        <td colspan="7" style="text-align:center; padding:32px; color:#777;">
+                            هیچ رکوردی یافت نشد.
+                        </td>
+                    </tr>
+                <?php else : ?>
+                    <?php foreach ( $rows as $row ) : ?>
+                        <tr style="<?php echo ! $row->is_read ? 'font-weight:bold; background:#fffbf0;' : ''; ?>">
+                            <td><?php echo esc_html( $row->id ); ?></td>
+                            <td><?php echo esc_html( $row->name ); ?></td>
+                            <td dir="ltr" style="text-align:left; letter-spacing:1px;">
+                                <?php echo esc_html( $row->phone ); ?>
+                            </td>
+                            <td style="max-width:240px; white-space:normal; word-break:break-word;">
+                                <?php echo esc_html( $row->message ?: '—' ); ?>
+                            </td>
+                            <td dir="ltr" style="text-align:left; font-size:12px; color:#555;">
+                                <?php echo esc_html( $row->submitted_at ); ?>
+                            </td>
+                            <td>
+                                <?php if ( $row->is_read ) : ?>
+                                    <span style="color:#1FA6A6; font-size:12px;">✓ خوانده</span>
+                                <?php else : ?>
+                                    <span style="color:#E9A441; font-size:12px;">● جدید</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if ( ! $row->is_read ) : ?>
+                                    <a href="<?php echo esc_url( wp_nonce_url(
+                                        admin_url( 'admin.php?page=ana-contacts&mark_read=' . $row->id ),
+                                        'ana_mark_read_' . $row->id
+                                    ) ); ?>"
+                                       class="button button-small">خوانده‌شد</a>
+                                <?php endif; ?>
+                                <a href="<?php echo esc_url( wp_nonce_url(
+                                    admin_url( 'admin.php?page=ana-contacts&delete_row=' . $row->id ),
+                                    'ana_delete_' . $row->id
+                                ) ); ?>"
+                                   class="button button-small"
+                                   style="color:#c0392b; border-color:#c0392b; margin-top:4px;"
+                                   onclick="return confirm('آیا مطمئن هستید؟')">حذف</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+ 
+        <!-- Pagination -->
+        <?php if ( $total_pages > 1 ) : ?>
+            <div style="margin-top:16px; display:flex; gap:8px; align-items:center;">
+                <?php for ( $i = 1; $i <= $total_pages; $i++ ) : ?>
+                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=ana-contacts&paged=' . $i . ( $filter !== 'all' ? '&filter=' . $filter : '' ) ) ); ?>"
+                       class="button <?php echo $i === $current_pg ? 'button-primary' : ''; ?>">
+                        <?php echo esc_html( $i ); ?>
+                    </a>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
+ 
+        <p style="color:#777; font-size:12px; margin-top:12px;">
+            مجموع: <?php echo esc_html( $total ); ?> رکورد
+        </p>
+ 
+    </div>
+    <?php
+}
+ 
+ 
+/* ────────────────────────────────────────────────────────
+   5. EXPORT CSV
+   ──────────────────────────────────────────────────────── */
+function ana_export_contacts_csv() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'ana_contacts';
+ 
+    $rows = $wpdb->get_results( "SELECT * FROM {$table_name} ORDER BY submitted_at DESC", ARRAY_A );
+ 
+    $filename = 'ana-contacts-' . gmdate( 'Y-m-d' ) . '.csv';
+ 
+    header( 'Content-Type: text/csv; charset=UTF-8' );
+    header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+    header( 'Pragma: no-cache' );
+    header( 'Expires: 0' );
+ 
+    $output = fopen( 'php://output', 'w' );
+    // BOM for Excel UTF-8
+    fputs( $output, "\xEF\xBB\xBF" );
+ 
+    fputcsv( $output, [ 'ID', 'نام', 'شماره موبایل', 'پیام', 'تاریخ ثبت', 'خوانده‌شده' ] );
+ 
+    foreach ( $rows as $row ) {
+        fputcsv( $output, [
+            $row['id'],
+            $row['name'],
+            $row['phone'],
+            $row['message'],
+            $row['submitted_at'],
+            $row['is_read'] ? 'بله' : 'خیر',
+        ] );
+    }
+ 
+    fclose( $output );
+    exit;
+}
+ 
+ 
+/* ────────────────────────────────────────────────────────
+   6. CUSTOMIZER: notification email setting
+   ──────────────────────────────────────────────────────── */
+add_action( 'customize_register', function( WP_Customize_Manager $wp_customize ) {
+    // Add to existing ana_social_links section or create new
+    $wp_customize->add_section( 'ana_contact_settings', [
+        'title'    => 'تنظیمات تماس با ما',
+        'priority' => 125,
+    ] );
+ 
+    $wp_customize->add_setting( 'ana_contact_notify_email', [
+        'default'           => get_option( 'admin_email' ),
+        'sanitize_callback' => 'sanitize_email',
+    ] );
+ 
+    $wp_customize->add_control( 'ana_contact_notify_email', [
+        'label'       => 'ایمیل دریافت اعلان‌های تماس',
+        'description' => 'هر بار که شماره‌ای ثبت شود به این آدرس ایمیل ارسال می‌شود.',
+        'section'     => 'ana_contact_settings',
+        'type'        => 'email',
+    ] );
+} );
+ 
+ 
+/* ────────────────────────────────────────────────────────
+   7. ADMIN BADGE: unread count in menu
+   ──────────────────────────────────────────────────────── */
+add_action( 'admin_menu', function() {
+    global $wpdb, $menu;
+    $table_name = $wpdb->prefix . 'ana_contacts';
+ 
+    if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) === $table_name ) {
+        $unread = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} WHERE is_read = 0" );
+        if ( $unread > 0 ) {
+            foreach ( $menu as $key => $item ) {
+                if ( isset( $item[2] ) && $item[2] === 'ana-contacts' ) {
+                    $menu[ $key ][0] .= ' <span class="awaiting-mod">' . $unread . '</span>';
+                    break;
+                }
+            }
+        }
+    }
+}, 999 );

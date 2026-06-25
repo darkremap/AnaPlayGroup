@@ -132,3 +132,63 @@ panels.forEach(panel => {
     buildDots();
     window.addEventListener('resize', () => { buildDots(); goTo(current); });
   })();
+
+
+  // loadding form to create phon number ---------------------------------------------------
+  (function(){
+      // Live phone validation feedback
+      const phoneInput = document.getElementById('ana_contact_phone');
+      const hint       = phoneInput ? phoneInput.closest('.AnaContact-field').querySelector('.AnaContact-hint') : null;
+
+      if ( phoneInput ) {
+          // Allow only digits
+          phoneInput.addEventListener('input', function(){
+              this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+              const valid = /^09[0-9]{9}$/.test(this.value);
+              this.classList.toggle('is-valid',   this.value.length === 11 && valid);
+              this.classList.toggle('is-invalid', this.value.length > 0 && !valid);
+              if ( hint ) {
+                  hint.textContent = valid
+                      ? '✓ شماره معتبر است'
+                      : (this.value.length > 0 ? 'شماره باید ۱۱ رقم و با ۰۹ شروع شود' : 'فرمت صحیح: ۰۹۱۲۳۴۵۶۷۸۹');
+                  hint.style.color = valid ? '#1FA6A6' : '#c0392b';
+              }
+          });
+
+          // Form submit guard
+          const form = document.getElementById('ana-contact-form');
+          if ( form ) {
+              form.addEventListener('submit', function(e){
+                  if ( !/^09[0-9]{9}$/.test(phoneInput.value) ) {
+                      e.preventDefault();
+                      phoneInput.classList.add('is-invalid');
+                      phoneInput.focus();
+                  }
+              });
+          }
+      }
+  })();
+  (function(){
+      const form = document.getElementById('ana-contact-form');
+      const loader = document.getElementById('form-loader');
+      const phoneInput = document.getElementById('ana_contact_phone');
+      if(form){
+          form.addEventListener('submit', function(e){
+            if ( !/^09[0-9]{9}$/.test(phoneInput.value) ) {
+                e.preventDefault();
+                phoneInput.classList.add('is-invalid');
+                phoneInput.focus();
+                return;
+            }
+            const loader = document.getElementById('form-loader');
+            if(loader){
+                loader.style.display = 'block';
+            }
+            const btn = this.querySelector('button[type="submit"]');
+            if(btn){
+                btn.disabled = true;
+                btn.innerHTML = 'در حال ثبت اطلاعات...';
+            }
+        });
+      }
+  })();
