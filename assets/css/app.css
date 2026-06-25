@@ -1107,9 +1107,9 @@ h1{
 }
 .AnaStep-d1 { animation-delay: 0.1s; }
 .AnaStep-d2 { animation-delay: 0.2s; }
-.AnaStep-d3 { animation-delay: 0.32s; }
+.AnaStep-d3 { animation-delay: 0.32s;  margin-left: 20px; display: flex; align-items: center; }
 .AnaStep-d4 { animation-delay: 0.44s; }
-.AnaStep-d5 { animation-delay: 0.56s; margin-left: 20px; }
+.AnaStep-d5 { animation-delay: 0.56s; }
 .AnaStep-d6 { animation-delay: 0.68s; }
 
 @keyframes fadeUp {
