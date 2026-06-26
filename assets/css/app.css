@@ -1006,11 +1006,6 @@ h1{
   margin-bottom: 100px;
 }
 
-/* ── Title block ── */
-.AnaGames-Title {
-  text-align: center;
-  margin-bottom: 56px;
-}
 
 /* ── Body layout: cube left, two cards right ── */
 .AnaAboutUs-body {
@@ -1107,7 +1102,7 @@ h1{
 }
 .AnaStep-d1 { animation-delay: 0.1s; }
 .AnaStep-d2 { animation-delay: 0.2s; }
-.AnaStep-d3 { animation-delay: 0.32s;  margin-left: 20px; display: flex; align-items: center; }
+.AnaStep-d3 { animation-delay: 0.32s;  display: flex; flex-direction: column; align-items: center; margin-left: 20px;     justify-content: center; }
 .AnaStep-d4 { animation-delay: 0.44s; }
 .AnaStep-d5 { animation-delay: 0.56s; }
 .AnaStep-d6 { animation-delay: 0.68s; }
@@ -1401,6 +1396,7 @@ h1{
 
 .AnaSingleGameHero-images img:first-child{
   width: 200px;
+  height: 45%;
   position: absolute;
   left: 0px;
   top: 0px;
@@ -1469,7 +1465,6 @@ h1{
   width:50px;
   height:50px;
   border-radius:50%;
-  border:3px solid #000;
   margin-left:-10px;
 }
 
@@ -1544,7 +1539,9 @@ h1{
 .AnaSingleGameInfo-left{
   direction: rtl;
 }
-
+.AnaSingleGameInfo-left p{
+  margin: 0;
+}
 
 .AnaSingleGameInfo-left h2{
   font-size:30px;
@@ -1698,7 +1695,308 @@ h1{
     height: 250px;
   }
 }
+
+/* ==========================
+  AnaContact-page
+========================== */
+
+/* ── Hero ── */
+.AnaContact-page {
+    background-color: var(--white);
+    min-height: 60vh;
+}
  
+.AnaContact-hero {
+    text-align: center;
+    padding: 64px 24px 48px;
+    background: linear-gradient(160deg, #eaf2f5 0%, var(--white) 60%);
+    border-bottom: 1px solid rgba(10,63,90,0.07);
+}
+ 
+.AnaContact-hero .AnaGames-Title {
+  margin-bottom: 0;
+}
+ 
+.AnaContact-hero__sub {
+    font-size: 15px;
+    color: var(--lightGray);
+    margin-top: 8px;
+}
+ 
+/* ── Wrap: two-column layout ── */
+.AnaContact-wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 48px;
+    align-items: start;
+}
+ 
+/* ── Info cards (left column) ── */
+.AnaContact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+ 
+.AnaContact-info__card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border: 1px solid rgba(10,63,90,0.09);
+    border-radius: 14px;
+    padding: 20px 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+ 
+.AnaContact-info__card:hover {
+    box-shadow: 0 6px 24px rgba(10,63,90,0.1);
+    transform: translateY(-2px);
+}
+ 
+.AnaContact-info__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--DeepOceanBlue), #1a6080);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+}
+ 
+.AnaContact-info__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #fff;
+}
+ 
+.AnaContact-info__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+ 
+.AnaContact-info__label {
+    font-size: 12px;
+    color: var(--lightGray);
+}
+ 
+.AnaContact-info__value {
+    font-size: 15px;
+    color: var(--DeepOceanBlue);
+}
+ 
+/* ── Form wrap ── */
+.AnaContact-form-wrap {
+  background: #fff;
+  border: 1px solid rgba(10,63,90,0.09);
+  border-radius: 18px;
+  padding: 36px 32px;
+  box-shadow: 0 4px 32px rgba(10,63,90,0.07);
+}
+ 
+/* ── Alert messages ── */
+.AnaContact-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+ 
+.AnaContact-alert--success {
+    background: rgba(31,166,166,0.1);
+    border: 1px solid rgba(31,166,166,0.3);
+    color: #0d6b6b;
+}
+ 
+.AnaContact-alert--error {
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.25);
+    color: #922b21;
+}
+ 
+/* ── Form fields ── */
+.AnaContact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+ 
+.AnaContact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+ 
+.AnaContact-label {
+    font-size: 13.5px;
+    color: var(--DeepOceanBlue);
+    font-weight: 600;
+}
+ 
+.AnaContact-label .req {
+    color: #e74c3c;
+    margin-right: 2px;
+}
+ 
+.AnaContact-optional {
+    font-size: 12px;
+    color: var(--lightGray);
+    font-weight: normal;
+}
+ 
+/* ── Input base ── */
+.AnaContact-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #d5dde3;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1e1e1e;
+    background: #fafcfd;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    font-family: iranSans, sans-serif;
+}
+ 
+.AnaContact-input:focus {
+    border-color: var(--TealFlow);
+    box-shadow: 0 0 0 3px rgba(31,166,166,0.12);
+    background: #fff;
+}
+ 
+.AnaContact-input.is-valid {
+    border-color: var(--TealFlow);
+}
+ 
+.AnaContact-input.is-invalid {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231,76,60,0.1);
+}
+ 
+.AnaContact-input--textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.8;
+}
+ 
+/* ── Phone row: flag prefix + input ── */
+.AnaContact-phone-wrap {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid #d5dde3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fafcfd;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+ 
+.AnaContact-phone-wrap:focus-within {
+    border-color: var(--TealFlow);
+    box-shadow: 0 0 0 3px rgba(31,166,166,0.12);
+    background: #fff;
+}
+ 
+.AnaContact-phone-prefix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 14px;
+    background: #f0f4f7;
+    border-left: 1.5px solid #d5dde3;
+    height: 100%;
+    min-height: 46px;
+    white-space: nowrap;
+    font-size: 13px;
+    color: var(--DeepOceanBlue);
+    font-family: iranSans_bold, sans-serif;
+    flex-shrink: 0;
+}
+ 
+.AnaContact-phone-prefix img {
+    border-radius: 2px;
+    display: inline-block;
+}
+ 
+.AnaContact-input--phone {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    flex: 1;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+}
+ 
+.AnaContact-input--phone:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+ 
+.AnaContact-hint {
+    font-size: 12px;
+    color: var(--lightGray);
+    font-family: iranSans, sans-serif;
+    transition: color 0.2s;
+}
+ 
+/* ── Submit button ── */
+.AnaContact-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+ 
+/* ── Animations ── */
+.AnaStep-fadeUp {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: contactFadeUp 0.65s ease forwards;
+}
+.AnaStep-d1 { animation-delay: 0.1s; }
+.AnaStep-d2 { animation-delay: 0.25s; }
+.AnaStep-d3 { animation-delay: 0.4s; }
+ 
+@keyframes contactFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+ 
+/* ── Responsive ── */
+@media (max-width: 800px) {
+    .AnaContact-wrap {
+        grid-template-columns: 1fr;
+        padding: 32px 16px 56px;
+        gap: 28px;
+    }
+    .AnaContact-hero { padding: 40px 16px 32px; }
+    .AnaContact-form-wrap { padding: 24px 18px; }
+}
+ 
+@media (max-width: 480px) {
+  .AnaContact-phone-prefix { padding: 0 10px; font-size: 12px; }
+}
+
+
 /* ══════════════════════════════
     FOOTER
 ══════════════════════════════ */

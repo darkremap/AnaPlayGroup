@@ -33,8 +33,8 @@
                 ?>
             </nav>
             <div class="header-cta iranSans_bold">
-                <a href="#" class="Anabtn btn-DeepOceanBlue-outline">درخواست مشاوره</a>
-                <a href="#" class="Anabtn btn-DeepOceanBlue">تماس با ما</a>
+                <a href="<?php echo esc_url( home_url( '/consultation' ) ); ?>" class="Anabtn btn-DeepOceanBlue-outline">درخواست مشاوره</a>
+                <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="Anabtn btn-DeepOceanBlue">تماس با ما</a>
             </div>
             <button id="menu-toggle" class="menu-toggle" aria-label="منوی موبایل">
                 <span></span>
