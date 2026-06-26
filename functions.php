@@ -181,24 +181,18 @@ function ana_customize_register( WP_Customize_Manager $wp_customize ) {
     }
 }
 add_action( 'customize_register', 'ana_customize_register' );
+
  
- 
-// ── 3. Enqueue footer CSS ─────────────────────────────────────────
-function ana_enqueue_footer_styles() {
-    wp_enqueue_style(
-        'ana-footer',
-        get_template_directory_uri() . '/assets/css/ana-footer.css',
-        [],
-        '1.0.0'
-    );
-}
-add_action( 'wp_enqueue_scripts', 'ana_enqueue_footer_styles' );
 
 
+// plugin for games ------------------------------------------------------------------------------
 
-// Register Custom Post Type for Games
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// ─────────────────────────────────────────
+// 1. Register Custom Post Type
+// ─────────────────────────────────────────
 function custom_post_type_games() {
-
     $labels = array(
         'name'                  => _x( 'Games', 'Post Type General Name', 'text_domain' ),
         'singular_name'         => _x( 'Game', 'Post Type Singular Name', 'text_domain' ),
@@ -229,30 +223,374 @@ function custom_post_type_games() {
         'filter_items_list'     => __( 'Filter Games list', 'text_domain' ),
     );
     $args = array(
-        'label'                 => __( 'Game', 'text_domain' ),
-        'description'           => __( 'Post Type for Games', 'text_domain' ),
-        'labels'                => $labels,
-        'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'page-attributes' ),
-        'taxonomies'            => array( 'category', 'post_tag' ),
-        'hierarchical'          => true,
-        'public'                => true,
-        'show_ui'               => true,
-        'show_in_menu'          => true,
-        'menu_position'         => 5,
-        'show_in_admin_bar'     => true,
-        'show_in_nav_menus'     => true,
-        'can_export'            => true,
-        'has_archive'           => true,
-        'exclude_from_search'   => false,
-        'publicly_queryable'    => true,
-        'capability_type'       => 'post',
-        'rewrite'               => array('slug' => 'games','with_front' => false),
+        'label'               => __( 'Game', 'text_domain' ),
+        'description'         => __( 'Post Type for Games', 'text_domain' ),
+        'labels'              => $labels,
+        'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'page-attributes' ),
+        'taxonomies'          => array( 'category', 'post_tag' ),
+        'hierarchical'        => true,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 5,
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => true,
+        'can_export'          => true,
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'post',
+        'rewrite'             => array( 'slug' => 'games', 'with_front' => false ),
     );
     register_post_type( 'game', $args );
-
 }
 add_action( 'init', 'custom_post_type_games', 0 );
 
+// ─────────────────────────────────────────
+// 2. Enqueue Media Uploader
+// ─────────────────────────────────────────
+function game_meta_enqueue_scripts( $hook ) {
+    global $post;
+    if ( ( $hook === 'post-new.php' || $hook === 'post.php' )
+        && isset( $post ) && $post->post_type === 'game' ) {
+        wp_enqueue_media();
+        wp_enqueue_editor();
+        wp_enqueue_style(
+            'game-meta-style',
+            plugin_dir_url( __FILE__ ) . 'game-meta.css',
+            array(),
+            '1.0'
+        );
+    }
+}
+add_action( 'admin_enqueue_scripts', 'game_meta_enqueue_scripts' );
+
+// ─────────────────────────────────────────
+// 3. Register Meta Boxes
+// ─────────────────────────────────────────
+function game_register_meta_boxes() {
+    add_meta_box(
+        'game_general_info',
+        'اطلاعات کلی بازی',
+        'game_general_info_cb',
+        'game',
+        'normal',
+        'high'
+    );
+    add_meta_box(
+        'game_creator_info',
+        'اطلاعات سازنده',
+        'game_creator_info_cb',
+        'game',
+        'normal',
+        'high'
+    );
+    add_meta_box(
+        'game_images',
+        'تصاویر بازی',
+        'game_images_cb',
+        'game',
+        'normal',
+        'default'
+    );
+    add_meta_box(
+        'game_story',
+        'داستان بازی',
+        'game_story_cb',
+        'game',
+        'normal',
+        'default'
+    );
+    add_meta_box(
+        'game_tech_info',
+        'اطلاعات فنی بازی',
+        'game_tech_info_cb',
+        'game',
+        'side',
+        'default'
+    );
+}
+add_action( 'add_meta_boxes', 'game_register_meta_boxes' );
+
+// ─────────────────────────────────────────
+// 4. Helper: Image Field
+// ─────────────────────────────────────────
+function game_image_field( $post, $meta_key, $label ) {
+    $value = get_post_meta( $post->ID, $meta_key, true );
+    $img_src = $value ? wp_get_attachment_image_src( $value, 'thumbnail' ) : false;
+    ?>
+    <div class="game-image-field" style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:6px;"><?php echo esc_html( $label ); ?></label>
+        <div class="game-image-preview" id="preview_<?php echo esc_attr( $meta_key ); ?>" style="margin-bottom:8px;">
+            <?php if ( $img_src ) : ?>
+                <img src="<?php echo esc_url( $img_src[0] ); ?>" style="max-width:150px;max-height:150px;display:block;border-radius:4px;border:1px solid #ddd;">
+            <?php endif; ?>
+        </div>
+        <input type="hidden" name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>" value="<?php echo esc_attr( $value ); ?>">
+        <button type="button" class="button game-upload-btn" data-target="<?php echo esc_attr( $meta_key ); ?>" data-preview="preview_<?php echo esc_attr( $meta_key ); ?>">
+            <?php echo $value ? 'تغییر تصویر' : 'انتخاب تصویر'; ?>
+        </button>
+        <?php if ( $value ) : ?>
+            <button type="button" class="button game-remove-btn" data-target="<?php echo esc_attr( $meta_key ); ?>" data-preview="preview_<?php echo esc_attr( $meta_key ); ?>" style="margin-right:6px;">
+                حذف تصویر
+            </button>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+// ─────────────────────────────────────────
+// 5. Meta Box Callbacks
+// ─────────────────────────────────────────
+
+// --- General Info ---
+function game_general_info_cb( $post ) {
+    wp_nonce_field( 'game_meta_nonce', 'game_meta_nonce_field' );
+    $english_title = get_post_meta( $post->ID, 'english_title', true );
+    $summary       = get_post_meta( $post->ID, 'summary', true );
+    ?>
+    <div class="game-meta-wrap">
+        <div class="game-field">
+            <label for="english_title"><strong>عنوان انگلیسی (english_title)</strong></label>
+            <input type="text" name="english_title" id="english_title"
+                   value="<?php echo esc_attr( $english_title ); ?>"
+                   class="widefat" style="margin-top:5px;">
+        </div>
+
+        <div class="game-field" style="margin-top:16px;">
+            <label><strong>خلاصه بازی (summary)</strong></label>
+            <div style="margin-top:6px;">
+                <?php
+                wp_editor( $summary, 'summary', array(
+                    'textarea_name' => 'summary',
+                    'textarea_rows' => 6,
+                    'media_buttons' => false,
+                    'teeny'         => true,
+                ) );
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// --- Creator Info ---
+function game_creator_info_cb( $post ) {
+    $creatorname = get_post_meta( $post->ID, 'creatorname', true );
+    ?>
+    <div class="game-meta-wrap">
+        <div class="game-field">
+            <label for="creatorname"><strong>نام سازنده (creatorname)</strong></label>
+            <input type="text" name="creatorname" id="creatorname"
+                   value="<?php echo esc_attr( $creatorname ); ?>"
+                   class="widefat" style="margin-top:5px;">
+        </div>
+        <div style="margin-top:16px;">
+            <?php game_image_field( $post, 'creatorimage', 'تصویر سازنده (creatorimage)' ); ?>
+        </div>
+    </div>
+    <?php
+}
+
+// --- Images ---
+function game_images_cb( $post ) {
+    ?>
+    <div class="game-meta-wrap">
+        <?php
+        game_image_field( $post, 'heroimage',  'تصویر اصلی هیرو (heroimage)' );
+        game_image_field( $post, 'sideimage',  'تصویر کناری (sideimage)' );
+        game_image_field( $post, 'storyimage', 'تصویر داستان (storyimage)' );
+        game_image_field( $post, 'infoimage',  'تصویر اطلاعات (infoimage)' );
+        ?>
+    </div>
+    <?php
+}
+
+// --- Story ---
+function game_story_cb( $post ) {
+    $storytitle   = get_post_meta( $post->ID, 'storytitle', true );
+    $storycontent = get_post_meta( $post->ID, 'storycontent', true );
+    ?>
+    <div class="game-meta-wrap">
+        <div class="game-field">
+            <label for="storytitle"><strong>عنوان داستان (storytitle)</strong></label>
+            <input type="text" name="storytitle" id="storytitle"
+                   value="<?php echo esc_attr( $storytitle ); ?>"
+                   class="widefat" style="margin-top:5px;">
+        </div>
+        <div class="game-field" style="margin-top:16px;">
+            <label><strong>متن داستان (storycontent)</strong></label>
+            <div style="margin-top:6px;">
+                <?php
+                wp_editor( $storycontent, 'storycontent', array(
+                    'textarea_name' => 'storycontent',
+                    'textarea_rows' => 8,
+                    'media_buttons' => false,
+                    'teeny'         => true,
+                ) );
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// --- Tech Info (sidebar) ---
+function game_tech_info_cb( $post ) {
+    $fields = array(
+        'gametype'           => 'نوع بازی',
+        'gamerevition'       => 'نسخه بازی',
+        'gamecreattime'      => 'تاریخ انتشار',
+        'gamenumbertoplay'   => 'تعداد بازیکنان',
+        'gamerange'          => 'محدوده سنی',
+    );
+    $gamecategory = get_post_meta( $post->ID, 'gamecategory', true );
+    ?>
+    <div class="game-meta-wrap">
+        <?php foreach ( $fields as $key => $label ) :
+            $val = get_post_meta( $post->ID, $key, true ); ?>
+            <div class="game-field" style="margin-bottom:12px;">
+                <label for="<?php echo esc_attr( $key ); ?>"><strong><?php echo esc_html( $label ); ?></strong></label>
+                <input type="text" name="<?php echo esc_attr( $key ); ?>"
+                       id="<?php echo esc_attr( $key ); ?>"
+                       value="<?php echo esc_attr( $val ); ?>"
+                       class="widefat" style="margin-top:4px;">
+            </div>
+        <?php endforeach; ?>
+
+        <div class="game-field" style="margin-top:4px;">
+            <label><strong>دسته‌بندی بازی (gamecategory)</strong></label>
+            <div style="margin-top:6px;">
+                <?php
+                wp_editor( $gamecategory, 'gamecategory', array(
+                    'textarea_name' => 'gamecategory',
+                    'textarea_rows' => 4,
+                    'media_buttons' => false,
+                    'teeny'         => true,
+                ) );
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// ─────────────────────────────────────────
+// 6. Save Meta Fields
+// ─────────────────────────────────────────
+function game_save_meta_fields( $post_id ) {
+    // Security checks
+    if ( ! isset( $_POST['game_meta_nonce_field'] )
+        || ! wp_verify_nonce( $_POST['game_meta_nonce_field'], 'game_meta_nonce' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+    if ( get_post_type( $post_id ) !== 'game' ) return;
+
+    // Text fields
+    $text_fields = array(
+        'english_title',
+        'creatorname',
+        'storytitle',
+        'gametype',
+        'gamerevition',
+        'gamecreattime',
+        'gamenumbertoplay',
+        'gamerange',
+    );
+    foreach ( $text_fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
+        }
+    }
+
+    // Rich text fields (allow HTML)
+    $richtext_fields = array( 'summary', 'storycontent', 'gamecategory' );
+    foreach ( $richtext_fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            update_post_meta( $post_id, $field, wp_kses_post( $_POST[ $field ] ) );
+        }
+    }
+
+    // Image fields (store attachment ID)
+    $image_fields = array( 'creatorimage', 'heroimage', 'sideimage', 'storyimage', 'infoimage' );
+    foreach ( $image_fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            $attachment_id = absint( $_POST[ $field ] );
+            if ( $attachment_id > 0 ) {
+                update_post_meta( $post_id, $field, $attachment_id );
+            } else {
+                delete_post_meta( $post_id, $field );
+            }
+        }
+    }
+}
+add_action( 'save_post', 'game_save_meta_fields' );
+
+// ─────────────────────────────────────────
+// 7. Inline JS for Media Uploader
+// ─────────────────────────────────────────
+function game_meta_admin_footer() {
+    global $post;
+    if ( ! isset( $post ) || $post->post_type !== 'game' ) return;
+    ?>
+    <script>
+    (function($){
+        // Upload button
+        $(document).on('click', '.game-upload-btn', function(e){
+            e.preventDefault();
+            var btn      = $(this);
+            var targetId = btn.data('target');
+            var previewId = btn.data('preview');
+
+            var frame = wp.media({
+                title: 'انتخاب تصویر',
+                button: { text: 'انتخاب' },
+                multiple: false,
+                library: { type: 'image' }
+            });
+
+            frame.on('select', function(){
+                var attachment = frame.state().get('selection').first().toJSON();
+                $('#' + targetId).val(attachment.id);
+                var imgUrl = attachment.sizes && attachment.sizes.thumbnail
+                    ? attachment.sizes.thumbnail.url
+                    : attachment.url;
+                $('#' + previewId).html('<img src="' + imgUrl + '" style="max-width:150px;max-height:150px;display:block;border-radius:4px;border:1px solid #ddd;">');
+                btn.text('تغییر تصویر');
+
+                // Show remove button if not already there
+                if (!btn.next('.game-remove-btn').length) {
+                    btn.after('<button type="button" class="button game-remove-btn" data-target="' + targetId + '" data-preview="' + previewId + '" style="margin-right:6px;">حذف تصویر</button>');
+                }
+            });
+
+            frame.open();
+        });
+
+        // Remove button
+        $(document).on('click', '.game-remove-btn', function(e){
+            e.preventDefault();
+            var btn       = $(this);
+            var targetId  = btn.data('target');
+            var previewId = btn.data('preview');
+            $('#' + targetId).val('');
+            $('#' + previewId).html('');
+            btn.prev('.game-upload-btn').text('انتخاب تصویر');
+            btn.remove();
+        });
+    })(jQuery);
+    </script>
+    <style>
+        .game-meta-wrap { padding: 4px 0; }
+        .game-field label { display: block; }
+        .game-field input[type="text"] { margin-top: 5px; }
+        #game_tech_info .game-field input { font-size: 13px; }
+    </style>
+    <?php
+}
+add_action( 'admin_footer', 'game_meta_admin_footer' );
 
 /* ────────────────────────────────────────────────────────
    1. CREATE DB TABLE ON THEME ACTIVATION

@@ -1102,7 +1102,7 @@ h1{
 }
 .AnaStep-d1 { animation-delay: 0.1s; }
 .AnaStep-d2 { animation-delay: 0.2s; }
-.AnaStep-d3 { animation-delay: 0.32s;  display: flex; flex-direction: column; align-items: center; }
+.AnaStep-d3 { animation-delay: 0.32s;  display: flex; flex-direction: column; align-items: center; margin-left: 20px;     justify-content: center; }
 .AnaStep-d4 { animation-delay: 0.44s; }
 .AnaStep-d5 { animation-delay: 0.56s; }
 .AnaStep-d6 { animation-delay: 0.68s; }
@@ -1396,6 +1396,7 @@ h1{
 
 .AnaSingleGameHero-images img:first-child{
   width: 200px;
+  height: 45%;
   position: absolute;
   left: 0px;
   top: 0px;
@@ -1464,7 +1465,6 @@ h1{
   width:50px;
   height:50px;
   border-radius:50%;
-  border:3px solid #000;
   margin-left:-10px;
 }
 
@@ -1539,7 +1539,9 @@ h1{
 .AnaSingleGameInfo-left{
   direction: rtl;
 }
-
+.AnaSingleGameInfo-left p{
+  margin: 0;
+}
 
 .AnaSingleGameInfo-left h2{
   font-size:30px;
@@ -1992,48 +1994,6 @@ h1{
  
 @media (max-width: 480px) {
   .AnaContact-phone-prefix { padding: 0 10px; font-size: 12px; }
-}
-
-#form-loader{
-  display:none;
-}
-
-.loader-overlay{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(255,255,255,.9);
-  z-index:999999;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.loader-box{
-  text-align:center;
-}
-
-.loader-box p{
-  margin-top:15px;
-  font-family:iranSans,sans-serif;
-  color:#0A3F5A;
-  font-size:15px;
-}
-
-.spinner{
-  width:70px;
-  height:70px;
-  border:6px solid #e5e5e5;
-  border-top:6px solid #1FA6A6;
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
 }
 
 

@@ -1,72 +1,112 @@
 <?php get_header(); ?>
 
+<?php
+// Get meta values
+$english_title      = get_post_meta( get_the_ID(), 'english_title', true );
+$summary            = get_post_meta( get_the_ID(), 'summary', true );
+$creatorname        = get_post_meta( get_the_ID(), 'creatorname', true );
+$creatorimage_id    = get_post_meta( get_the_ID(), 'creatorimage', true );
+$heroimage_id       = get_post_meta( get_the_ID(), 'heroimage', true );
+$sideimage_id       = get_post_meta( get_the_ID(), 'sideimage', true );
+$storyimage_id      = get_post_meta( get_the_ID(), 'storyimage', true );
+$storytitle         = get_post_meta( get_the_ID(), 'storytitle', true );
+$storycontent       = get_post_meta( get_the_ID(), 'storycontent', true );
+$infoimage_id       = get_post_meta( get_the_ID(), 'infoimage', true );
+$gametype           = get_post_meta( get_the_ID(), 'gametype', true );
+$gamerevition       = get_post_meta( get_the_ID(), 'gamerevition', true );
+$gamecreattime      = get_post_meta( get_the_ID(), 'gamecreattime', true );
+$gamenumbertoplay   = get_post_meta( get_the_ID(), 'gamenumbertoplay', true );
+$gamerange          = get_post_meta( get_the_ID(), 'gamerange', true );
+$gamecategory       = get_post_meta( get_the_ID(), 'gamecategory', true );
+?>
+
 <div class="container-fluid AnaSingleGame">
+
     <!-- Hero -->
     <section class="AnaSingleGameHero">
         <div class="AnaSingleGameHero-images">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/NoraImage.png" alt="book">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/NoraImage.png" alt="Nora">
+            <?php if ( $sideimage_id ) : ?>
+                <?php echo wp_get_attachment_image( $sideimage_id, 'full', false, array( 'class' => 'AnaSingleGameHero-sideimage', 'alt' => get_the_title() ) ); ?>
+            <?php endif; ?>
+
+            <?php if ( $heroimage_id ) : ?>
+                <?php echo wp_get_attachment_image( $heroimage_id, 'full', false, array( 'class' => 'AnaSingleGameHero-heroimage', 'alt' => get_the_title() ) ); ?>
+            <?php endif; ?>
         </div>
+
         <div class="AnaSingleGameHero-content">
             <div class="AnaSingleGameHero-title">
                 <div>
-                    <h1>نورا</h1>
-                    <span>NORA</span>
+                    <h1><?php the_title(); ?></h1>
+                    <?php if ( $english_title ) : ?>
+                        <span><?php echo esc_html( $english_title ); ?></span>
+                    <?php endif; ?>
                 </div>
-                <p class="AnaSingleGameHero-subtitle iranSans">
-                    «گاهی برای پیدا کردن نورا باید بخشی از خودمان را پیدا کنیم.»
-                </p>
+                <?php if ( $summary ) : ?>
+                    <p class="AnaSingleGameHero-subtitle iranSans">
+                        <?php echo wp_kses_post( $summary ); ?>
+                    </p>
+                <?php endif; ?>
             </div>
+
             <div class="AnaSingleGameHero-text iranSans">
                 <p>
-                    نورا یک بازی داستان‌محور و روان‌شناختی است که شما را به سفری میان خاطرات، باورها و رازهای یک شخصیت مرموز می‌برد. در آغاز بازی، شما تنها با تکه‌هایی پراکنده از زندگی نورا روبه‌رو هستید؛ زنی که زمانی عاشق رنگ‌ها بود، اما در نقطه‌ای از زندگی‌اش چیزی را از دست داده که مسیر او را تغییر داده است. حالا این شما و هم‌گروهی‌هایتان هستید که باید از میان خاطرات، نشانه‌ها و روایت‌های مختلف، تصویری کامل از او بسازید. اما نورا فقط یک معمای ساده نیست. هر سرنخ، هر پرسش و هر کشف، شما را با مفاهیمی مانند قضاوت، خودپنداره، ترس‌های پنهان، روابط انسانی و بخش‌هایی از شخصیت که معمولاً نادیده گرفته می‌شوند روبه‌رو می‌کند. در این بازی هیچ‌کس فقط تماشاگر نیست. هرچه بیشتر به نورا نزدیک می‌شوید، بیشتر با پرسشی روبه‌رو خواهید شد که شاید به زندگی خودتان نیز مربوط باشد:
-                    «اگر کسی را که سال‌ها از خودش فاصله گرفته پیدا کنیم، چگونه می‌توانیم به او کمک کنیم؟»
-                    نورا تجربه‌ای است میان داستان، معما و خودشناسی؛ سفری برای کشف یک انسان و شاید کشف بخشی از خودتان.
+                    <?php the_content(); ?>
                 </p>
             </div>
+
             <div class="AnaSingleGameHero-rating">
                 <div class="AnaSingleGameHero-avatars">
-                    <img src="https://i.pravatar.cc/60?img=1">
+                    <?php if ( $creatorimage_id ) : ?>
+                        <?php echo wp_get_attachment_image( $creatorimage_id, 'thumbnail', false, array( 'class' => 'AnaSingleGameHero-creatorimage', 'alt' => esc_attr( $creatorname ) ) ); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="iranSans">
                     <strong>مولف :</strong>
-                    <span>آناهیتا موگویی</span>
+                    <?php if ( $creatorname ) : ?>
+                        <span><?php echo esc_html( $creatorname ); ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- Story -->
     <section class="AnaSingleGameStory">
         <div class="AnaSingleGameStory-image">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/NoraImage.png" alt="story">
+            <?php if ( $storyimage_id ) : ?>
+                <?php echo wp_get_attachment_image( $storyimage_id, 'full', false, array( 'class' => 'AnaSingleGameStory-img', 'alt' => esc_attr( $storytitle ) ) ); ?>
+            <?php endif; ?>
         </div>
+
         <div class="AnaSingleGameStory-EnglishCard">
             <div class="AnaSingleGameStory-card">
-                <h1>
-                    Uncover the truth hidden behind her narrative.
-                </h1>
-                <p>
-                    Nora is a story-driven, psychological game that takes you on a journey through the memories, beliefs, and secrets of a mysterious character. At the beginning of the game, you are faced only with scattered fragments of Nora’s life—a woman who once loved colors, until at some point she lost something that changed her path forever. Now it is up to you and your teammates to piece together a complete picture of her through memories, clues, and different accounts. But Nora is not a simple mystery. Every clue, every question, and every discovery confronts you with concepts such as judgment, self-image, hidden fears, human relationships, and the parts of a personality that are usually ignored.
-                    In this game, no one is just a spectator. The closer you get to Nora, the more you will face a question that may also relate to your own life:
-                    “If we find someone who has been distant from themselves for years, how can we help them?”
-                    Nora is an experience between story, puzzle, and self-discovery—a journey to uncover a human being, and perhaps to uncover a part of yourself.
-                    autorenewthumb_upthumb_down
-                </p>
+                <?php if ( $storytitle ) : ?>
+                    <h1><?php echo esc_html( $storytitle ); ?></h1>
+                <?php endif; ?>
+
+                <?php if ( $storycontent ) : ?>
+                    <p><?php echo wp_kses_post( $storycontent ); ?></p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
+
     <!-- Gallery -->
     <section class="AnaSingleGameGallery">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/NoraImage.png" alt="gallery">
+        <?php if ( $infoimage_id ) : ?>
+            <?php echo wp_get_attachment_image( $infoimage_id, 'full', false, array( 'class' => 'AnaSingleGameGallery-infoimage', 'alt' => get_the_title() ) ); ?>
+        <?php endif; ?>
     </section>
+
     <!-- Info -->
     <section class="AnaSingleGameInfo">
-        <div class="AnaSingleGameInfo-left">
+        <div class="AnaSingleGameInfo-left iranSans">
             <h2 class="iranSans_bold">نورا</h2>
             <h3 class="iranSans">مدار بازی</h3>
-            <p class="iranSans">
-                بازی گروهی معمایی با محوریت کشف داستان، تحلیل شخصیت و تصمیم‌گیری.
-            </p>
+            <?php if ( $gamecategory ) : ?>
+                <?php echo wp_kses_post( $gamecategory ); ?>
+            <?php endif; ?>
             <div class="AnaSingleGameInfo-buttons">
                 <a href="#" class="Anabtn btn-DeepOceanBlue">
                     درخواست ثبت نام
@@ -76,12 +116,15 @@
                 </a>
             </div>
         </div>
+
         <div class="iranSans AnaSingleGameInfo-right">
             <div class="AnaSingleGameInfo-top">
                 <div class="AnaSingleGameInfo-top-image">
                     <div class="AnaSingleGameInfo-avatar-title">
                         <span>نوع بازی</span>
-                        <strong>کارتی</strong>
+                        <?php if ( $gametype ) : ?>
+                            <strong><?php echo esc_html( $gametype ); ?></strong>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="AnaSingleGameInfo-top-logo">
@@ -91,23 +134,33 @@
                     </div>
                 </div>
             </div>
+
             <div class="iranSans AnaSingleGameInfo-grid">
                 <div class="AnaSingleGameInfo-grid-virsion">
                     <span>نسخه نهایی</span>
-                    <strong>ویرایش 1.00</strong>
-                    <span>اردیبهشت 1405</span>
+                    <?php if ( $gamerevition ) : ?>
+                        <strong><?php echo esc_html( $gamerevition ); ?></strong>
+                    <?php endif; ?>
+                    <?php if ( $gamecreattime ) : ?>
+                        <span><?php echo esc_html( $gamecreattime ); ?></span>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <span>شرکت کنندگان</span>
-                    <strong>2 تا 10 نفر</strong>
+                    <?php if ( $gamenumbertoplay ) : ?>
+                        <strong><?php echo esc_html( $gamenumbertoplay ); ?></strong>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <span>محدوده سنی</span>
-                    <strong>14 تا 94 سال</strong>
+                    <?php if ( $gamerange ) : ?>
+                        <strong><?php echo esc_html( $gamerange ); ?></strong>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </section>
+
 </div>
 
 <?php get_footer(); ?>

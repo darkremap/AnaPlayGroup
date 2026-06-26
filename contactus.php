@@ -223,17 +223,7 @@ get_header();
                     </svg>
                 </button>
             </form>
-            <div id="form-loader">
-                <div class="loader-overlay">
-                    <div class="loader-box">
-                        <div class="spinner"></div>
-                        <p>در حال ثبت اطلاعات، لطفاً صبر کنید...</p>
-                    </div>
-                </div>
-            </div>
         </div><!-- .AnaContact-form-wrap -->
     </div><!-- .AnaContact-wrap -->
 </main>
-
-
 <?php get_footer(); ?>

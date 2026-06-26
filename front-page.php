@@ -42,7 +42,7 @@
 
     <div class="AnaGames-gallery container-fluid">
         <div class="AnaGames-panel active">
-            <img src="https://picsum.photos/id/1015/800/800" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
             <span>
                 <div class="AnaGames-gallery-content">
                     <h1>نورا</h1>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="AnaGames-panel">
-            <img src="https://picsum.photos/id/1016/800/800" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
             <span>
                 <div class="AnaGames-gallery-content">
                     <h1>نورا</h1>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="AnaGames-panel">
-            <img src="https://picsum.photos/id/1018/800/800" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
             <span>
                 <div class="AnaGames-gallery-content">
                     <h1>نورا</h1>
@@ -111,7 +111,7 @@
         </div>
 
         <div class="AnaGames-panel">
-            <img src="https://picsum.photos/id/1020/800/800" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
             <span>
                 <div class="AnaGames-gallery-content">
                     <h1>نورا</h1>
@@ -134,7 +134,7 @@
         </div>
 
         <div class="AnaGames-panel">
-            <img src="https://picsum.photos/id/1024/800/800" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
             <span>
                 <div class="AnaGames-gallery-content">
                     <h1>نورا</h1>
