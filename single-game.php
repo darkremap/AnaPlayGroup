@@ -108,10 +108,10 @@ $gamecategory       = get_post_meta( get_the_ID(), 'gamecategory', true );
                 <?php echo wp_kses_post( $gamecategory ); ?>
             <?php endif; ?>
             <div class="AnaSingleGameInfo-buttons">
-                <a href="#" class="Anabtn btn-DeepOceanBlue">
+                <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="Anabtn btn-DeepOceanBlue">
                     درخواست ثبت نام
                 </a>
-                <a href="#" class="Anabtn btn-DeepOceanBlue-outline">
+                <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="Anabtn btn-DeepOceanBlue-outline">
                     درخواست مشاوره
                 </a>
             </div>
