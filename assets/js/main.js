@@ -169,4 +169,67 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   })();
 
+// scroll page to about us  -------------------------------------------------------------
+// scroll page to games -------------------------------------------------------------
+// Smooth scroll for anchor links
+document.addEventListener('DOMContentLoaded', function () {
+    function smoothScrollTo(targetId) {
+        var target = document.getElementById(targetId);
+        if (!target) return;
+        // Close mobile menu if open
+        var menuToggle = document.getElementById('menu-toggle');
+        var nav = document.querySelector('.main-navigation');
+        if (nav && nav.classList.contains('is-active')) {
+            nav.classList.remove('is-active');
+            if (menuToggle) menuToggle.classList.remove('is-active');
+        }
+        // Offset for sticky header
+        var headerHeight = document.getElementById('masthead')
+            ? document.getElementById('masthead').offsetHeight
+            : 0;
+
+        var targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 16;
+        window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    }
+    // درباره ما
+    document.querySelectorAll('a[href="#about-us"], a[href*="/#about-us"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            smoothScrollTo('about-us');
+        });
+    });
+    // بازی ها
+    document.querySelectorAll('a[href="#games"], a[href*="/#games"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            smoothScrollTo('games');
+        });
+    });
 });
+    // Smooth scroll for anchor links (درباره ما and any #hash links)
+  // document.addEventListener('DOMContentLoaded', function () {
+  //     document.querySelectorAll('a[href*="#about-us"], a[href="#about-us"]').forEach(function (link) {
+  //         link.addEventListener('click', function (e) {
+  //             var target = document.getElementById('about-us');
+  //             if (!target) return;
+  //             e.preventDefault();
+  //             // Close mobile menu if open
+  //             var menuToggle = document.getElementById('menu-toggle');
+  //             var nav = document.querySelector('.main-navigation');
+  //             if (nav && nav.classList.contains('is-active')) {
+  //                 nav.classList.remove('is-active');
+  //                 if (menuToggle) menuToggle.classList.remove('is-active');
+  //             }
+  //             // Offset for sticky header
+  //             var headerHeight = document.getElementById('masthead')
+  //                 ? document.getElementById('masthead').offsetHeight
+  //                 : 0;
+  //             var targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 16;
+  //             window.scrollTo({ top: targetTop, behavior: 'smooth' });
+  //         });
+  //     });
+  // });
+
+});
+
+

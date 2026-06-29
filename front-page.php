@@ -24,7 +24,7 @@
 </section>
 
 
-<section class="AnaGames">
+<section id="games" class="AnaGames">
     <div class="AnaGames-Title">
         <h1>هر بازی یک سفر</h1>
         <div class="AnaTitleBoarder">
@@ -280,7 +280,7 @@
     </div>
 </section>
 
-<section class="container AnaAboutUs">
+<section id="about-us" class="container AnaAboutUs">
     <!-- Title -->
     <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
         <h1 class="iranSans_bold">درباره ما</h1>
@@ -330,6 +330,17 @@
     </div>
 </section>
 
+<?php
+// Query all AnaComments
+$ana_comments_query = new WP_Query( array(
+    'post_type'      => 'ana_comment',
+    'posts_per_page' => -1,
+    'post_status'    => 'publish',
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+) );
+?>
+<?php if ( $ana_comments_query->have_posts() ) : ?>
 <div class="container AnaComments">
     <!-- Title -->
     <div class="AnaGames-Title AnaStep-fadeUp AnaStep-d1">
@@ -342,162 +353,92 @@
             <span class="divider-dot"></span>
         </div>
     </div>
-
     <!-- Slider -->
     <div class="AnaComments-slider-wrap AnaStep-fadeUp AnaStep-d2">
-    
         <!-- Prev arrow -->
         <button class="AnaComments-nav prev" id="ana-prev" aria-label="قبلی">&#8249;</button>
-    
         <div class="AnaComments-track-outer">
-        <div class="AnaComments-track" id="ana-track">
-    
-            <!-- Card 1 -->
-            <div class="AnaComments-card">
-                <p class="AnaComments-card-text">
-                    خیلی خوشحالم که در بازی شرکت کردم بی نظیر بود و وقتی کارنامه گرفتم شگفتزده شدم. خیلی خوشحالم که در بازی شرکت کردم بی نظیر بود و وقتی کارنامه گرفتم شگفتزده شدم.
-                </p>
-                <div class="AnaComments-card-footer">
-                    <div class="AnaComments-avatar">
-                        <div class="AnaComments-avatar-item">
-                            <div class="AnaComments-avatar-placeholder">
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ChartPersone.jpeg" alt="AnaPlayGroup">
+            <div class="AnaComments-track" id="ana-track">
+                <?php while ( $ana_comments_query->have_posts() ) : $ana_comments_query->the_post(); ?>
+                <?php
+                    $comment_id     = get_the_ID();
+                    $content        = get_post_meta( $comment_id, 'content', true );
+                    $commentpoint   = get_post_meta( $comment_id, 'commentpoint', true );
+                    $playername     = get_post_meta( $comment_id, 'playername', true );
+                    $playermejore   = get_post_meta( $comment_id, 'playermejore', true );
+                    $playerimage_id = get_post_meta( $comment_id, 'playerimage', true );
+                    $game_title     = get_the_title();
+                ?>
+                <!-- Card -->
+                <div class="AnaComments-card">
+                    <?php if ( $content ) : ?>
+                        <p class="AnaComments-card-text">
+                            <?php echo wp_kses_post( $content ); ?>
+                        </p>
+                    <?php endif; ?>
+                    <div class="AnaComments-card-footer">
+                        <div class="AnaComments-avatar">
+                            <div class="AnaComments-avatar-item">
+                                <div class="AnaComments-avatar-placeholder">
+                                    <?php if ( $playerimage_id ) : ?>
+                                        <?php echo wp_get_attachment_image(
+                                            $playerimage_id,
+                                            'thumbnail',
+                                            false,
+                                            array(
+                                                'alt'   => esc_attr( $playername ),
+                                                'style' => 'width:100%;height:100%;object-fit:cover;border-radius:50%;',
+                                            )
+                                        ); ?>
+                                    <?php else : ?>
+                                        <span class="AnaComments-avatar-fallback">
+                                            <?php echo mb_substr( $playername, 0, 1 ); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="AnaComments-avatar-info">
+                                    <?php if ( $playername ) : ?>
+                                        <div class="AnaComments-avatar-name">
+                                            <?php echo esc_html( $playername ); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ( $playermejore ) : ?>
+                                        <div class="AnaComments-avatar-role">
+                                            <?php echo esc_html( $playermejore ); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                            <div class="AnaComments-avatar-info">
-                                <div class="AnaComments-avatar-name">تام داوید</div>
-                                <div class="AnaComments-avatar-role">مهندس</div>
+                        </div>
+                        <div class="AnaComments-meta">
+                            <div class="AnaComments-meta-divider"></div>
+                            <div class="AnaComments-meta-item">
+                                <span class="AnaComments-meta-label">امتیاز</span>
+                                <span class="AnaComments-meta-value">
+                                    <span class="coin-icon">★</span>
+                                    <?php echo esc_html( $commentpoint ?: '—' ); ?>
+                                </span>
+                            </div>
+                            <div class="AnaComments-meta-divider"></div>
+                            <div class="AnaComments-meta-item">
+                                <span class="AnaComments-meta-label">نام بازی</span>
+                                <span class="AnaComments-meta-value">
+                                    <?php echo esc_html( $game_title ); ?>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div class="AnaComments-meta">
-                        <div class="AnaComments-meta-divider"></div>
-                        <div class="AnaComments-meta-item">
-                            <span class="AnaComments-meta-label">امتیاز</span>
-                            <span class="AnaComments-meta-value">
-                            <span class="coin-icon">★</span> ۸/۱۰
-                            </span>
-                        </div>
-                        <div class="AnaComments-meta-divider"></div>
-                        <div class="AnaComments-meta-item">
-                            <span class="AnaComments-meta-label">نام بازی</span>
-                            <span class="AnaComments-meta-value">سلوا</span>
-                        </div>
-                    </div>
                 </div>
-            </div>
-    
-            <!-- Card 2 -->
-            <div class="AnaComments-card">
-            <p class="AnaComments-card-text">
-                خیلی خوشحالم که در بازی شرکت کردم بی نظیر بود و وقتی کارنامه گرفتم شگفتزده شدم. خیلی خوشحالم که در بازی شرکت کردم بی نظیر بود و وقتی کارنامه گرفتم شگفتزده شدم.
-            </p>
-            <div class="AnaComments-card-footer">
-                <div class="AnaComments-avatar">
-                    <div class="AnaComments-avatar-item">
-                        <div class="AnaComments-avatar-placeholder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ChartPersone.jpeg" alt="AnaPlayGroup">
-                        </div>
-                        <div class="AnaComments-avatar-info">
-                            <div class="AnaComments-avatar-name">تام داوید</div>
-                            <div class="AnaComments-avatar-role">مهندس</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="AnaComments-meta">
-                <div class="AnaComments-meta-divider"></div>
-                <div class="AnaComments-meta-item">
-                    <span class="AnaComments-meta-label">امتیاز</span>
-                    <span class="AnaComments-meta-value">
-                    <span class="coin-icon">★</span> ۸/۱۰
-                    </span>
-                </div>
-                <div class="AnaComments-meta-divider"></div>
-                <div class="AnaComments-meta-item">
-                    <span class="AnaComments-meta-label">نام بازی</span>
-                    <span class="AnaComments-meta-value">سلوا</span>
-                </div>
-                </div>
-            </div>
-            </div>
-    
-            <!-- Card 3 -->
-            <div class="AnaComments-card">
-            <p class="AnaComments-card-text">
-                تجربه‌ای بی‌نظیر بود، هم از نظر یادگیری و هم از نظر ارتباط با اعضای تیم. پیشنهاد می‌کنم همه امتحان کنن.
-            </p>
-            <div class="AnaComments-card-footer">
-                <div class="AnaComments-avatar">
-                    <div class="AnaComments-avatar-item">
-                        <div class="AnaComments-avatar-placeholder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ChartPersone.jpeg" alt="AnaPlayGroup">
-                        </div>
-                        <div class="AnaComments-avatar-info">
-                            <div class="AnaComments-avatar-name">تام داوید</div>
-                            <div class="AnaComments-avatar-role">مهندس</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="AnaComments-meta">
-                <div class="AnaComments-meta-divider"></div>
-                <div class="AnaComments-meta-item">
-                    <span class="AnaComments-meta-label">امتیاز</span>
-                    <span class="AnaComments-meta-value">
-                    <span class="coin-icon">★</span> ۹/۱۰
-                    </span>
-                </div>
-                <div class="AnaComments-meta-divider"></div>
-                <div class="AnaComments-meta-item">
-                    <span class="AnaComments-meta-label">نام بازی</span>
-                    <span class="AnaComments-meta-value">آنا</span>
-                </div>
-                </div>
-            </div>
-            </div>
-    
-            <!-- Card 4 -->
-            <div class="AnaComments-card">
-            <p class="AnaComments-card-text">
-                واقعاً محیط امنی بود که تونستم با خودم رو به رو بشم. کارنامه‌ام خیلی چیزها بهم یاد داد که فکرش رو نمی‌کردم.
-            </p>
-            <div class="AnaComments-card-footer">
-                <div class="AnaComments-avatar">
-                    <div class="AnaComments-avatar-item">
-                        <div class="AnaComments-avatar-placeholder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ChartPersone.jpeg" alt="AnaPlayGroup">
-                        </div>
-                        <div class="AnaComments-avatar-info">
-                            <div class="AnaComments-avatar-name">تام داوید</div>
-                            <div class="AnaComments-avatar-role">مهندس</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="AnaComments-meta">
-                <div class="AnaComments-meta-divider"></div>
-                <div class="AnaComments-meta-item">
-                    <span class="AnaComments-meta-label">امتیاز</span>
-                    <span class="AnaComments-meta-value">
-                    <span class="coin-icon">★</span> ۱۰/۱۰
-                    </span>
-                </div>
-                <div class="AnaComments-meta-divider"></div>
-                <div class="AnaComments-meta-item">
-                    <span class="AnaComments-meta-label">نام بازی</span>
-                    <span class="AnaComments-meta-value">سلوا</span>
-                </div>
-                </div>
-            </div>
-            </div>
-    
-        </div>
-        </div>
-    
+                <!-- /Card -->
+                <?php endwhile; wp_reset_postdata(); ?>
+            </div><!-- /track -->
+        </div><!-- /track-outer -->
         <!-- Next arrow -->
         <button class="AnaComments-nav next" id="ana-next" aria-label="بعدی">&#8250;</button>
-    
-    </div>
-    
+    </div><!-- /slider-wrap -->
     <!-- Dots -->
     <div class="AnaComments-dots" id="ana-dots"></div>
-</div>
+</div><!-- /AnaComments -->
+<?php endif; ?>
 
 <?php get_footer(); ?>

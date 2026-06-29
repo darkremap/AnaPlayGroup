@@ -1209,3 +1209,16 @@ add_action( 'admin_menu', function() {
         }
     }
 }, 999 );
+
+
+// scroll page to about us  -------------------------------------------------------------
+function ana_enqueue_smooth_scroll() {
+    wp_enqueue_script(
+        'ana-smooth-scroll',
+        get_template_directory_uri() . '/assets/js/smooth-scroll.js',
+        array(), // بدون dependency
+        '1.0',
+        true     // footer
+    );
+}
+add_action( 'wp_enqueue_scripts', 'ana_enqueue_smooth_scroll' );
