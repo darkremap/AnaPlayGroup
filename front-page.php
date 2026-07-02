@@ -41,120 +41,45 @@
    </div>
 
     <div class="AnaGames-gallery container-fluid">
-        <div class="AnaGames-panel active">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
-            <span>
-                <div class="AnaGames-gallery-content">
-                    <h1>نورا</h1>
-                    <div class="iranSans AnaGames-gallery-content-body">
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سبک بازی:</h5>
-                            <p>همکاری گروهی، حل معما، تحلیل شخصیت، کشف داستان</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سطح تجربه:</h5>
-                            <p> مناسب برای بزرگسالان و نوجوانان علاقه‌مند به داستان، روان‌شناسی و بازی‌های تعاملی</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>هدف بازی:</h5>
-                            <p>بازسازی داستان زندگی نورا و کشف حقیقتی که پشت روایت او پنهان شده است.</p>
-                        </div>
-                    </div>
-                </div>
-            </span>
-        </div>
+        <?php
+        $games_query = new WP_Query( array(
+            'post_type'      => 'game',
+            'posts_per_page' => -1,
+            'orderby'        => 'menu_order',
+            'order'          => 'ASC',
+        ) );
 
-        <div class="AnaGames-panel">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
-            <span>
-                <div class="AnaGames-gallery-content">
-                    <h1>نورا</h1>
-                    <div class="iranSans AnaGames-gallery-content-body">
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سبک بازی:</h5>
-                            <p>همکاری گروهی، حل معما، تحلیل شخصیت، کشف داستان</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سطح تجربه:</h5>
-                            <p> مناسب برای بزرگسالان و نوجوانان علاقه‌مند به داستان، روان‌شناسی و بازی‌های تعاملی</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>هدف بازی:</h5>
-                            <p>بازسازی داستان زندگی نورا و کشف حقیقتی که پشت روایت او پنهان شده است.</p>
-                        </div>
-                    </div>
-                </div>
-            </span>
-        </div>
+        if ( $games_query->have_posts() ) :
+            $i = 0;
+            while ( $games_query->have_posts() ) : $games_query->the_post();
 
-        <div class="AnaGames-panel">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
-            <span>
-                <div class="AnaGames-gallery-content">
-                    <h1>نورا</h1>
-                    <div class="iranSans AnaGames-gallery-content-body">
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سبک بازی:</h5>
-                            <p>همکاری گروهی، حل معما، تحلیل شخصیت، کشف داستان</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سطح تجربه:</h5>
-                            <p> مناسب برای بزرگسالان و نوجوانان علاقه‌مند به داستان، روان‌شناسی و بازی‌های تعاملی</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>هدف بازی:</h5>
-                            <p>بازسازی داستان زندگی نورا و کشف حقیقتی که پشت روایت او پنهان شده است.</p>
-                        </div>
-                    </div>
-                </div>
-            </span>
-        </div>
+                $storyimage_id  = get_post_meta( get_the_ID(), 'infoimage', true );
+                $storyimage_url = $storyimage_id
+                    ? wp_get_attachment_image_url( $storyimage_id, 'full' )
+                    : get_template_directory_uri() . '/assets/images/hero.png'; // fallback
 
-        <div class="AnaGames-panel">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
-            <span>
-                <div class="AnaGames-gallery-content">
-                    <h1>نورا</h1>
-                    <div class="iranSans AnaGames-gallery-content-body">
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سبک بازی:</h5>
-                            <p>همکاری گروهی، حل معما، تحلیل شخصیت، کشف داستان</p>
+                $gamecategory = get_post_meta( get_the_ID(), 'gamecategory', true );
+                $active_class = ( $i === 0 ) ? ' active' : '';
+                ?>
+                <div class="AnaGames-panel<?php echo esc_attr( $active_class ); ?>">
+                    <img src="<?php echo esc_url( $storyimage_url ); ?>" alt="<?php the_title_attribute(); ?>">
+                    <span>
+                        <div class="AnaGames-gallery-content">
+                            <h1><?php the_title(); ?></h1>
+                            <div class="iranSans AnaGames-gallery-content-body">
+                                <?php echo wp_kses_post( $gamecategory ); ?>
+                            </div>
                         </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سطح تجربه:</h5>
-                            <p> مناسب برای بزرگسالان و نوجوانان علاقه‌مند به داستان، روان‌شناسی و بازی‌های تعاملی</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>هدف بازی:</h5>
-                            <p>بازسازی داستان زندگی نورا و کشف حقیقتی که پشت روایت او پنهان شده است.</p>
-                        </div>
-                    </div>
+                    </span>
                 </div>
-            </span>
-        </div>
-
-        <div class="AnaGames-panel">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero.png" alt="AnaPlayGroup">
-            <span>
-                <div class="AnaGames-gallery-content">
-                    <h1>نورا</h1>
-                    <div class="iranSans AnaGames-gallery-content-body">
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سبک بازی:</h5>
-                            <p>همکاری گروهی، حل معما، تحلیل شخصیت، کشف داستان</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>سطح تجربه:</h5>
-                            <p> مناسب برای بزرگسالان و نوجوانان علاقه‌مند به داستان، روان‌شناسی و بازی‌های تعاملی</p>
-                        </div>
-                        <div class="AnaGames-gallery-content-item">
-                            <h5>هدف بازی:</h5>
-                            <p>بازسازی داستان زندگی نورا و کشف حقیقتی که پشت روایت او پنهان شده است.</p>
-                        </div>
-                    </div>
-                </div>
-            </span>
-        </div>
+                <?php
+                $i++;
+            endwhile;
+            wp_reset_postdata();
+        else :
+            echo '<p>بازی‌ای ثبت نشده است.</p>';
+        endif;
+        ?>
     </div>
 </section>
 
