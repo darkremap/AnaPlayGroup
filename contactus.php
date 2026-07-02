@@ -166,7 +166,7 @@ get_header();
                         id="ana_contact_name"
                         name="ana_contact_name"
                         class="AnaContact-input iranSans"
-                        placeholder="مثلاً: علی رضایی"
+                        placeholder="مثلا سینا اکبری"
                         value="<?php echo esc_attr( $_POST['ana_contact_name'] ?? '' ); ?>"
                         required
                     />

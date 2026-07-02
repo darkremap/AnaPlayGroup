@@ -701,6 +701,274 @@ function ana_register_admin_menu() {
 }
 add_action( 'admin_menu', 'ana_register_admin_menu' );
  
+
+// comments plugin ---------------------------------------------------------------------------
+
+// ─────────────────────────────────────────
+// 1. Register Custom Post Type
+// ─────────────────────────────────────────
+function ana_register_comments_cpt() {
+    $labels = array(
+        'name'                  => _x( 'Comments', 'Post Type General Name', 'ana_comments' ),
+        'singular_name'         => _x( 'Comment', 'Post Type Singular Name', 'ana_comments' ),
+        'menu_name'             => __( 'AnaComments', 'ana_comments' ),
+        'name_admin_bar'        => __( 'Comment', 'ana_comments' ),
+        'archives'              => __( 'Comment Archives', 'ana_comments' ),
+        'all_items'             => __( 'All Comments', 'ana_comments' ),
+        'add_new_item'          => __( 'Add New Comment', 'ana_comments' ),
+        'add_new'               => __( 'Add New', 'ana_comments' ),
+        'new_item'              => __( 'New Comment', 'ana_comments' ),
+        'edit_item'             => __( 'Edit Comment', 'ana_comments' ),
+        'update_item'           => __( 'Update Comment', 'ana_comments' ),
+        'view_item'             => __( 'View Comment', 'ana_comments' ),
+        'search_items'          => __( 'Search Comment', 'ana_comments' ),
+        'not_found'             => __( 'Not found', 'ana_comments' ),
+        'not_found_in_trash'    => __( 'Not found in Trash', 'ana_comments' ),
+    );
+    $args = array(
+        'label'               => __( 'Comment', 'ana_comments' ),
+        'description'         => __( 'Player comments and reviews', 'ana_comments' ),
+        'labels'              => $labels,
+        'supports'            => array( 'title' ),
+        'hierarchical'        => false,
+        'public'              => false,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 6,
+        'menu_icon'           => 'dashicons-format-chat',
+        'show_in_admin_bar'   => true,
+        'show_in_nav_menus'   => false,
+        'can_export'          => true,
+        'has_archive'         => false,
+        'exclude_from_search' => true,
+        'publicly_queryable'  => false,
+        'capability_type'     => 'post',
+        'rewrite'             => false,
+    );
+    register_post_type( 'ana_comment', $args );
+}
+add_action( 'init', 'ana_register_comments_cpt', 0 );
+
+// ─────────────────────────────────────────
+// 2. Enqueue Media Uploader
+// ─────────────────────────────────────────
+function ana_comments_enqueue_scripts( $hook ) {
+    global $post;
+    if ( ( $hook === 'post-new.php' || $hook === 'post.php' )
+        && isset( $post ) && $post->post_type === 'ana_comment' ) {
+        wp_enqueue_media();
+        wp_enqueue_editor();
+    }
+}
+add_action( 'admin_enqueue_scripts', 'ana_comments_enqueue_scripts' );
+
+// ─────────────────────────────────────────
+// 3. Register Meta Boxes
+// ─────────────────────────────────────────
+function ana_comments_register_meta_boxes() {
+    add_meta_box(
+        'ana_comment_main',
+        'محتوای نظر',
+        'ana_comment_main_cb',
+        'ana_comment',
+        'normal',
+        'high'
+    );
+    add_meta_box(
+        'ana_comment_player',
+        'اطلاعات بازیکن',
+        'ana_comment_player_cb',
+        'ana_comment',
+        'side',
+        'default'
+    );
+}
+add_action( 'add_meta_boxes', 'ana_comments_register_meta_boxes' );
+
+// ─────────────────────────────────────────
+// 4. Helper: Image Field
+// ─────────────────────────────────────────
+function ana_image_field( $post, $meta_key, $label ) {
+    $value   = get_post_meta( $post->ID, $meta_key, true );
+    $img_src = $value ? wp_get_attachment_image_src( $value, 'thumbnail' ) : false;
+    ?>
+    <div class="ana-image-field" style="margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:6px;"><?php echo esc_html( $label ); ?></label>
+        <div id="preview_<?php echo esc_attr( $meta_key ); ?>" style="margin-bottom:8px;">
+            <?php if ( $img_src ) : ?>
+                <img src="<?php echo esc_url( $img_src[0] ); ?>" style="max-width:120px;max-height:120px;display:block;border-radius:50%;border:2px solid #ddd;">
+            <?php endif; ?>
+        </div>
+        <input type="hidden" name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>" value="<?php echo esc_attr( $value ); ?>">
+        <button type="button" class="button ana-upload-btn" data-target="<?php echo esc_attr( $meta_key ); ?>" data-preview="preview_<?php echo esc_attr( $meta_key ); ?>">
+            <?php echo $value ? 'تغییر تصویر' : 'انتخاب تصویر'; ?>
+        </button>
+        <?php if ( $value ) : ?>
+            <button type="button" class="button ana-remove-btn" data-target="<?php echo esc_attr( $meta_key ); ?>" data-preview="preview_<?php echo esc_attr( $meta_key ); ?>" style="margin-right:6px;">
+                حذف
+            </button>
+        <?php endif; ?>
+    </div>
+    <?php
+}
+
+// ─────────────────────────────────────────
+// 5. Meta Box Callbacks
+// ─────────────────────────────────────────
+
+// --- Main Content ---
+function ana_comment_main_cb( $post ) {
+    wp_nonce_field( 'ana_comment_nonce', 'ana_comment_nonce_field' );
+    $content      = get_post_meta( $post->ID, 'content', true );
+    $commentpoint = get_post_meta( $post->ID, 'commentpoint', true );
+    ?>
+    <div style="padding:4px 0;">
+
+        <div style="margin-bottom:16px;">
+            <label style="display:block;font-weight:600;margin-bottom:6px;">متن نظر (content)</label>
+            <?php
+            wp_editor( $content, 'ana_content', array(
+                'textarea_name' => 'content',
+                'textarea_rows' => 8,
+                'media_buttons' => false,
+                'teeny'         => true,
+            ) );
+            ?>
+        </div>
+
+        <div>
+            <label for="commentpoint" style="display:block;font-weight:600;margin-bottom:6px;">امتیاز نظر (commentpoint)</label>
+            <input type="text" name="commentpoint" id="commentpoint"
+                   value="<?php echo esc_attr( $commentpoint ); ?>"
+                   class="widefat"
+                   placeholder="مثال: ۴.۵ یا 9/10">
+        </div>
+
+    </div>
+    <?php
+}
+
+// --- Player Info (sidebar) ---
+function ana_comment_player_cb( $post ) {
+    $playername  = get_post_meta( $post->ID, 'playername', true );
+    $playermejore = get_post_meta( $post->ID, 'playermejore', true );
+    ?>
+    <div style="padding:4px 0;">
+
+        <div style="margin-bottom:14px;">
+            <label for="playername" style="display:block;font-weight:600;margin-bottom:5px;">نام بازیکن (playername)</label>
+            <input type="text" name="playername" id="playername"
+                   value="<?php echo esc_attr( $playername ); ?>"
+                   class="widefat">
+        </div>
+
+        <div style="margin-bottom:14px;">
+            <label for="playermejore" style="display:block;font-weight:600;margin-bottom:5px;">مدرک بازیکن (playermejore)</label>
+            <input type="text" name="playermejore" id="playermejore"
+                   value="<?php echo esc_attr( $playermejore ); ?>"
+                   class="widefat">
+        </div>
+
+        <?php ana_image_field( $post, 'playerimage', 'تصویر بازیکن (playerimage)' ); ?>
+
+    </div>
+    <?php
+}
+
+// ─────────────────────────────────────────
+// 6. Save Meta Fields
+// ─────────────────────────────────────────
+function ana_comments_save_meta( $post_id ) {
+    if ( ! isset( $_POST['ana_comment_nonce_field'] )
+        || ! wp_verify_nonce( $_POST['ana_comment_nonce_field'], 'ana_comment_nonce' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+    if ( get_post_type( $post_id ) !== 'ana_comment' ) return;
+
+    // Text fields
+    $text_fields = array( 'commentpoint', 'playername', 'playermejore' );
+    foreach ( $text_fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
+        }
+    }
+
+    // Rich text
+    if ( isset( $_POST['content'] ) ) {
+        update_post_meta( $post_id, 'content', wp_kses_post( $_POST['content'] ) );
+    }
+
+    // Image (attachment ID)
+    if ( isset( $_POST['playerimage'] ) ) {
+        $attachment_id = absint( $_POST['playerimage'] );
+        if ( $attachment_id > 0 ) {
+            update_post_meta( $post_id, 'playerimage', $attachment_id );
+        } else {
+            delete_post_meta( $post_id, 'playerimage' );
+        }
+    }
+}
+add_action( 'save_post', 'ana_comments_save_meta' );
+
+// ─────────────────────────────────────────
+// 7. Inline JS for Media Uploader
+// ─────────────────────────────────────────
+function ana_comments_admin_footer() {
+    global $post;
+    if ( ! isset( $post ) || $post->post_type !== 'ana_comment' ) return;
+    ?>
+    <script>
+    (function($){
+        $(document).on('click', '.ana-upload-btn', function(e){
+            e.preventDefault();
+            var btn       = $(this);
+            var targetId  = btn.data('target');
+            var previewId = btn.data('preview');
+
+            var frame = wp.media({
+                title: 'انتخاب تصویر بازیکن',
+                button: { text: 'انتخاب' },
+                multiple: false,
+                library: { type: 'image' }
+            });
+
+            frame.on('select', function(){
+                var attachment = frame.state().get('selection').first().toJSON();
+                $('#' + targetId).val(attachment.id);
+                var imgUrl = attachment.sizes && attachment.sizes.thumbnail
+                    ? attachment.sizes.thumbnail.url
+                    : attachment.url;
+                $('#' + previewId).html('<img src="' + imgUrl + '" style="max-width:120px;max-height:120px;display:block;border-radius:50%;border:2px solid #ddd;">');
+                btn.text('تغییر تصویر');
+                if ( !btn.next('.ana-remove-btn').length ) {
+                    btn.after('<button type="button" class="button ana-remove-btn" data-target="' + targetId + '" data-preview="' + previewId + '" style="margin-right:6px;">حذف</button>');
+                }
+            });
+
+            frame.open();
+        });
+
+        $(document).on('click', '.ana-remove-btn', function(e){
+            e.preventDefault();
+            var btn       = $(this);
+            var targetId  = btn.data('target');
+            var previewId = btn.data('preview');
+            $('#' + targetId).val('');
+            $('#' + previewId).html('');
+            btn.prev('.ana-upload-btn').text('انتخاب تصویر');
+            btn.remove();
+        });
+    })(jQuery);
+    </script>
+    <?php
+}
+add_action( 'admin_footer', 'ana_comments_admin_footer' );
+
+
+
+// contactus page in panel admin  ----------------------------------------------------------------------------------------------
  
 function ana_contacts_admin_page() {
     global $wpdb;
@@ -941,3 +1209,16 @@ add_action( 'admin_menu', function() {
         }
     }
 }, 999 );
+
+
+// scroll page to about us  -------------------------------------------------------------
+function ana_enqueue_smooth_scroll() {
+    wp_enqueue_script(
+        'ana-smooth-scroll',
+        get_template_directory_uri() . '/assets/js/smooth-scroll.js',
+        array(), // بدون dependency
+        '1.0',
+        true     // footer
+    );
+}
+add_action( 'wp_enqueue_scripts', 'ana_enqueue_smooth_scroll' );
