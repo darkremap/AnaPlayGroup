@@ -1418,7 +1418,7 @@ h1{
 }
 
 .AnaSingleGameHero-title{
-  background:var(--WarmGold);
+  background:var(--lightGray);
   display:flex;
   flex-direction: column;
   padding:25px;
