@@ -11,7 +11,7 @@
           با بهره‌گیری از روش‌های نوین یادگیری، دنیایی از کشف و خلاقیت را تجربه کنید.
           ما راهنمای شما در مسیر رشد و شناخت عمیق‌تر هستیم.
         </p>
-        <a href="#" class="btn-consult Anabtn">درخواست مشاوره</a>
+        <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="btn-consult Anabtn">درخواست مشاوره</a>
       </div>
 
       <!-- ── Left column: hero image ── -->
@@ -199,7 +199,7 @@
             <p class="iranSans">ما اینجا هستیم تا در مسیر رسیدن به اهدافتان همراه شما باشیم. اگر پروژه خاصی در نظر دارید یا برای چالش‌های خود به راهنمایی تخصصی نیاز دارید، تیم ما آماده است تا بینش‌های کاربردی مورد نیازتان را ارائه دهد.</p>
         </div>
     </div>
-    <a href="#" class="btn-consult Anabtn">درخواست مشاوره</a>
+    <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" class="btn-consult Anabtn">درخواست مشاوره</a>
     <div class="container AnaConsultation-image">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Consultation.png" alt="AnaPlayGroup">
     </div>

@@ -66,12 +66,12 @@
  
         <?php
         // Store social URLs in Customizer — Appearance > Customize > Social Links
-        $facebook  = get_theme_mod( 'ana_social_facebook',  'https://github.com/darkremap/AnaPlayGroup/pull/13' );
-        $twitter   = get_theme_mod( 'ana_social_twitter',   'https://github.com/darkremap/AnaPlayGroup/pull/13' );
-        $instagram = get_theme_mod( 'ana_social_instagram', 'https://github.com/darkremap/AnaPlayGroup/pull/13' );
-        $linkedin  = get_theme_mod( 'ana_social_linkedin',  'https://github.com/darkremap/AnaPlayGroup/pull/13' );
-        $whatsapp  = get_theme_mod( 'ana_social_whatsapp',  'https://github.com/darkremap/AnaPlayGroup/pull/13' );
-        $telegram  = get_theme_mod( 'ana_social_telegram',  'https://github.com/darkremap/AnaPlayGroup/pull/13' );
+        $facebook  = get_theme_mod( 'ana_social_facebook',  '' );
+        $twitter   = get_theme_mod( 'ana_social_twitter',   '' );
+        $instagram = get_theme_mod( 'ana_social_instagram', 'https://www.instagram.com/anaplaygroup/' );
+        $linkedin  = get_theme_mod( 'ana_social_linkedin',  'https://www.linkedin.com/in/ana-play-group/' );
+        $whatsapp  = get_theme_mod( 'ana_social_whatsapp',  'https://wa.me/989210031737' );
+        $telegram  = get_theme_mod( 'ana_social_telegram',  'https://t.me/+9_Ig2QrrF-Y4MWI0' );
         ?>
  
         <?php if ( $facebook && $facebook !== '#' ) : ?>
