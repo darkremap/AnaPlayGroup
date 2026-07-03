@@ -30,10 +30,8 @@ get_header();
 
     <!-- ══ Main Layout ══ -->
     <div class="AnaContact-wrap">
-
         <!-- ── Left: Info cards ── -->
         <div class="AnaContact-info AnaStep-fadeUp AnaStep-d2">
-
             <div class="AnaContact-info__card">
                 <div class="AnaContact-info__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -43,10 +41,9 @@ get_header();
                 </div>
                 <div class="AnaContact-info__text">
                     <span class="AnaContact-info__label iranSans">تلفن تماس</span>
-                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">0921-0031737</span>
                 </div>
             </div>
-
             <div class="AnaContact-info__card">
                 <div class="AnaContact-info__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -57,25 +54,76 @@ get_header();
                 </div>
                 <div class="AnaContact-info__text">
                     <span class="AnaContact-info__label iranSans">ایمیل</span>
-                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">info@anaplay.ir</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">info@anaplaygroup.com</span>
                 </div>
             </div>
-
-            <div class="AnaContact-info__card">
+            <a href="https://www.instagram.com/anaplaygroup/" target="_blank" rel="noopener" class="AnaContact-info__card">
                 <div class="AnaContact-info__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                          stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
                     </svg>
                 </div>
                 <div class="AnaContact-info__text">
-                    <span class="AnaContact-info__label iranSans">آدرس</span>
-                    <span class="AnaContact-info__value iranSans_bold">تهران، خیابان ولیعصر</span>
+                    <span class="AnaContact-info__label iranSans">اینستاگرام</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">@anaplaygroup</span>
                 </div>
-            </div>
+            </a>
+            <a href="https://t.me/+9_Ig2QrrF-Y4MWI0" target="_blank" rel="noopener" class="AnaContact-info__card">
+                <div class="AnaContact-info__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2 11 13"/>
+                        <path d="M22 2 15 22l-4-9-9-4 20-7z"/>
+                    </svg>
+                </div>
+                <div class="AnaContact-info__text">
+                    <span class="AnaContact-info__label iranSans">تلگرام</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">@anaplaygroup</span>
+                </div>
+            </a>
+            <a href="https://wa.me/989210031737" target="_blank" rel="noopener" class="AnaContact-info__card">
+                <div class="AnaContact-info__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                </div>
+                <div class="AnaContact-info__text">
+                    <span class="AnaContact-info__label iranSans">واتس‌اپ</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">0921-0031737</span>
+                </div>
+            </a>
+            <a href="https://www.linkedin.com/in/ana-play-group/" target="_blank" rel="noopener" class="AnaContact-info__card">
+                <div class="AnaContact-info__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </div>
+                <div class="AnaContact-info__text">
+                    <span class="AnaContact-info__label iranSans">لینکدین</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">Ana Play Group</span>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/@anaplaygroup" target="_blank" rel="noopener" class="AnaContact-info__card">
+                <div class="AnaContact-info__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/>
+                        <polygon points="9.75,15.02 15.5,11.75 9.75,8.48"/>
+                    </svg>
+                </div>
+                <div class="AnaContact-info__text">
+                    <span class="AnaContact-info__label iranSans">یوتیوب</span>
+                    <span class="AnaContact-info__value iranSans_bold" dir="ltr">Ana Play Group</span>
+                </div>
+            </a>
         </div>
-
         <!-- ── Right: Form ── -->
         <div class="AnaContact-form-wrap AnaStep-fadeUp AnaStep-d3">
             <?php

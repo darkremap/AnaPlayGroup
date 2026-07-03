@@ -56,12 +56,12 @@
                 $storyimage_id  = get_post_meta( get_the_ID(), 'infoimage', true );
                 $storyimage_url = $storyimage_id
                     ? wp_get_attachment_image_url( $storyimage_id, 'full' )
-                    : get_template_directory_uri() . '/assets/images/hero.png'; // fallback
+                    : get_template_directory_uri() . '/assets/images/hero.png';
 
                 $gamecategory = get_post_meta( get_the_ID(), 'gamecategory', true );
                 $active_class = ( $i === 0 ) ? ' active' : '';
                 ?>
-                <div class="AnaGames-panel<?php echo esc_attr( $active_class ); ?>">
+                <a href="<?php the_permalink(); ?>" class="AnaGames-panel<?php echo esc_attr( $active_class ); ?>">
                     <img src="<?php echo esc_url( $storyimage_url ); ?>" alt="<?php the_title_attribute(); ?>">
                     <span>
                         <div class="AnaGames-gallery-content">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     </span>
-                </div>
+                </a>
                 <?php
                 $i++;
             endwhile;

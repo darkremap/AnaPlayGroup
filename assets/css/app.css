@@ -1740,7 +1740,9 @@ h1{
     flex-direction: column;
     gap: 16px;
 }
- 
+.AnaContact-info a{
+  text-decoration: none;
+}
 .AnaContact-info__card {
     display: flex;
     align-items: center;
