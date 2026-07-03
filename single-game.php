@@ -72,7 +72,7 @@ $gamecategory       = get_post_meta( get_the_ID(), 'gamecategory', true );
     </section>
 
     <!-- Story -->
-    <section class="AnaSingleGameStory">
+    <section class="AnaSingleGameStory container">
         <div class="AnaSingleGameStory-image">
             <?php if ( $storyimage_id ) : ?>
                 <?php echo wp_get_attachment_image( $storyimage_id, 'full', false, array( 'class' => 'AnaSingleGameStory-img', 'alt' => esc_attr( $storytitle ) ) ); ?>
@@ -93,7 +93,7 @@ $gamecategory       = get_post_meta( get_the_ID(), 'gamecategory', true );
     </section>
 
     <!-- Gallery -->
-    <section class="AnaSingleGameGallery">
+    <section class="AnaSingleGameGallery container">
         <?php if ( $infoimage_id ) : ?>
             <?php echo wp_get_attachment_image( $infoimage_id, 'full', false, array( 'class' => 'AnaSingleGameGallery-infoimage', 'alt' => get_the_title() ) ); ?>
         <?php endif; ?>
