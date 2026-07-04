@@ -6,14 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (menuToggle && mainNavigation) {
         
         menuToggle.addEventListener('click', function () {
-            // این خط باید در کنسول مرورگر چاپ شود تا مطمئن شویم کلیک کار میکند
-            console.log('Hamburger Clicked!'); 
-            
             this.classList.toggle('active');
             mainNavigation.classList.toggle('active');
-            
-            // لاگ وضعیت کلاس
-            console.log('Button classes:', this.className);
+            this.setAttribute('aria-expanded', this.classList.contains('active') ? 'true' : 'false');
         });
 
         // بستن منو با کلیک روی لینک‌ها
@@ -22,7 +17,20 @@ document.addEventListener('DOMContentLoaded', function () {
             link.addEventListener('click', function () {
                 menuToggle.classList.remove('active');
                 mainNavigation.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
             });
+        });
+
+        // بستن منو با کلیک روی هر جای صفحه بجز خود منو و دکمه همبرگر
+        document.addEventListener('click', function (e) {
+            if (!mainNavigation.classList.contains('active')) return;
+            const clickedInsideNav    = mainNavigation.contains(e.target);
+            const clickedToggleButton = menuToggle.contains(e.target);
+            if (!clickedInsideNav && !clickedToggleButton) {
+                menuToggle.classList.remove('active');
+                mainNavigation.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
         });
         
     } else {
@@ -179,9 +187,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Close mobile menu if open
         var menuToggle = document.getElementById('menu-toggle');
         var nav = document.querySelector('.main-navigation');
-        if (nav && nav.classList.contains('is-active')) {
-            nav.classList.remove('is-active');
-            if (menuToggle) menuToggle.classList.remove('is-active');
+        if (nav && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            if (menuToggle) {
+                menuToggle.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
         }
         // Offset for sticky header
         var headerHeight = document.getElementById('masthead')
@@ -231,5 +242,3 @@ document.addEventListener('DOMContentLoaded', function () {
   // });
 
 });
-
-

@@ -161,6 +161,65 @@ $gamecategory       = get_post_meta( get_the_ID(), 'gamecategory', true );
         </div>
     </section>
 
+    <section id="games" class="AnaGames">
+        <div class="AnaGames-Title">
+            <h1>سایر بازی ها</h1>
+            <div class="AnaTitleBoarder">
+                <span class="divider-dot"></span>
+                <span class="divider-line"></span>
+                <span class="divider-diamond"></span>
+                <span class="divider-line"></span>
+                <span class="divider-dot"></span>
+            </div>
+            <div class="AnaGames-Content">
+                <p class="iranSans">بازی‌های ما صرفاً برای سرگرمی نیستند.</p>
+                <p class="iranSans">آن‌ها فضایی برای کنجکاوی، تأمل و آگاهی عمیق‌تر نسبت به خود و دیگران ایجاد می‌کنند.</p>
+            </div>
+        </div>
+
+        <div class="AnaGames-gallery container-fluid">
+            <?php
+            $games_query = new WP_Query( array(
+                'post_type'      => 'game',
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC',
+            ) );
+
+            if ( $games_query->have_posts() ) :
+                $i = 0;
+                while ( $games_query->have_posts() ) : $games_query->the_post();
+
+                    $storyimage_id  = get_post_meta( get_the_ID(), 'infoimage', true );
+                    $storyimage_url = $storyimage_id
+                        ? wp_get_attachment_image_url( $storyimage_id, 'full' )
+                        : get_template_directory_uri() . '/assets/images/hero.png';
+
+                    $gamecategory = get_post_meta( get_the_ID(), 'gamecategory', true );
+                    $active_class = ( $i === 0 ) ? ' active' : '';
+                    ?>
+                    <div class="AnaGames-panel<?php echo esc_attr( $active_class ); ?>" >
+                        <img src="<?php echo esc_url( $storyimage_url ); ?>" alt="<?php the_title_attribute(); ?>">
+                        <span>
+                            <div class="AnaGames-gallery-content">
+                                <h1><?php the_title(); ?></h1>
+                                <div class="iranSans AnaGames-gallery-content-body">
+                                    <?php echo wp_kses_post( $gamecategory ); ?>
+                                </div>
+                                <a class="btn-consult Anabtn" href="<?php the_permalink(); ?>">مشاهده اطلاعات</a>
+                            </div>
+                        </span>
+                    </div>
+                    <?php
+                    $i++;
+                endwhile;
+                wp_reset_postdata();
+            else :
+                echo '<p>بازی‌ای ثبت نشده است.</p>';
+            endif;
+            ?>
+        </div>
+    </section>
 </div>
 
 <?php get_footer(); ?>
