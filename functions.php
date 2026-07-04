@@ -41,6 +41,25 @@ if ( ! function_exists( 'ana_setup' ) ) {
 }
 add_action( 'after_setup_theme', 'ana_setup' );
 
+
+// meta link  --------------------------------------------------------------------------------------------------------------
+
+function ana_seo_meta_tags() {
+    if ( is_page( 'about' ) || is_page('درباره-ما') ) { // اسلاگ صفحه رو جایگزین کنید
+        ?>
+        <title>درباره آنا | آفاق نگار اندیشه آنا - بازی‌محوری برای رشد فردی و سازمانی</title>
+        <meta name="description" content="آنا با تلفیق بازی، رفتارشناسی و طراحی تجربه، به افراد و سازمان‌ها کمک می‌کند خود را بهتر بشناسند، فرهنگ سازمانی پویا بسازند و رشد فردی را تجربه کنند.">
+        
+        <!-- Open Graph برای شبکه‌های اجتماعی -->
+        <meta property="og:title" content="درباره آنا | آفاق نگار اندیشه آنا">
+        <meta property="og:description" content="بازی به‌عنوان زبانی جهانی برای یادگیری، خودشناسی و تحول سازمانی.">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="fa_IR">
+        <?php
+    }
+}
+add_action( 'wp_head', 'ana_seo_meta_tags', 1 );
+
 /**
  * Set content width for the theme.
  */
@@ -1212,13 +1231,5 @@ add_action( 'admin_menu', function() {
 
 
 // scroll page to about us  -------------------------------------------------------------
-function ana_enqueue_smooth_scroll() {
-    wp_enqueue_script(
-        'ana-smooth-scroll',
-        get_template_directory_uri() . '/assets/js/smooth-scroll.js',
-        array(), // بدون dependency
-        '1.0',
-        true     // footer
-    );
-}
-add_action( 'wp_enqueue_scripts', 'ana_enqueue_smooth_scroll' );
+// حذف شد: main.js از قبل با هندل 'ana-main' در تابع ana_scripts() لود می‌شود.
+// enqueue دوباره‌ی همین فایل با هندل جدا باعث اجرای دوبار اسکریپت و از کار افتادن دکمه همبرگر می‌شد.

@@ -61,7 +61,7 @@
                 $gamecategory = get_post_meta( get_the_ID(), 'gamecategory', true );
                 $active_class = ( $i === 0 ) ? ' active' : '';
                 ?>
-                <a href="<?php the_permalink(); ?>" class="AnaGames-panel<?php echo esc_attr( $active_class ); ?>">
+                <div class="AnaGames-panel<?php echo esc_attr( $active_class ); ?>" >
                     <img src="<?php echo esc_url( $storyimage_url ); ?>" alt="<?php the_title_attribute(); ?>">
                     <span>
                         <div class="AnaGames-gallery-content">
@@ -69,9 +69,10 @@
                             <div class="iranSans AnaGames-gallery-content-body">
                                 <?php echo wp_kses_post( $gamecategory ); ?>
                             </div>
+                            <a class="btn-consult Anabtn" href="<?php the_permalink(); ?>">مشاهده اطلاعات</a>
                         </div>
                     </span>
-                </a>
+                </div>
                 <?php
                 $i++;
             endwhile;
