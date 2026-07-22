@@ -78,71 +78,150 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // AnaComments  ---------------------------------------------------------------------------
+(function(){
 
-  (function () {
-      const track   = document.getElementById('ana-track');
-      const prevBtn = document.getElementById('ana-prev');
-      const nextBtn = document.getElementById('ana-next');
-      const dotsEl  = document.getElementById('ana-dots');
-      if (!track || !prevBtn || !nextBtn || !dotsEl) {
-          return;
-      }
-      const cards      = track.querySelectorAll('.AnaComments-card');
-      const total      = cards.length;
-      const visibleCount = () => window.innerWidth <= 760 ? 1 : 2;
-      let current = 0;
-  
-      // Build dots
-      function buildDots() {
-        dotsEl.innerHTML = '';
-        const steps = total - visibleCount() + 1;
-        for (let i = 0; i < steps; i++) {
-          const d = document.createElement('span');
-          d.className = 'AnaComments-dot' + (i === current ? ' active' : '');
-          d.addEventListener('click', () => goTo(i));
-          dotsEl.appendChild(d);
-        }
-      }
-  
-      function updateDots() {
-        dotsEl.querySelectorAll('.AnaComments-dot').forEach((d, i) => {
-          d.classList.toggle('active', i === current);
-        });
-      }
-  
-      function cardWidth() {
-        return cards[0].offsetWidth + 24; // 24 = gap
-      }
-  
-      function goTo(index) {
-        const maxIndex = total - visibleCount();
-        current = Math.max(0, Math.min(index, maxIndex));
-        track.style.transform = `translateX(${current * cardWidth()}px)`;
-        updateDots();
-      }
-  
-      prevBtn.addEventListener('click', () => goTo(current - 1));
-      nextBtn.addEventListener('click', () => goTo(current + 1));
-  
-      // Keyboard
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight') goTo(current - 1);
-        if (e.key === 'ArrowLeft')  goTo(current + 1);
-      });
-  
-      // Touch/swipe
-      let startX = 0;
-      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-      track.addEventListener('touchend', e => {
-        const diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
-      });
-  
-      // Init & resize
-      buildDots();
-      window.addEventListener('resize', () => { buildDots(); goTo(current); });
-  })();
+const track=document.getElementById("ana-track");
+const prev=document.getElementById("ana-prev");
+const next=document.getElementById("ana-next");
+const dots=document.getElementById("ana-dots");
 
+if(!track) return;
+
+const cards=[...track.querySelectorAll(".AnaComments-card")];
+
+let current=0;
+
+function visible(){
+
+    return window.innerWidth<=760?1:2;
+
+}
+
+function gap(){
+
+    return parseFloat(getComputedStyle(track).gap)||0;
+
+}
+
+function cardWidth(){
+
+    return cards[0].getBoundingClientRect().width+gap();
+
+}
+
+function maxIndex(){
+
+    return Math.max(0,cards.length-visible());
+
+}
+
+function move(){
+
+    track.style.transform=`translateX(-${current*cardWidth()}px)`;
+
+    updateDots();
+
+}
+
+function go(index){
+
+    current=Math.max(0,Math.min(index,maxIndex()));
+
+    move();
+
+}
+
+function buildDots(){
+
+    dots.innerHTML="";
+
+    for(let i=0;i<=maxIndex();i++){
+
+        const d=document.createElement("span");
+
+        d.className="AnaComments-dot";
+
+        if(i===current) d.classList.add("active");
+
+        d.onclick=()=>go(i);
+
+        dots.appendChild(d);
+
+    }
+
+}
+
+function updateDots(){
+
+    [...dots.children].forEach((d,i)=>{
+
+        d.classList.toggle("active",i===current);
+
+    });
+
+}
+
+prev?.addEventListener("click",()=>go(current-1));
+
+next?.addEventListener("click",()=>go(current+1));
+
+
+
+let startX=0;
+
+let delta=0;
+
+const outer=document.querySelector(".AnaComments-track-outer");
+
+outer.addEventListener("touchstart",(e)=>{
+
+startX=e.touches[0].clientX;
+
+delta=0;
+
+},{passive:true});
+
+outer.addEventListener("touchmove",(e)=>{
+
+delta=e.touches[0].clientX-startX;
+
+},{passive:true});
+
+outer.addEventListener("touchend",()=>{
+
+if(Math.abs(delta)>50){
+
+if(delta<0){
+
+go(current+1);
+
+}else{
+
+go(current-1);
+
+}
+
+}
+
+});
+
+
+
+window.addEventListener("resize",()=>{
+
+current=Math.min(current,maxIndex());
+
+buildDots();
+
+move();
+
+});
+
+buildDots();
+
+move();
+
+})();
 
 // contact us form to create phon number ---------------------------------------------------
   (function(){
