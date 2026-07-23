@@ -78,150 +78,78 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // AnaComments  ---------------------------------------------------------------------------
-(function(){
-
-const track=document.getElementById("ana-track");
-const prev=document.getElementById("ana-prev");
-const next=document.getElementById("ana-next");
-const dots=document.getElementById("ana-dots");
-
-if(!track) return;
-
-const cards=[...track.querySelectorAll(".AnaComments-card")];
-
-let current=0;
-
-function visible(){
-
-    return window.innerWidth<=760?1:2;
-
-}
-
-function gap(){
-
-    return parseFloat(getComputedStyle(track).gap)||0;
-
-}
-
-function cardWidth(){
-
-    return cards[0].getBoundingClientRect().width+gap();
-
-}
-
-function maxIndex(){
-
-    return Math.max(0,cards.length-visible());
-
-}
-
-function move(){
-
-    track.style.transform=`translateX(-${current*cardWidth()}px)`;
-
-    updateDots();
-
-}
-
-function go(index){
-
-    current=Math.max(0,Math.min(index,maxIndex()));
-
-    move();
-
-}
-
-function buildDots(){
-
-    dots.innerHTML="";
-
-    for(let i=0;i<=maxIndex();i++){
-
-        const d=document.createElement("span");
-
-        d.className="AnaComments-dot";
-
-        if(i===current) d.classList.add("active");
-
-        d.onclick=()=>go(i);
-
-        dots.appendChild(d);
-
+    (function(){
+    const track=document.getElementById("ana-track");
+    const prev=document.getElementById("ana-prev");
+    const next=document.getElementById("ana-next");
+    const dots=document.getElementById("ana-dots");
+    if(!track) return;
+    const cards=[...track.querySelectorAll(".AnaComments-card")];
+    let current=0;
+    function visible(){
+       return window.innerWidth<=760?1:2;
     }
-
-}
-
-function updateDots(){
-
-    [...dots.children].forEach((d,i)=>{
-
-        d.classList.toggle("active",i===current);
-
+    function gap(){
+        return parseFloat(getComputedStyle(track).gap)||0;
+    }
+    function cardWidth(){
+        return cards[0].getBoundingClientRect().width+gap();
+    }
+    function maxIndex(){
+        return Math.max(0,cards.length-visible());
+    }
+    function move(){
+        track.style.transform=`translateX(-${current*cardWidth()}px)`;
+        updateDots();
+    }
+    function go(index){
+        current=Math.max(0,Math.min(index,maxIndex()));
+        move();
+    }
+    function buildDots(){
+        dots.innerHTML="";
+        for(let i=0;i<=maxIndex();i++){
+            const d=document.createElement("span");
+            d.className="AnaComments-dot";
+            if(i===current) d.classList.add("active");
+            d.onclick=()=>go(i);
+            dots.appendChild(d);
+        }
+    }
+    function updateDots(){
+        [...dots.children].forEach((d,i)=>{
+            d.classList.toggle("active",i===current);
+        });
+    }
+    prev?.addEventListener("click",()=>go(current-1));
+    next?.addEventListener("click",()=>go(current+1));
+    let startX=0;
+    let delta=0;
+    const outer=document.querySelector(".AnaComments-track-outer");
+    outer.addEventListener("touchstart",(e)=>{
+    startX=e.touches[0].clientX;
+    delta=0;
+    },{passive:true});
+    outer.addEventListener("touchmove",(e)=>{
+    delta=e.touches[0].clientX-startX;
+    },{passive:true});
+    outer.addEventListener("touchend",()=>{
+    if(Math.abs(delta)>50){
+    if(delta<0){
+    go(current+1);
+    }else{
+    go(current-1);
+    }
+    }
     });
-
-}
-
-prev?.addEventListener("click",()=>go(current-1));
-
-next?.addEventListener("click",()=>go(current+1));
-
-
-
-let startX=0;
-
-let delta=0;
-
-const outer=document.querySelector(".AnaComments-track-outer");
-
-outer.addEventListener("touchstart",(e)=>{
-
-startX=e.touches[0].clientX;
-
-delta=0;
-
-},{passive:true});
-
-outer.addEventListener("touchmove",(e)=>{
-
-delta=e.touches[0].clientX-startX;
-
-},{passive:true});
-
-outer.addEventListener("touchend",()=>{
-
-if(Math.abs(delta)>50){
-
-if(delta<0){
-
-go(current+1);
-
-}else{
-
-go(current-1);
-
-}
-
-}
-
-});
-
-
-
-window.addEventListener("resize",()=>{
-
-current=Math.min(current,maxIndex());
-
-buildDots();
-
-move();
-
-});
-
-buildDots();
-
-move();
-
-})();
+    window.addEventListener("resize",()=>{
+    current=Math.min(current,maxIndex());
+    buildDots();
+    move();
+    });
+    buildDots();
+    move();
+    })();
 
 // contact us form to create phon number ---------------------------------------------------
   (function(){
