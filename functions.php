@@ -169,6 +169,36 @@ function ana_register_menus() {
 add_action( 'after_setup_theme', 'ana_register_menus' );
  
  
+// ── 2b. Helper: URL of the page using the "blog" template ─────────
+function ana_blog_page_url() {
+    static $url = null;
+    if ( null !== $url ) {
+        return $url;
+    }
+
+    // Preferred: whichever Page has the "blog" template (home.php) assigned to it.
+    $blog_pages = get_posts( array(
+        'post_type'      => 'page',
+        'post_status'    => 'publish',
+        'posts_per_page' => 1,
+        'meta_key'       => '_wp_page_template',
+        'meta_value'     => 'home.php',
+        'no_found_rows'  => true,
+    ) );
+
+    if ( ! empty( $blog_pages ) ) {
+        $url = get_permalink( $blog_pages[0] );
+        return $url;
+    }
+
+    // Fallback: the "Posts page" set in Settings → Reading.
+    $page_for_posts = (int) get_option( 'page_for_posts' );
+    $url            = $page_for_posts ? get_permalink( $page_for_posts ) : home_url( '/blog' );
+
+    return $url;
+}
+
+
 // ── 2. Social links in Customizer ─────────────────────────────────
 function ana_customize_register( WP_Customize_Manager $wp_customize ) {
  
@@ -271,7 +301,7 @@ add_action( 'init', 'custom_post_type_games', 0 );
 function game_meta_enqueue_scripts( $hook ) {
     global $post;
     if ( ( $hook === 'post-new.php' || $hook === 'post.php' )
-        && isset( $post ) && $post->post_type === 'game' ) {
+        && isset( $post ) && in_array( $post->post_type, array( 'game', 'post' ), true ) ) {
         wp_enqueue_media();
         wp_enqueue_editor();
         wp_enqueue_style(
@@ -552,7 +582,7 @@ add_action( 'save_post', 'game_save_meta_fields' );
 // ─────────────────────────────────────────
 function game_meta_admin_footer() {
     global $post;
-    if ( ! isset( $post ) || $post->post_type !== 'game' ) return;
+    if ( ! isset( $post ) || ! in_array( $post->post_type, array( 'game', 'post' ), true ) ) return;
     ?>
     <script>
     (function($){
@@ -719,7 +749,109 @@ function ana_register_admin_menu() {
     );
 }
 add_action( 'admin_menu', 'ana_register_admin_menu' );
- 
+
+
+// blog posts extra fields ---------------------------------------------------------------------------
+
+// ─────────────────────────────────────────
+// 1. Register Meta Box on native Posts
+// ─────────────────────────────────────────
+function ana_blog_register_meta_box() {
+    add_meta_box(
+        'ana_blog_extra_info',
+        'اطلاعات تکمیلی بلاگ',
+        'ana_blog_extra_info_cb',
+        'post',
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'ana_blog_register_meta_box' );
+
+// ─────────────────────────────────────────
+// 2. Meta Box Callback
+// ─────────────────────────────────────────
+function ana_blog_extra_info_cb( $post ) {
+    wp_nonce_field( 'ana_blog_meta_nonce', 'ana_blog_meta_nonce_field' );
+    $blogauthorname = get_post_meta( $post->ID, 'blogauthorname', true );
+    ?>
+    <div class="game-meta-wrap">
+        <?php game_image_field( $post, 'blogcoverimage', 'تصویر بلاگ (جایگزین تصویر پیش‌فرض کارت‌ها)' ); ?>
+
+        <div class="game-field" style="margin-top:16px;">
+            <label for="blogauthorname"><strong>نام نویسنده (blogauthorname)</strong></label>
+            <input type="text" name="blogauthorname" id="blogauthorname"
+                   value="<?php echo esc_attr( $blogauthorname ); ?>"
+                   class="widefat" style="margin-top:5px;">
+        </div>
+
+        <div style="margin-top:16px;">
+            <?php game_image_field( $post, 'blogauthorimage', 'تصویر نویسنده' ); ?>
+        </div>
+    </div>
+    <?php
+}
+
+// ─────────────────────────────────────────
+// 3. Save Meta Fields
+// ─────────────────────────────────────────
+function ana_blog_save_meta_fields( $post_id ) {
+    if ( ! isset( $_POST['ana_blog_meta_nonce_field'] )
+        || ! wp_verify_nonce( $_POST['ana_blog_meta_nonce_field'], 'ana_blog_meta_nonce' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+    if ( get_post_type( $post_id ) !== 'post' ) return;
+
+    if ( isset( $_POST['blogauthorname'] ) ) {
+        update_post_meta( $post_id, 'blogauthorname', sanitize_text_field( $_POST['blogauthorname'] ) );
+    }
+
+    $image_fields = array( 'blogcoverimage', 'blogauthorimage' );
+    foreach ( $image_fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            $attachment_id = absint( $_POST[ $field ] );
+            if ( $attachment_id > 0 ) {
+                update_post_meta( $post_id, $field, $attachment_id );
+            } else {
+                delete_post_meta( $post_id, $field );
+            }
+        }
+    }
+}
+add_action( 'save_post', 'ana_blog_save_meta_fields' );
+
+// ─────────────────────────────────────────
+// 4. Template helpers
+// ─────────────────────────────────────────
+function ana_blog_cover_image_url( $post_id, $size = 'full' ) {
+    $cover_id = get_post_meta( $post_id, 'blogcoverimage', true );
+    if ( $cover_id ) {
+        $url = wp_get_attachment_image_url( $cover_id, $size );
+        if ( $url ) {
+            return $url;
+        }
+    }
+    if ( has_post_thumbnail( $post_id ) ) {
+        return get_the_post_thumbnail_url( $post_id, $size );
+    }
+    return '';
+}
+
+function ana_blog_author_name( $post_id ) {
+    $name = get_post_meta( $post_id, 'blogauthorname', true );
+    if ( $name ) {
+        return $name;
+    }
+    return get_the_author_meta( 'display_name', get_post_field( 'post_author', $post_id ) );
+}
+
+function ana_blog_author_avatar_url( $post_id ) {
+    $image_id = get_post_meta( $post_id, 'blogauthorimage', true );
+    return $image_id ? wp_get_attachment_image_url( $image_id, 'thumbnail' ) : '';
+}
+
 
 // comments plugin ---------------------------------------------------------------------------
 

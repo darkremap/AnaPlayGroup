@@ -2464,3 +2464,190 @@ h1{
   .order-xxl-0 { order: 0; } .order-xxl-1 { order: 1; } .order-xxl-2 { order: 2; }
   .order-xxl-3 { order: 3; } .order-xxl-4 { order: 4; } .order-xxl-5 { order: 5; }
 }
+/* ==========================
+   AnaBlog — listing (home.php)
+========================== */
+.AnaBlog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 120px;
+}
+.AnaBlog-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(10, 63, 90, .08);
+  transition: transform .3s, box-shadow .3s;
+}
+.AnaBlog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(10, 63, 90, .14);
+}
+.AnaBlog-card-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.AnaBlog-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s;
+}
+.AnaBlog-card:hover .AnaBlog-card-thumb img {
+  transform: scale(1.05);
+}
+.AnaBlog-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 22px;
+  flex: 1;
+}
+.AnaBlog-card-date {
+  color: var(--WarmGold);
+  font-size: 13px;
+}
+.AnaBlog-card-title {
+  margin: 0;
+  font-size: 19px;
+}
+.AnaBlog-card-title a {
+  color: var(--DeepOceanBlue);
+  text-decoration: none;
+}
+.AnaBlog-card-title a:hover {
+  text-decoration: underline;
+}
+.AnaBlog-card-excerpt {
+  margin: 0;
+  color: var(--lightGray);
+  font-size: 14px;
+  line-height: 1.8;
+  flex: 1;
+}
+.AnaBlog-card .Anabtn {
+  margin-top: 8px;
+  padding: 8px 20px;
+  font-size: 14px;
+}
+.AnaBlog-empty {
+  text-align: center;
+  color: var(--lightGray);
+  grid-column: 1 / -1;
+}
+.AnaBlog-card-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--DeepOceanBlue);
+  font-size: 13px;
+}
+.AnaBlog-card-author-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.AnaBlog-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 48px;
+}
+.AnaBlog-pagination .page-numbers {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 2px solid var(--DeepOceanBlue);
+  color: var(--DeepOceanBlue);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background .3s, color .3s;
+}
+.AnaBlog-pagination .page-numbers.current,
+.AnaBlog-pagination .page-numbers:hover {
+  background: var(--DeepOceanBlue);
+  color: #fff;
+}
+@media (max-width: 991px) {
+  .AnaBlog-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+@media (max-width: 680px) {
+  .AnaBlog-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================
+   AnaSingleBlog — single.php
+========================== */
+.AnaSingleBlog-hero {
+  position: relative;
+  margin-bottom: 40px;
+}
+.AnaSingleBlog-hero-img {
+  width: 100%;
+}
+.AnaSingleBlog-hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.AnaSingleBlog-hero-content {
+  padding-top: 32px;
+  text-align: center;
+}
+.AnaSingleBlog-hero-content h1 {
+  font-size: 32px !important;
+}
+.AnaSingleBlog-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  color: var(--lightGray);
+  font-size: 14px;
+}
+.AnaSingleBlog-meta img{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.AnaSingleBlog-meta-divider {
+  color: var(--WarmGold);
+}
+.AnaSingleBlog-content {
+  margin-inline: auto;
+  color: var(--lightGray);
+  font-size: 16px;
+  line-height: 2;
+  padding-bottom: 40px;
+}
+.AnaSingleBlog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+  margin-block: 16px;
+}
+.AnaSingleBlog-back {
+  margin-inline: auto;
+  padding-bottom: 60px;
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 680px) {
+  .AnaSingleBlog-hero-content h1 { font-size: 22px !important; }
+  .AnaSingleBlog-content { font-size: 14px; }
+}

@@ -56,6 +56,7 @@
             <a href="<?php echo esc_url( home_url( '/encyclopedia' ) ); ?>">دانشنامه</a>
             <a href="<?php echo esc_url( home_url( '/packages' ) ); ?>">پکیج</a>
             <a href="<?php echo esc_url( home_url( '/events' ) ); ?>">رویداد</a>
+            <a href="<?php echo esc_url( ana_blog_page_url() ); ?>">بلاگ</a>
         </nav>
         <?php
     }
